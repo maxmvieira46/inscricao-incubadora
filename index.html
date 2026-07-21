@@ -1268,6 +1268,10 @@ function coletarDados() {
   function get(name) {
     var el = document.querySelector('[name="' + name + '"]');
     if (!el) return '';
+    if (el.type === 'radio') {
+      var checked = document.querySelector('[name="' + name + '"]:checked');
+      return checked ? checked.value : '';
+    }
     return el.value ? el.value.trim() : '';
   }
 
