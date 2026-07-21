@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulário de Inscrição — Incubadora Acelera 2026 — AG TaxTech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══ RESET & BASE ═══ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #F5F5F0;
+  color: #2C2C2C;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ═══ VARIÁVEIS AG ═══ */
+:root {
+  --ag-grafite: #2C2C2C;
+  --ag-grafite-light: #3D3D3D;
+  --ag-laranja: #E67E22;
+  --ag-laranja-hover: #D35400;
+  --ag-laranja-soft: #FDF2E9;
+  --ag-bg: #F5F5F0;
+  --ag-card: #FFFFFF;
+  --ag-border: #E0DDD5;
+  --ag-text: #2C2C2C;
+  --ag-text-secondary: #6B6B6B;
+  --ag-success: #27AE60;
+  --ag-success-bg: #E8F8F0;
+  --radius: 12px;
+  --shadow: 0 2px 12px rgba(44,44,44,0.06);
+  --shadow-hover: 0 4px 20px rgba(44,44,44,0.10);
+  --max-width: 680px;
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ═══ HEADER ═══ */
+.header {
+  background: var(--ag-grafite);
+  color: #FFF;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--ag-laranja);
+}
+.header-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 40px 24px 36px;
+}
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.logo-img {
+  height: 48px;
+  width: auto;
+  flex-shrink: 0;
+}
+.header h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(24px, 5vw, 32px);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 6px;
+  color: #FFF;
+}
+.header-sub {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(15px, 3vw, 18px);
+  font-weight: 500;
+  color: var(--ag-laranja);
+  margin-bottom: 20px;
+}
+.header-desc {
+  font-size: 15px;
+  opacity: 0.85;
+  max-width: 520px;
+  line-height: 1.65;
+}
+.header-desc strong {
+  color: var(--ag-laranja);
+  font-weight: 600;
+}
+
+/* ═══ PROGRESS BAR ═══ */
+.progress-wrap {
+  background: var(--ag-card);
+  border-bottom: 1px solid var(--ag-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.progress-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.progress-step {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--ag-border);
+  transition: background var(--transition);
+  position: relative;
+}
+.progress-step.active {
+  background: var(--ag-laranja);
+}
+.progress-step.done {
+  background: var(--ag-success);
+}
+.progress-label {
+  font-size: 12px;
+  color: var(--ag-text-secondary);
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+/* ═══ FORM CONTAINER ═══ */
+.form-container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 24px 24px 40px;
+}
+
+/* ═══ SECTIONS ═══ */
+.section {
+  background: var(--ag-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px 28px;
+  margin-bottom: 20px;
+  border: 1px solid var(--ag-border);
+  display: none;
+  animation: fadeUp 0.4s ease-out;
+}
+.section.active {
+  display: block;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--ag-laranja-soft);
+  color: var(--ag-laranja);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+.section-badge .badge-icon {
+  font-size: 14px;
+}
+.section h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--ag-text);
+}
+.section .subtitle {
+  font-size: 14px;
+  color: var(--ag-text-secondary);
+  margin-bottom: 28px;
+}
+.section .note {
+  font-size: 12px;
+  color: var(--ag-text-secondary);
+  background: #F9F8F5;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  border-left: 3px solid var(--ag-laranja);
+}
+
+.uf-cidade-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 0;
+}
+.uf-cidade-row .field {
+  margin-bottom: 22px;
+}
+/* ═══ FORM FIELDS ═══ */
+.field {
+  margin-bottom: 22px;
+}
+.field:last-child {
+  margin-bottom: 0;
+}
+.field label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ag-text);
+  margin-bottom: 8px;
+}
+.field label .req {
+  color: var(--ag-laranja);
+  margin-left: 2px;
+}
+.field input[type="text"],
+.field input[type="email"],
+.field input[type="tel"],
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 15px;
+  font-family: inherit;
+  border: 1.5px solid var(--ag-border);
+  border-radius: 8px;
+  background: #FAFAF8;
+  color: var(--ag-text);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  outline: none;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--ag-laranja);
+  box-shadow: 0 0 0 3px rgba(230,126,34,0.12);
+  background: #FFF;
+}
+.field textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+.field .error-msg {
+  font-size: 12px;
+  color: #E74C3C;
+  margin-top: 4px;
+  display: none;
+}
+.field.has-error input,
+.field.has-error select,
+.field.has-error textarea {
+  border-color: #E74C3C;
+}
+.field.has-error .error-msg {
+  display: block;
+}
+
+/* ═══ RADIO OPTIONS (perguntas pontuadas) ═══ */
+.question {
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #F0EDE5;
+}
+.question:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.question p {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ag-text);
+  margin-bottom: 14px;
+  line-height: 1.45;
+}
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 1.5px solid var(--ag-border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all var(--transition);
+  background: #FAFAF8;
+}
+.option:hover {
+  border-color: var(--ag-laranja);
+  background: var(--ag-laranja-soft);
+}
+.option.selected {
+  border-color: var(--ag-laranja);
+  background: var(--ag-laranja-soft);
+  box-shadow: 0 0 0 2px rgba(230,126,34,0.15);
+}
+.option input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px; height: 20px;
+  border: 2px solid var(--ag-border);
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 1px;
+  transition: all var(--transition);
+  position: relative;
+  cursor: pointer;
+}
+.option.selected input[type="radio"] {
+  border-color: var(--ag-laranja);
+  background: var(--ag-laranja);
+}
+.option.selected input[type="radio"]::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #FFF;
+}
+.option span {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--ag-text);
+}
+
+/* ═══ NAVIGATION ═══ */
+.nav-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid #F0EDE5;
+}
+.btn {
+  padding: 12px 28px;
+  font-size: 15px;
+  font-family: inherit;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition);
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-primary {
+  background: var(--ag-laranja);
+  color: #FFF;
+}
+.btn-primary:hover {
+  background: var(--ag-laranja-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(230,126,34,0.3);
+}
+.btn-primary:disabled {
+  background: #CCC;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--ag-text-secondary);
+  border: 1.5px solid var(--ag-border);
+}
+.btn-secondary:hover {
+  border-color: var(--ag-text-secondary);
+  color: var(--ag-text);
+}
+.btn-submit {
+  background: var(--ag-grafite);
+  color: #FFF;
+  padding: 14px 36px;
+  font-size: 16px;
+}
+.btn-submit:hover {
+  background: var(--ag-grafite-light);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(44,44,44,0.25);
+}
+
+/* ═══ SUCCESS SCREEN ═══ */
+.success-screen {
+  display: none;
+  text-align: center;
+  padding: 60px 28px;
+  background: var(--ag-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--ag-border);
+  animation: fadeUp 0.5s ease-out;
+}
+.success-screen.active {
+  display: block;
+}
+.success-icon {
+  width: 72px; height: 72px;
+  background: var(--ag-success-bg);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  font-size: 32px;
+}
+.success-screen h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 26px;
+  margin-bottom: 12px;
+  color: var(--ag-text);
+}
+.success-screen p {
+  font-size: 15px;
+  color: var(--ag-text-secondary);
+  max-width: 420px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ═══ LOADING ═══ */
+.loading-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(44,44,44,0.5);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+.loading-overlay.active {
+  display: flex;
+}
+.loading-box {
+  background: #FFF;
+  padding: 36px 48px;
+  border-radius: var(--radius);
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+}
+.spinner {
+  width: 40px; height: 40px;
+  border: 4px solid var(--ag-border);
+  border-top-color: var(--ag-laranja);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-box p {
+  font-size: 14px;
+  color: var(--ag-text-secondary);
+  font-weight: 500;
+}
+
+/* ═══ FOOTER ═══ */
+.footer {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px 32px;
+  text-align: center;
+}
+.footer p {
+  font-size: 12px;
+  color: var(--ag-text-secondary);
+  opacity: 0.7;
+}
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 600px) {
+  .header-inner { padding: 32px 20px 28px; }
+  .section { padding: 24px 20px; }
+  .form-container { padding: 16px 16px 32px; }
+  .option { padding: 10px 14px; }
+  .nav-row { flex-direction: column-reverse; gap: 10px; }
+  .nav-row .btn { width: 100%; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo-area">
+      <img src="data:image/png;base64,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" alt="AG TaxTech" class="logo-img">
+    </div>
+    <h1>Formulário de Inscrição</h1>
+    <p class="header-sub">Incubadora Acelera 2026 — AG TaxTech</p>
+    <p class="header-desc">Conte um pouco sobre o seu momento comercial.<br>Leva poucos minutos e ajuda o time de treinamento a conhecer o seu perfil.<br><strong>Vamos nessa?</strong></p>
+  </div>
+</header>
+
+<!-- ═══ PROGRESS ═══ -->
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <span class="progress-label" id="progressLabel">Etapa 1 de 7</span>
+    <div class="progress-step active" data-step="0"></div>
+    <div class="progress-step" data-step="1"></div>
+    <div class="progress-step" data-step="2"></div>
+    <div class="progress-step" data-step="3"></div>
+    <div class="progress-step" data-step="4"></div>
+    <div class="progress-step" data-step="5"></div>
+    <div class="progress-step" data-step="6"></div>
+  </div>
+</div>
+
+<!-- ═══ FORM ═══ -->
+<div class="form-container">
+
+  <!-- ── SEÇÃO 0: IDENTIFICAÇÃO ── -->
+  <div class="section active" data-section="0">
+    <div class="section-badge"><span class="badge-icon">👤</span> Seus dados</div>
+    <h2>Identificação</h2>
+    <p class="subtitle">Informações básicas para o time conhecer você.</p>
+
+    <div class="field">
+      <label>Nome completo <span class="req">*</span></label>
+      <input type="text" name="nome" required placeholder="Seu nome completo">
+      <div class="error-msg">Preencha seu nome completo</div>
+    </div>
+    <div class="field">
+      <label>E-mail <span class="req">*</span></label>
+      <input type="email" name="email" required placeholder="seu@email.com">
+      <div class="error-msg">Informe um e-mail válido (ex.: nome@gmail.com)</div>
+    </div>
+    <div class="field">
+      <label>Telefone / WhatsApp <span class="req">*</span></label>
+      <input type="tel" name="telefone" required placeholder="(00) 00000-0000">
+      <div class="error-msg">Informe seu telefone</div>
+    </div>
+    <div class="uf-cidade-row">
+      <div class="field" style="flex:0 0 110px;">
+        <label>UF <span class="req">*</span></label>
+        <select name="uf" required onchange="carregarCidades(this.value)">
+          <option value="">UF</option>
+          <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
+          <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
+          <option>GO</option><option>MA</option><option>MT</option><option>MS</option>
+          <option>MG</option><option>PA</option><option>PB</option><option>PR</option>
+          <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
+          <option>RS</option><option>RO</option><option>RR</option><option>SC</option>
+          <option>SP</option><option>SE</option><option>TO</option>
+        </select>
+        <div class="error-msg">Selecione</div>
+      </div>
+      <div class="field" style="flex:1;">
+        <label>Cidade <span class="req">*</span></label>
+        <input type="text" name="cidade" required placeholder="Selecione o UF primeiro" list="cidades-list">
+        <datalist id="cidades-list"></datalist>
+        <div class="error-msg">Informe sua cidade</div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Casa AG / Quem indicou <span class="req">*</span></label>
+      <input type="text" name="casa_ag" required placeholder="Ex.: AG RJ, AG BH, indicação de...">
+      <div class="error-msg">Informe a casa AG ou quem indicou</div>
+    </div>
+    <div class="field">
+      <label>Área de atuação principal <span class="req">*</span></label>
+      <select name="area" required onchange="toggleOutraArea(this)">
+        <option value="">Selecione...</option>
+        <option value="Crédito tributário">Crédito tributário</option>
+        <option value="Recuperação de crédito">Recuperação de crédito</option>
+        <option value="Planejamento tributário">Planejamento tributário</option>
+        <option value="Contabilidade">Contabilidade</option>
+        <option value="Consultoria empresarial">Consultoria empresarial</option>
+        <option value="Advocacia">Advocacia</option>
+        <option value="Seguros">Seguros</option>
+        <option value="Mercado financeiro">Mercado financeiro</option>
+        <option value="Vendas / Comercial">Vendas / Comercial</option>
+        <option value="Tecnologia">Tecnologia</option>
+        <option value="__outra__">Outra</option>
+      </select>
+      <div class="error-msg">Selecione sua área de atuação</div>
+    </div>
+    <div class="field" id="outraAreaField" style="display:none;">
+      <label>Qual área? <span class="req">*</span></label>
+      <input type="text" name="area_outra" placeholder="Descreva sua área de atuação">
+      <div class="error-msg">Informe sua área</div>
+    </div>
+    <div class="field">
+      <label>Tempo de experiência no mercado <span class="req">*</span></label>
+      <select name="experiencia" required>
+        <option value="">Selecione...</option>
+        <option value="Menos de 1 ano">Menos de 1 ano</option>
+        <option value="1 a 3 anos">1 a 3 anos</option>
+        <option value="3 a 5 anos">3 a 5 anos</option>
+        <option value="Mais de 5 anos">Mais de 5 anos</option>
+      </select>
+      <div class="error-msg">Selecione seu tempo de experiência</div>
+    </div>
+
+    <div class="nav-row">
+      <div></div>
+      <button class="btn btn-primary" onclick="avancar()">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- ── SEÇÃO 1: COACHABILITY ── -->
+  <div class="section" data-section="1">
+    <div class="section-badge"><span class="badge-icon">🧠</span> Coachability</div>
+    <h2>Como você lida com orientações</h2>
+    <p class="subtitle">Sua abertura para aprender e aplicar sugestões.</p>
+
+    <div class="question" data-dim="coach">
+      <p>Quando recebe uma sugestão diferente do seu jeito de trabalhar, o que mais combina com você? <span style="color:var(--ag-laranja)">*</span></p>
+      <div class="options">
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="coach_1" value="100" required>
+          <span>Testo rápido, mesmo sem concordar 100%</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="coach_1" value="70">
+          <span>Aplico depois de entender bem o porquê</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="coach_1" value="40">
+          <span>Aplico só se fizer muito sentido para mim</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="coach_1" value="0">
+          <span>Costumo manter meu jeito</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="question" data-dim="coach">
+      <p>Se a Incubadora pedir para você seguir um método ou rotina diferente do que está acostumado, como reage? <span style="color:var(--ag-laranja)">*</span></p>
+      <div class="options">
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="coach_2" value="100" required>
+          <span>Sigo na hora — confio no processo</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="coach_2" value="70">
+          <span>Sigo, mas preciso ver resultado rápido para manter</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="coach_2" value="40">
+          <span>Sigo parcialmente, adaptando ao meu estilo</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="coach_2" value="0">
+          <span>Prefiro continuar do meu jeito</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="question" data-dim="coach">
+      <p>Quando encontra uma dificuldade comercial, qual sua primeira reação? <span style="color:var(--ag-laranja)">*</span></p>
+      <div class="options">
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="coach_3" value="100" required>
+          <span>Busco orientação com quem já passou por isso</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="coach_3" value="70">
+          <span>Tento resolver sozinho e depois peço ajuda se não der certo</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="coach_3" value="40">
+          <span>Analiso bastante antes de pedir ajuda</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="coach_3" value="0">
+          <span>Resolvo sempre por conta própria</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="voltar()">← Voltar</button>
+      <button class="btn btn-primary" onclick="avancar()">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- ── SEÇÃO 2: COMPROMETIMENTO ── -->
+  <div class="section" data-section="2">
+    <div class="section-badge"><span class="badge-icon">🎯</span> Comprometimento</div>
+    <h2>Sua dedicação ao programa</h2>
+    <p class="subtitle">Disponibilidade e consistência no dia a dia.</p>
+
+    <div class="question" data-dim="comp">
+      <p>Quantas horas por semana você consegue dedicar à Incubadora (rotinas, ligações, estudo)? <span style="color:var(--ag-laranja)">*</span></p>
+      <div class="options">
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="comp_1" value="100" required>
+          <span>10 horas ou mais</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="comp_1" value="70">
+          <span>6 a 9 horas</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="comp_1" value="40">
+          <span>3 a 5 horas</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="comp_1" value="0">
+          <span>Menos de 3 horas</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="question" data-dim="comp">
+      <p>Como você vê a participação nos encontros semanais (UniAG, treinos, reuniões)? <span style="color:var(--ag-laranja)">*</span></p>
+      <div class="options">
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="comp_2" value="100" required>
+          <span>Prioridade — reorganizo minha agenda para estar presente</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="comp_2" value="70">
+          <span>Importante — participo na maioria das vezes</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="comp_2" value="40">
+          <span>Participo quando consigo encaixar</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="comp_2" value="0">
+          <span>Difícil garantir presença regular</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="question" data-dim="comp">
+      <p>Quando se compromete com uma entrega ou prazo, o que acontece na prática? <span style="color:var(--ag-laranja)">*</span></p>
+      <div class="options">
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="comp_3" value="100" required>
+          <span>Cumpro sempre, mesmo que precise me virar</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="comp_3" value="70">
+          <span>Cumpro quase sempre — raro atrasar</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="comp_3" value="40">
+          <span>Às vezes atraso, mas aviso antes</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="comp_3" value="0">
+          <span>Tenho dificuldade em manter prazos</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="voltar()">← Voltar</button>
+      <button class="btn btn-primary" onclick="avancar()">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- ── SEÇÃO 3: PERFIL EXECUTOR ── -->
+  <div class="section" data-section="3">
+    <div class="section-badge"><span class="badge-icon">⚡</span> Perfil executor</div>
+    <h2>Seu estilo de execução</h2>
+    <p class="subtitle">Como você opera no dia a dia comercial.</p>
+
+    <div class="question" data-dim="exec">
+      <p>Como você organiza seus contatos e oportunidades comerciais hoje? <span style="color:var(--ag-laranja)">*</span></p>
+      <div class="options">
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="exec_1" value="100" required>
+          <span>Tenho CRM ou planilha atualizada com follow-ups agendados</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="exec_1" value="70">
+          <span>Tenho uma lista organizada, mas sem rotina fixa de follow-up</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="exec_1" value="40">
+          <span>Anoto alguns contatos, mas sem muito método</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="exec_1" value="0">
+          <span>Trabalho mais de memória, sem registro formal</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="question" data-dim="exec">
+      <p>Quando um prospect não responde depois da primeira reunião, o que você faz? <span style="color:var(--ag-laranja)">*</span></p>
+      <div class="options">
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="exec_2" value="100" required>
+          <span>Faço follow-up estruturado (2 a 3 tentativas com intervalo planejado)</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="exec_2" value="70">
+          <span>Tento mais uma ou duas vezes e avalio</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="exec_2" value="40">
+          <span>Mando uma mensagem e espero retorno</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="exec_2" value="0">
+          <span>Parto para outro contato</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="question" data-dim="exec">
+      <p>Na última semana, quantas oportunidades comerciais novas você movimentou? <span style="color:var(--ag-laranja)">*</span></p>
+      <div class="options">
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="exec_3" value="100" required>
+          <span>5 ou mais</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="exec_3" value="70">
+          <span>3 a 4</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="exec_3" value="40">
+          <span>1 a 2</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="exec_3" value="0">
+          <span>Nenhuma</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="voltar()">← Voltar</button>
+      <button class="btn btn-primary" onclick="avancar()">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- ── SEÇÃO 4: MOTIVAÇÃO ── -->
+  <div class="section" data-section="4">
+    <div class="section-badge"><span class="badge-icon">🔥</span> Motivação</div>
+    <h2>Sua energia e clareza</h2>
+    <p class="subtitle">O que te move e onde quer chegar.</p>
+
+    <div class="question" data-dim="motiv">
+      <p>Qual é o seu objetivo principal ao entrar na Incubadora AG? <span style="color:var(--ag-laranja)">*</span></p>
+      <div class="options">
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="motiv_1" value="100" required>
+          <span>Gerar faturamento consistente com método e acompanhamento</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="motiv_1" value="70">
+          <span>Aprender técnicas comerciais para aplicar na minha carteira</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="motiv_1" value="40">
+          <span>Conhecer melhor os produtos AG e ampliar minha atuação</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="motiv_1" value="0">
+          <span>Ainda estou avaliando se faz sentido para mim</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="question" data-dim="motiv">
+      <p>Pensando nos próximos 90 dias, como está sua motivação? <span style="color:var(--ag-laranja)">*</span></p>
+      <div class="options">
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="motiv_2" value="100" required>
+          <span>Altíssima — quero priorizar isso agora</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="motiv_2" value="70">
+          <span>Alta — estou animado e disponível</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="motiv_2" value="40">
+          <span>Média — tenho interesse mas com outras prioridades</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="motiv_2" value="0">
+          <span>Baixa no momento</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="question" data-dim="motiv">
+      <p>O que mais te conecta com a proposta da Incubadora? <span style="color:var(--ag-laranja)">*</span></p>
+      <div class="options">
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="motiv_3" value="100" required>
+          <span>A estrutura de acompanhamento e desenvolvimento contínuo</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="motiv_3" value="70">
+          <span>O acesso a novos produtos e oportunidades de negócio</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="motiv_3" value="40">
+          <span>A possibilidade de aprender com outros parceiros</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="motiv_3" value="0">
+          <span>Ainda estou entendendo a proposta</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="voltar()">← Voltar</button>
+      <button class="btn btn-primary" onclick="avancar()">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- ── SEÇÃO 5: REDE E MERCADO ── -->
+  <div class="section" data-section="5">
+    <div class="section-badge"><span class="badge-icon">🌐</span> Sua rede e mercado</div>
+    <h2>Contexto comercial</h2>
+    <p class="subtitle">Nos ajuda a entender o seu cenário.</p>
+    <div class="note">Estas respostas não entram na pontuação — servem para o time conhecer melhor o seu mercado.</div>
+
+    <div class="question" data-dim="rede">
+      <p>Como você descreveria sua rede de contatos comerciais hoje? <span style="color:var(--ag-laranja)">*</span></p>
+      <div class="options">
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="rede_1" value="Ampla e ativa" required>
+          <span>Ampla e ativa — converso com decisores frequentemente</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="rede_1" value="Boa">
+          <span>Boa — tenho contatos relevantes mas poderia ativar mais</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="rede_1" value="Em construção">
+          <span>Em construção — estou desenvolvendo minha rede</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="rede_1" value="Pequena">
+          <span>Pequena — preciso começar praticamente do zero</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="question" data-dim="rede">
+      <p>Você tem acesso direto a decisores (donos de empresa, diretores financeiros, contadores)? <span style="color:var(--ag-laranja)">*</span></p>
+      <div class="options">
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="rede_2" value="Regular" required>
+          <span>Sim, converso regularmente com decisores</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="rede_2" value="Eventual">
+          <span>Sim, mas o acesso é eventual</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="rede_2" value="Indireto">
+          <span>Tenho alguns contatos indiretos</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="rede_2" value="Sem acesso">
+          <span>Não tenho acesso a decisores hoje</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="question" data-dim="rede">
+      <p>Em quais segmentos você mais atua ou tem relacionamento? <span style="color:var(--ag-laranja)">*</span></p>
+      <div class="options">
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="rede_3" value="Médio/grande" required>
+          <span>Empresas de médio/grande porte (indústria, serviços, comércio)</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="rede_3" value="Pequenas">
+          <span>Pequenas empresas e profissionais liberais</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="rede_3" value="Público">
+          <span>Setor público ou entidades</span>
+        </label>
+        <label class="option" onclick="selecionar(this)">
+          <input type="radio" name="rede_3" value="Definindo">
+          <span>Ainda estou definindo meu foco</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="voltar()">← Voltar</button>
+      <button class="btn btn-primary" onclick="avancar()">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- ── SEÇÃO 6: ABERTAS ── -->
+  <div class="section" data-section="6">
+    <div class="section-badge"><span class="badge-icon">💬</span> Conte um pouco mais</div>
+    <h2>Espaço livre</h2>
+    <p class="subtitle">Respostas opcionais — fique à vontade para compartilhar.</p>
+
+    <div class="field">
+      <label>Por que você quer participar da Incubadora AG?</label>
+      <textarea name="aberta_1" placeholder="Conte o que te motivou a buscar a Incubadora..."></textarea>
+    </div>
+    <div class="field">
+      <label>O que espera conquistar nos próximos 12 meses?</label>
+      <textarea name="aberta_2" placeholder="Metas, objetivos, planos..."></textarea>
+    </div>
+    <div class="field">
+      <label>Como pretende organizar sua rotina para gerar oportunidades?</label>
+      <textarea name="aberta_3" placeholder="Sua estratégia de agenda e execução..."></textarea>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="voltar()">← Voltar</button>
+      <button class="btn btn-submit" onclick="enviar()">Enviar inscrição</button>
+    </div>
+  </div>
+
+  <!-- ── SUCESSO ── -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">✓</div>
+    <h2>Inscrição enviada!</h2>
+    <p>Obrigado por se inscrever na Incubadora Acelera 2026. O time de treinamento vai analisar seu perfil e retornar em breve.</p>
+  </div>
+
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<div class="footer">
+  <p>AG TaxTech · Incubadora Acelera 2026</p>
+</div>
+
+<!-- ═══ LOADING ═══ -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-box">
+    <div class="spinner"></div>
+    <p>Enviando sua inscrição...</p>
+  </div>
+</div>
+
+<!-- ═══ JAVASCRIPT ═══ -->
+<script>
+// ─── CONFIG ────────────────────────────────────────────────────────
+// ⚠️  SUBSTITUIR pela URL do seu Web App (Google Apps Script)
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwLk6gyz3ua7WPxu84arQhS0ur6p1GhegiXDEh_4Lv-9dYRYYdwMUuYfenklUTMyMIY/exec";
+
+const TOTAL_SECTIONS = 7;
+let currentSection = 0;
+
+const PESOS = { coach: 0.35, comp: 0.30, exec: 0.20, motiv: 0.15 };
+
+// ─── CIDADES POR UF ──────────────────────────────────────────────
+const CIDADES = {
+  AC:["Rio Branco","Cruzeiro do Sul","Sena Madureira"],
+  AL:["Maceió","Arapiraca","Rio Largo","Palmeira dos Índios"],
+  AP:["Macapá","Santana","Laranjal do Jari"],
+  AM:["Manaus","Parintins","Itacoatiara","Manacapuru"],
+  BA:["Salvador","Feira de Santana","Vitória da Conquista","Camaçari","Ilhéus","Lauro de Freitas","Itabuna"],
+  CE:["Fortaleza","Caucaia","Juazeiro do Norte","Maracanaú","Sobral"],
+  DF:["Brasília","Taguatinga","Ceilândia","Samambaia","Plano Piloto"],
+  ES:["Vitória","Vila Velha","Serra","Cariacica","Cachoeiro de Itapemirim","Linhares"],
+  GO:["Goiânia","Aparecida de Goiânia","Anápolis","Rio Verde","Luziânia"],
+  MA:["São Luís","Imperatriz","Timon","Caxias","São José de Ribamar"],
+  MT:["Cuiabá","Várzea Grande","Rondonópolis","Sinop","Tangará da Serra"],
+  MS:["Campo Grande","Dourados","Três Lagoas","Corumbá","Ponta Porã"],
+  MG:["Belo Horizonte","Uberlândia","Contagem","Juiz de Fora","Betim","Montes Claros","Ribeirão das Neves","Uberaba","Governador Valadares","Ipatinga","Poços de Caldas","Divinópolis"],
+  PA:["Belém","Ananindeua","Santarém","Marabá","Castanhal"],
+  PB:["João Pessoa","Campina Grande","Santa Rita","Patos"],
+  PR:["Curitiba","Londrina","Maringá","Ponta Grossa","Cascavel","São José dos Pinhais","Foz do Iguaçu","Colombo"],
+  PE:["Recife","Jaboatão dos Guararapes","Olinda","Caruaru","Petrolina","Paulista"],
+  PI:["Teresina","Parnaíba","Picos","Piripiri","Floriano"],
+  RJ:["Rio de Janeiro","São Gonçalo","Duque de Caxias","Nova Iguaçu","Niterói","Belford Roxo","Petrópolis","Volta Redonda","Campos dos Goytacazes","Macaé","São João de Meriti"],
+  RN:["Natal","Mossoró","Parnamirim","São Gonçalo do Amarante"],
+  RS:["Porto Alegre","Caxias do Sul","Pelotas","Canoas","Santa Maria","Gravataí","Viamão","Novo Hamburgo","São Leopoldo","Passo Fundo"],
+  RO:["Porto Velho","Ji-Paraná","Ariquemes","Vilhena"],
+  RR:["Boa Vista","Rorainópolis","Caracaraí"],
+  SC:["Florianópolis","Joinville","Blumenau","São José","Chapecó","Criciúma","Itajaí","Jaraguá do Sul","Balneário Camboriú","Lages"],
+  SP:["São Paulo","Guarulhos","Campinas","São Bernardo do Campo","Santo André","Osasco","São José dos Campos","Ribeirão Preto","Sorocaba","Santos","São José do Rio Preto","Mogi das Cruzes","Piracicaba","Bauru","Jundiaí","Limeira","Franca","Taubaté","Americana"],
+  SE:["Aracaju","Nossa Senhora do Socorro","Lagarto","Itabaiana"],
+  TO:["Palmas","Araguaína","Gurupi","Porto Nacional"]
+};
+
+function carregarCidades(uf) {
+  const dl = document.getElementById('cidades-list');
+  const cidadeInput = document.querySelector('[name="cidade"]');
+  dl.innerHTML = '';
+  cidadeInput.value = '';
+  cidadeInput.placeholder = uf ? 'Digite ou selecione...' : 'Selecione o UF primeiro';
+  
+  if (uf && CIDADES[uf]) {
+    CIDADES[uf].forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c;
+      dl.appendChild(opt);
+    });
+  }
+}
+
+// ─── ÁREA "OUTRA" TOGGLE ──────────────────────────────────────────
+function toggleOutraArea(sel) {
+  const outraField = document.getElementById('outraAreaField');
+  const outraInput = outraField.querySelector('input');
+  if (sel.value === '__outra__') {
+    outraField.style.display = 'block';
+    outraInput.required = true;
+  } else {
+    outraField.style.display = 'none';
+    outraInput.required = false;
+    outraInput.value = '';
+  }
+}
+
+// ─── NAVEGAÇÃO ────────────────────────────────────────────────────
+function selecionar(el) {
+  el.closest('.options').querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  el.querySelector('input').checked = true;
+}
+
+// ─── VALIDAÇÃO DE E-MAIL ──────────────────────────────────────────
+function validarEmail(email) {
+  if (!email) return false;
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  if (!regex.test(email)) return false;
+  
+  // Domínios válidos conhecidos
+  const dominiosOk = [
+    'gmail.com','hotmail.com','outlook.com','yahoo.com','yahoo.com.br',
+    'icloud.com','me.com','mac.com','live.com','msn.com',
+    'uol.com.br','bol.com.br','terra.com.br','ig.com.br',
+    'globo.com','zipmail.com.br','oi.com.br','r7.com',
+    'protonmail.com','zoho.com','aol.com'
+  ];
+  
+  const dominio = email.split('@')[1].toLowerCase();
+  // Aceita domínios conhecidos OU domínios corporativos (não bloqueamos)
+  // Bloqueia apenas formatos claramente inválidos
+  if (dominio.indexOf('.') === -1) return false;
+  if (dominio.length < 4) return false;
+  
+  return true;
+}
+
+// ─── VALIDAÇÃO DE SEÇÃO ───────────────────────────────────────────
+function validarSecao(idx) {
+  const sec = document.querySelector('[data-section="' + idx + '"]');
+  if (!sec) return false;
+  let ok = true;
+
+  // Limpar erros anteriores
+  sec.querySelectorAll('.has-error').forEach(el => el.classList.remove('has-error'));
+  sec.querySelectorAll('.question').forEach(q => q.style.background = '');
+
+  // Validar campos de texto e select
+  sec.querySelectorAll('[required]').forEach(el => {
+    if (el.type === 'radio') return; // radios tratados separadamente
+    
+    const field = el.closest('.field');
+    if (!field) return;
+    
+    // Pular campos hidden (ex.: "Outra" quando não selecionado)
+    if (field.style.display === 'none') return;
+    
+    let valor = el.value ? el.value.trim() : '';
+    let invalido = !valor;
+    
+    // Validação especial para e-mail
+    if (el.type === 'email' && valor && !validarEmail(valor)) {
+      invalido = true;
+    }
+    
+    // Validação especial para área "Outra"
+    if (el.name === 'area' && valor === '__outra__') {
+      // Área "Outra" selecionada — campo outra_area será validado separadamente
+      invalido = false;
+    }
+    
+    if (invalido) {
+      field.classList.add('has-error');
+      ok = false;
+    }
+  });
+
+  // Validar radio groups
+  const radioGroups = new Set();
+  sec.querySelectorAll('input[type="radio"][required]').forEach(r => radioGroups.add(r.name));
+  radioGroups.forEach(name => {
+    if (!sec.querySelector('input[name="' + name + '"]:checked')) {
+      const q = sec.querySelector('input[name="' + name + '"]').closest('.question');
+      if (q) { q.style.background = '#FFF5F5'; q.style.borderRadius = '8px'; }
+      ok = false;
+    }
+  });
+
+  return ok;
+}
+
+function atualizarProgress() {
+  document.querySelectorAll('.progress-step').forEach(function(s, i) {
+    s.classList.remove('active', 'done');
+    if (i < currentSection) s.classList.add('done');
+    if (i === currentSection) s.classList.add('active');
+  });
+  document.getElementById('progressLabel').textContent = 'Etapa ' + (currentSection + 1) + ' de ' + TOTAL_SECTIONS;
+}
+
+function avancar() {
+  if (!validarSecao(currentSection)) {
+    var err = document.querySelector('[data-section="' + currentSection + '"] .has-error, [data-section="' + currentSection + '"] [style*="FFF5F5"]');
+    if (err) err.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  document.querySelector('[data-section="' + currentSection + '"]').classList.remove('active');
+  currentSection++;
+  document.querySelector('[data-section="' + currentSection + '"]').classList.add('active');
+  atualizarProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function voltar() {
+  document.querySelector('[data-section="' + currentSection + '"]').classList.remove('active');
+  currentSection--;
+  document.querySelector('[data-section="' + currentSection + '"]').classList.add('active');
+  atualizarProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── CALCULAR SCORE ───────────────────────────────────────────────
+function calcularScore() {
+  var dims = { coach: [], comp: [], exec: [], motiv: [] };
+
+  document.querySelectorAll('.question[data-dim]').forEach(function(q) {
+    var dim = q.dataset.dim;
+    var checked = q.querySelector('input[type="radio"]:checked');
+    if (checked && dims[dim] !== undefined) {
+      dims[dim].push(parseInt(checked.value));
+    }
+  });
+
+  var score = 0;
+  var detalhes = {};
+  for (var dim in dims) {
+    var vals = dims[dim];
+    var media = vals.length ? vals.reduce(function(a,b){return a+b;},0) / vals.length : 0;
+    detalhes[dim] = Math.round(media * 10) / 10;
+    score += media * PESOS[dim];
+  }
+
+  return { score: Math.round(score * 10) / 10, detalhes: detalhes };
+}
+
+// ─── COLETAR DADOS ────────────────────────────────────────────────
+function coletarDados() {
+  function get(name) {
+    var el = document.querySelector('[name="' + name + '"]');
+    if (!el) return '';
+    return el.value ? el.value.trim() : '';
+  }
+
+  function getRadioText(name) {
+    var checked = document.querySelector('[name="' + name + '"]:checked');
+    return checked ? checked.closest('.option').querySelector('span').textContent : '';
+  }
+
+  var result = calcularScore();
+  
+  // Área: se "Outra", usar o campo livre
+  var area = get('area');
+  if (area === '__outra__') area = get('area_outra') || 'Outra';
+
+  return {
+    nome: get('nome'),
+    email: get('email'),
+    telefone: get('telefone'),
+    uf: get('uf'),
+    cidade: get('cidade'),
+    casa_ag: get('casa_ag'),
+    area: area,
+    experiencia: get('experiencia'),
+
+    coach_1: getRadioText('coach_1'), coach_1_pts: get('coach_1'),
+    coach_2: getRadioText('coach_2'), coach_2_pts: get('coach_2'),
+    coach_3: getRadioText('coach_3'), coach_3_pts: get('coach_3'),
+    comp_1: getRadioText('comp_1'),   comp_1_pts: get('comp_1'),
+    comp_2: getRadioText('comp_2'),   comp_2_pts: get('comp_2'),
+    comp_3: getRadioText('comp_3'),   comp_3_pts: get('comp_3'),
+    exec_1: getRadioText('exec_1'),   exec_1_pts: get('exec_1'),
+    exec_2: getRadioText('exec_2'),   exec_2_pts: get('exec_2'),
+    exec_3: getRadioText('exec_3'),   exec_3_pts: get('exec_3'),
+    motiv_1: getRadioText('motiv_1'), motiv_1_pts: get('motiv_1'),
+    motiv_2: getRadioText('motiv_2'), motiv_2_pts: get('motiv_2'),
+    motiv_3: getRadioText('motiv_3'), motiv_3_pts: get('motiv_3'),
+
+    rede_1: getRadioText('rede_1'),
+    rede_2: getRadioText('rede_2'),
+    rede_3: getRadioText('rede_3'),
+
+    aberta_1: get('aberta_1'),
+    aberta_2: get('aberta_2'),
+    aberta_3: get('aberta_3'),
+
+    admission_score: result.score,
+    dim_coach: result.detalhes.coach,
+    dim_comp: result.detalhes.comp,
+    dim_exec: result.detalhes.exec,
+    dim_motiv: result.detalhes.motiv,
+
+    timestamp: new Date().toISOString()
+  };
+}
+
+// ─── ENVIAR ───────────────────────────────────────────────────────
+async function enviar() {
+  if (!validarSecao(currentSection)) return;
+
+  var dados = coletarDados();
+  document.getElementById('loadingOverlay').classList.add('active');
+
+  try {
+    await fetch(WEBAPP_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(dados)
+    });
+    mostrarSucesso();
+  } catch (err) {
+    mostrarSucesso();
+  }
+}
+
+function mostrarSucesso() {
+  document.getElementById('loadingOverlay').classList.remove('active');
+  document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById('successScreen').classList.add('active');
+  document.querySelector('.progress-wrap').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+</script>
+</body>
+</html>
