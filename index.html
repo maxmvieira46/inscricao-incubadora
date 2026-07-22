@@ -1548,6 +1548,29 @@ document.addEventListener('click', function(e) {
     document.getElementById('countryDropdown').classList.remove('open');
   }
 });
+
+
+// ─── RANDOMIZAR ALTERNATIVAS ──────────────────────────────────────
+// Embaralha a ordem das opções em cada pergunta ao carregar a página
+// para impedir que o candidato identifique padrões de posição.
+// A pontuação (value) acompanha a alternativa — o score fica correto.
+(function() {
+  function shuffle(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+    }
+    return arr;
+  }
+
+  document.querySelectorAll('.options').forEach(function(container) {
+    var options = Array.from(container.querySelectorAll('.option'));
+    shuffle(options);
+    options.forEach(function(opt) {
+      container.appendChild(opt);
+    });
+  });
+})();
 </script>
 </body>
 </html>
