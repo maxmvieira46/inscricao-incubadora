@@ -226,6 +226,27 @@ body {
   font-weight: 600;
   color: #FFF;
 }
+.phone-group {
+  display: flex;
+  align-items: stretch;
+}
+.phone-prefix {
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ag-text-secondary);
+  background: #EEECEA;
+  border: 1.5px solid var(--ag-border);
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  white-space: nowrap;
+}
+.phone-group input {
+  border-radius: 0 8px 8px 0 !important;
+  flex: 1;
+}
 /* ═══ FORM FIELDS ═══ */
 .field {
   margin-bottom: 22px;
@@ -566,7 +587,10 @@ body {
     </div>
     <div class="field">
       <label>Telefone / WhatsApp <span class="req">*</span></label>
-      <input type="tel" name="telefone" required placeholder="(00) 00000-0000">
+      <div class="phone-group">
+        <span class="phone-prefix">+55</span>
+        <input type="tel" name="telefone" required placeholder="(00) 00000-0000">
+      </div>
       <div class="error-msg">Informe seu telefone</div>
     </div>
     <div class="uf-cidade-row">
