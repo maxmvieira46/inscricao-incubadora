@@ -226,33 +226,106 @@ body {
   font-weight: 600;
   color: #FFF;
 }
-.phone-group {
+.phone-row {
   display: flex;
-  align-items: stretch;
+  align-items: center;
+  border: 1.5px solid var(--ag-border);
+  border-radius: 8px;
+  background: #FAFAF8;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  overflow: hidden;
 }
-.phone-ddi {
-  width: auto;
-  min-width: 105px;
-  padding: 12px 8px 12px 12px;
+.phone-row:focus-within {
+  border-color: var(--ag-laranja);
+  box-shadow: 0 0 0 3px rgba(230,126,34,0.12);
+  background: #FFF;
+}
+.phone-country {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 12px;
+  cursor: pointer;
+  height: 46px;
+  user-select: none;
+  flex-shrink: 0;
+}
+.phone-country:hover { background: rgba(0,0,0,0.03); }
+#countryFlag {
+  background: var(--ag-laranja);
+  color: #FFF;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 3px;
+  letter-spacing: 0.5px;
+}
+#countryCode {
   font-size: 14px;
-  font-family: inherit;
   font-weight: 600;
   color: var(--ag-text);
-  background: #EEECEA;
-  border: 1.5px solid var(--ag-border);
-  border-right: none;
-  border-radius: 8px 0 0 8px;
-  cursor: pointer;
-  outline: none;
-  appearance: auto;
 }
-.phone-ddi:focus {
-  border-color: var(--ag-laranja);
+.phone-arrow {
+  font-size: 10px;
+  color: var(--ag-text-secondary);
+  margin-left: 2px;
 }
-.phone-group input {
-  border-radius: 0 8px 8px 0 !important;
+.phone-sep {
+  width: 1px;
+  height: 26px;
+  background: var(--ag-border);
+  flex-shrink: 0;
+}
+.phone-input {
   flex: 1;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 12px 14px !important;
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--ag-text);
+  outline: none;
+  min-width: 0;
 }
+.country-dropdown {
+  display: none;
+  position: absolute;
+  z-index: 200;
+  background: #FFF;
+  border: 1px solid var(--ag-border);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  max-height: 240px;
+  overflow-y: auto;
+  width: 280px;
+  margin-top: 4px;
+}
+.country-dropdown.open { display: block; }
+.country-opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.15s;
+}
+.country-opt:hover { background: var(--ag-laranja-soft); }
+.country-opt.selected { background: var(--ag-laranja-soft); font-weight: 600; }
+.co-flag {
+  background: var(--ag-grafite);
+  color: #FFF;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 3px;
+  letter-spacing: 0.5px;
+  min-width: 26px;
+  text-align: center;
+}
+.co-name { flex: 1; color: var(--ag-text); }
+.co-code { color: var(--ag-text-secondary); font-weight: 600; font-size: 12px; }
 /* ═══ FORM FIELDS ═══ */
 .field {
   margin-bottom: 22px;
@@ -593,30 +666,36 @@ body {
     </div>
     <div class="field">
       <label>Telefone / WhatsApp <span class="req">*</span></label>
-      <div class="phone-group">
-        <select name="ddi" class="phone-ddi">
-          <option value="+55" selected>🇧🇷 +55</option>
-          <option value="+1">🇺🇸 +1</option>
-          <option value="+54">🇦🇷 +54</option>
-          <option value="+56">🇨🇱 +56</option>
-          <option value="+57">🇨🇴 +57</option>
-          <option value="+51">🇵🇪 +51</option>
-          <option value="+598">🇺🇾 +598</option>
-          <option value="+595">🇵🇾 +595</option>
-          <option value="+58">🇻🇪 +58</option>
-          <option value="+52">🇲🇽 +52</option>
-          <option value="+34">🇪🇸 +34</option>
-          <option value="+351">🇵🇹 +351</option>
-          <option value="+39">🇮🇹 +39</option>
-          <option value="+33">🇫🇷 +33</option>
-          <option value="+49">🇩🇪 +49</option>
-          <option value="+44">🇬🇧 +44</option>
-          <option value="+81">🇯🇵 +81</option>
-          <option value="+86">🇨🇳 +86</option>
-          <option value="+971">🇦🇪 +971</option>
-          <option value="+27">🇿🇦 +27</option>
-        </select>
-        <input type="tel" name="telefone" required placeholder="(00) 00000-0000">
+      <div class="phone-row">
+        <div class="phone-country" onclick="toggleCountryList()">
+          <span id="countryFlag">BR</span>
+          <span id="countryCode">+55</span>
+          <span class="phone-arrow">▾</span>
+        </div>
+        <div class="phone-sep"></div>
+        <input type="tel" name="telefone" required placeholder="(11) 99999-0000" class="phone-input" oninput="mascaraTelefone(this)">
+        <input type="hidden" name="ddi" value="+55">
+      </div>
+      <div class="country-dropdown" id="countryDropdown">
+        <div class="country-opt selected" data-code="+55" data-flag="BR" data-name="Brasil" onclick="selecionarPais(this)"><span class="co-flag">BR</span><span class="co-name">Brasil</span><span class="co-code">+55</span></div>
+        <div class="country-opt" data-code="+1" data-flag="US" data-name="Estados Unidos" onclick="selecionarPais(this)"><span class="co-flag">US</span><span class="co-name">Estados Unidos</span><span class="co-code">+1</span></div>
+        <div class="country-opt" data-code="+351" data-flag="PT" data-name="Portugal" onclick="selecionarPais(this)"><span class="co-flag">PT</span><span class="co-name">Portugal</span><span class="co-code">+351</span></div>
+        <div class="country-opt" data-code="+34" data-flag="ES" data-name="Espanha" onclick="selecionarPais(this)"><span class="co-flag">ES</span><span class="co-name">Espanha</span><span class="co-code">+34</span></div>
+        <div class="country-opt" data-code="+54" data-flag="AR" data-name="Argentina" onclick="selecionarPais(this)"><span class="co-flag">AR</span><span class="co-name">Argentina</span><span class="co-code">+54</span></div>
+        <div class="country-opt" data-code="+56" data-flag="CL" data-name="Chile" onclick="selecionarPais(this)"><span class="co-flag">CL</span><span class="co-name">Chile</span><span class="co-code">+56</span></div>
+        <div class="country-opt" data-code="+57" data-flag="CO" data-name="Colômbia" onclick="selecionarPais(this)"><span class="co-flag">CO</span><span class="co-name">Colômbia</span><span class="co-code">+57</span></div>
+        <div class="country-opt" data-code="+52" data-flag="MX" data-name="México" onclick="selecionarPais(this)"><span class="co-flag">MX</span><span class="co-name">México</span><span class="co-code">+52</span></div>
+        <div class="country-opt" data-code="+51" data-flag="PE" data-name="Peru" onclick="selecionarPais(this)"><span class="co-flag">PE</span><span class="co-name">Peru</span><span class="co-code">+51</span></div>
+        <div class="country-opt" data-code="+598" data-flag="UY" data-name="Uruguai" onclick="selecionarPais(this)"><span class="co-flag">UY</span><span class="co-name">Uruguai</span><span class="co-code">+598</span></div>
+        <div class="country-opt" data-code="+595" data-flag="PY" data-name="Paraguai" onclick="selecionarPais(this)"><span class="co-flag">PY</span><span class="co-name">Paraguai</span><span class="co-code">+595</span></div>
+        <div class="country-opt" data-code="+58" data-flag="VE" data-name="Venezuela" onclick="selecionarPais(this)"><span class="co-flag">VE</span><span class="co-name">Venezuela</span><span class="co-code">+58</span></div>
+        <div class="country-opt" data-code="+39" data-flag="IT" data-name="Itália" onclick="selecionarPais(this)"><span class="co-flag">IT</span><span class="co-name">Itália</span><span class="co-code">+39</span></div>
+        <div class="country-opt" data-code="+33" data-flag="FR" data-name="França" onclick="selecionarPais(this)"><span class="co-flag">FR</span><span class="co-name">França</span><span class="co-code">+33</span></div>
+        <div class="country-opt" data-code="+49" data-flag="DE" data-name="Alemanha" onclick="selecionarPais(this)"><span class="co-flag">DE</span><span class="co-name">Alemanha</span><span class="co-code">+49</span></div>
+        <div class="country-opt" data-code="+44" data-flag="GB" data-name="Reino Unido" onclick="selecionarPais(this)"><span class="co-flag">GB</span><span class="co-name">Reino Unido</span><span class="co-code">+44</span></div>
+        <div class="country-opt" data-code="+81" data-flag="JP" data-name="Japão" onclick="selecionarPais(this)"><span class="co-flag">JP</span><span class="co-name">Japão</span><span class="co-code">+81</span></div>
+        <div class="country-opt" data-code="+971" data-flag="AE" data-name="Emirados Árabes" onclick="selecionarPais(this)"><span class="co-flag">AE</span><span class="co-name">Emirados Árabes</span><span class="co-code">+971</span></div>
+        <div class="country-opt" data-code="+27" data-flag="ZA" data-name="África do Sul" onclick="selecionarPais(this)"><span class="co-flag">ZA</span><span class="co-name">África do Sul</span><span class="co-code">+27</span></div>
       </div>
       <div class="error-msg">Informe seu telefone</div>
     </div>
@@ -1429,6 +1508,46 @@ function mostrarSucesso() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+
+
+// ─── TELEFONE — SELETOR DE PAÍS ───────────────────────────────────
+function toggleCountryList() {
+  var dd = document.getElementById('countryDropdown');
+  dd.classList.toggle('open');
+}
+
+function selecionarPais(el) {
+  var code = el.dataset.code;
+  var flag = el.dataset.flag;
+  document.getElementById('countryFlag').textContent = flag;
+  document.getElementById('countryCode').textContent = code;
+  document.querySelector('[name="ddi"]').value = code;
+  
+  // Update selected state
+  document.querySelectorAll('.country-opt').forEach(function(o) { o.classList.remove('selected'); });
+  el.classList.add('selected');
+  
+  document.getElementById('countryDropdown').classList.remove('open');
+}
+
+function mascaraTelefone(input) {
+  var v = input.value.replace(/\D/g, '');
+  if (v.length > 11) v = v.slice(0, 11);
+  if (v.length > 6) {
+    input.value = '(' + v.slice(0,2) + ') ' + v.slice(2,7) + '-' + v.slice(7);
+  } else if (v.length > 2) {
+    input.value = '(' + v.slice(0,2) + ') ' + v.slice(2);
+  } else if (v.length > 0) {
+    input.value = '(' + v;
+  }
+}
+
+// Fechar dropdown ao clicar fora
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.phone-country') && !e.target.closest('.country-dropdown')) {
+    document.getElementById('countryDropdown').classList.remove('open');
+  }
+});
 </script>
 </body>
 </html>
