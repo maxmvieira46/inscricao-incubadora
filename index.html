@@ -1116,19 +1116,19 @@ body {
       <p>Como você descreveria sua rede de contatos comerciais hoje? <span style="color:var(--ag-laranja)">*</span></p>
       <div class="options">
         <label class="option" onclick="selecionar(this)">
-          <input type="radio" name="rede_1" value="Ampla e ativa" required>
+          <input type="radio" name="rede_1" value="Ampla e ativa" data-score="100" required>
           <span>Ampla e ativa — converso com decisores frequentemente</span>
         </label>
         <label class="option" onclick="selecionar(this)">
-          <input type="radio" name="rede_1" value="Boa">
+          <input type="radio" name="rede_1" value="Boa" data-score="70">
           <span>Boa — tenho contatos relevantes mas poderia ativar mais</span>
         </label>
         <label class="option" onclick="selecionar(this)">
-          <input type="radio" name="rede_1" value="Em construção">
+          <input type="radio" name="rede_1" value="Em construção" data-score="40">
           <span>Em construção — estou desenvolvendo minha rede</span>
         </label>
         <label class="option" onclick="selecionar(this)">
-          <input type="radio" name="rede_1" value="Pequena">
+          <input type="radio" name="rede_1" value="Pequena" data-score="0">
           <span>Pequena — preciso começar praticamente do zero</span>
         </label>
       </div>
@@ -1138,19 +1138,19 @@ body {
       <p>Você tem acesso direto a decisores (donos de empresa, diretores financeiros, contadores)? <span style="color:var(--ag-laranja)">*</span></p>
       <div class="options">
         <label class="option" onclick="selecionar(this)">
-          <input type="radio" name="rede_2" value="Regular" required>
+          <input type="radio" name="rede_2" value="Regular" data-score="100" required>
           <span>Sim, converso regularmente com decisores</span>
         </label>
         <label class="option" onclick="selecionar(this)">
-          <input type="radio" name="rede_2" value="Eventual">
+          <input type="radio" name="rede_2" value="Eventual" data-score="70">
           <span>Sim, mas o acesso é eventual</span>
         </label>
         <label class="option" onclick="selecionar(this)">
-          <input type="radio" name="rede_2" value="Indireto">
+          <input type="radio" name="rede_2" value="Indireto" data-score="40">
           <span>Tenho alguns contatos indiretos</span>
         </label>
         <label class="option" onclick="selecionar(this)">
-          <input type="radio" name="rede_2" value="Sem acesso">
+          <input type="radio" name="rede_2" value="Sem acesso" data-score="0">
           <span>Não tenho acesso a decisores hoje</span>
         </label>
       </div>
@@ -1160,19 +1160,19 @@ body {
       <p>Em quais segmentos você mais atua ou tem relacionamento? <span style="color:var(--ag-laranja)">*</span></p>
       <div class="options">
         <label class="option" onclick="selecionar(this)">
-          <input type="radio" name="rede_3" value="Médio/grande" required>
+          <input type="radio" name="rede_3" value="Médio/grande" data-score="100" required>
           <span>Empresas de médio/grande porte (indústria, serviços, comércio)</span>
         </label>
         <label class="option" onclick="selecionar(this)">
-          <input type="radio" name="rede_3" value="Pequenas">
+          <input type="radio" name="rede_3" value="Pequenas" data-score="70">
           <span>Pequenas empresas e profissionais liberais</span>
         </label>
         <label class="option" onclick="selecionar(this)">
-          <input type="radio" name="rede_3" value="Público">
+          <input type="radio" name="rede_3" value="Público" data-score="40">
           <span>Setor público ou entidades</span>
         </label>
         <label class="option" onclick="selecionar(this)">
-          <input type="radio" name="rede_3" value="Definindo">
+          <input type="radio" name="rede_3" value="Definindo" data-score="0">
           <span>Ainda estou definindo meu foco</span>
         </label>
       </div>
@@ -1240,7 +1240,9 @@ const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwLk6gyz3ua7WPxu84ar
 const TOTAL_SECTIONS = 7;
 let currentSection = 0;
 
-const PESOS = { coach: 0.35, comp: 0.30, exec: 0.20, motiv: 0.15 };
+const PESOS = { coach: 0.20, comp: 0.25, exec: 0.15, motiv: 0.15, rede: 0.25 };
+// Peso interno do Networking (dim rede): Q2 (acesso a decisores) domina
+const PESO_REDE_Q = { rede_1: 0.25, rede_2: 0.50, rede_3: 0.25 };
 
 // ─── CIDADES POR UF ──────────────────────────────────────────────
 const CIDADES = {
@@ -1428,11 +1430,21 @@ function voltar() {
 // ─── CALCULAR SCORE ───────────────────────────────────────────────
 function calcularScore() {
   var dims = { coach: [], comp: [], exec: [], motiv: [] };
+  // Networking (rede) tem ponderação interna por pergunta
+  var redePond = 0, redeTemResposta = false;
 
   document.querySelectorAll('.question[data-dim]').forEach(function(q) {
     var dim = q.dataset.dim;
     var checked = q.querySelector('input[type="radio"]:checked');
-    if (checked && dims[dim] !== undefined) {
+    if (!checked) return;
+    if (dim === 'rede') {
+      var nome = checked.name;               // rede_1 / rede_2 / rede_3
+      var sc = parseInt(checked.dataset.score);
+      if (!isNaN(sc) && PESO_REDE_Q[nome] !== undefined) {
+        redePond += sc * PESO_REDE_Q[nome];
+        redeTemResposta = true;
+      }
+    } else if (dims[dim] !== undefined) {
       dims[dim].push(parseInt(checked.value));
     }
   });
@@ -1445,6 +1457,9 @@ function calcularScore() {
     detalhes[dim] = Math.round(media * 10) / 10;
     score += media * PESOS[dim];
   }
+  // Networking entra como dimensão ponderada
+  detalhes.rede = Math.round(redePond * 10) / 10;
+  score += redePond * PESOS.rede;
 
   return { score: Math.round(score * 10) / 10, detalhes: detalhes };
 }
@@ -1510,6 +1525,7 @@ function coletarDados() {
     dim_comp: result.detalhes.comp,
     dim_exec: result.detalhes.exec,
     dim_motiv: result.detalhes.motiv,
+    dim_rede: result.detalhes.rede,
 
     timestamp: new Date().toISOString()
   };
