@@ -575,7 +575,7 @@ body {
     <h2>O que aconteceu</h2>
     <p class="subtitle">Queremos entender o seu momento — sem julgamento.</p>
     <div class="question">
-      <p>1. Há quanto tempo você não gera novos negócios com a AG TaxTech?</p>
+      <p>1. Há quanto tempo você não gera negócios efetivos com a AG TaxTech?</p>
       <div class="options">
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q1" value="1" required><span>Menos de 3 meses</span></label>
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q1" value="2" required><span>De 3 a 6 meses</span></label>
@@ -592,6 +592,7 @@ body {
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Faltou suporte / acompanhamento"><span>Faltou suporte / acompanhamento</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Questão de honorários / comissão"><span>Questão de honorários / comissão</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Mudei de foco ou atividade"><span>Mudei de foco ou atividade</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Conflito interno da rede"><span>Conflito interno da rede</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Dificuldade de gerar oportunidades"><span>Dificuldade de gerar oportunidades</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Outro"><span>Outro</span></label>
       </div>
@@ -631,6 +632,9 @@ body {
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q4" value="Material / portfólio atualizado"><span>Material / portfólio atualizado</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q4" value="Clareza de processo"><span>Clareza de processo</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q4" value="Revisão de honorários"><span>Revisão de honorários</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q4" value="Falta de Foco"><span>Falta de Foco</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q4" value="Falta de Tempo"><span>Falta de Tempo</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q4" value="Sem Interesse"><span>Sem Interesse</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q4" value="Outro"><span>Outro</span></label>
       </div>
     </div>
@@ -673,16 +677,20 @@ body {
     <div class="question" data-rank="q8">
       <p>8. Ordene os formatos de apoio, do que você mais prefere (topo) ao que menos prefere.</p>
       <div class="rank-list" id="rankList">
-        <div class="rank-item" data-val="Individual (1:1)">
-          <span class="rank-num">1º</span><span class="rank-label">Individual (1:1)</span>
+        <div class="rank-item" data-val="Reuniões individuais">
+          <span class="rank-num">1º</span><span class="rank-label">Reuniões individuais</span>
           <span class="rank-btns"><button type="button" onclick="mover(this,-1)">▲</button><button type="button" onclick="mover(this,1)">▼</button></span>
         </div>
-        <div class="rank-item" data-val="Em grupo">
-          <span class="rank-num">2º</span><span class="rank-label">Em grupo</span>
+        <div class="rank-item" data-val="Reuniões em grupo com demais parceiros">
+          <span class="rank-num">2º</span><span class="rank-label">Reuniões em grupo com demais parceiros</span>
           <span class="rank-btns"><button type="button" onclick="mover(this,-1)">▲</button><button type="button" onclick="mover(this,1)">▼</button></span>
         </div>
-        <div class="rank-item" data-val="Material para consulta no meu tempo">
-          <span class="rank-num">3º</span><span class="rank-label">Material para consulta no meu tempo</span>
+        <div class="rank-item" data-val="Material para consulta no seu tempo">
+          <span class="rank-num">3º</span><span class="rank-label">Material para consulta no seu tempo</span>
+          <span class="rank-btns"><button type="button" onclick="mover(this,-1)">▲</button><button type="button" onclick="mover(this,1)">▼</button></span>
+        </div>
+        <div class="rank-item" data-val="Tanto faz (sem preferência)">
+          <span class="rank-num">4º</span><span class="rank-label">Tanto faz (sem preferência)</span>
           <span class="rank-btns"><button type="button" onclick="mover(this,-1)">▲</button><button type="button" onclick="mover(this,1)">▼</button></span>
         </div>
       </div>
