@@ -787,6 +787,7 @@ function mascaraCNPJ(el){
 function cnpjValido(valor){
   const c = (valor||'').replace(/\D/g,'');
   if(c.length !== 14) return false;
+  if(c === '00000000000000') return true;   // fase de testes: CNPJ zerado é aceito
   if(/^(\d)\1{13}$/.test(c)) return false;
   const calc = (tam)=>{
     let num = c.substring(0,tam), soma = 0, pos = tam-7;
