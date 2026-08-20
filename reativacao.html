@@ -507,16 +507,17 @@ body {
 .range-ends{display:flex;justify-content:space-between;font-size:12px;color:var(--ag-text-secondary);margin-top:4px;}
 .justif{display:none;margin-top:14px;} .justif.show{display:block;}
 /* ranking (ordem de preferência) */
+.rank-hint{font-size:13px;color:var(--ag-text-secondary);margin:2px 0 12px;}
 .rank-list{display:flex;flex-direction:column;gap:8px;}
-.rank-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border:1.5px solid var(--ag-border);
-  border-radius:10px;background:#FAFAF8;}
+.rank-list.rank-disabled{opacity:.4;pointer-events:none;}
+.rank-item{display:flex;align-items:center;gap:12px;padding:13px 16px;border:1.5px solid var(--ag-border);
+  border-radius:10px;background:#FAFAF8;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;
+  transition:border-color var(--transition),background var(--transition);}
+.rank-item.dragging{cursor:grabbing;background:#fff;border-color:var(--ag-laranja);position:relative;z-index:5;}
 .rank-num{font-weight:700;color:var(--ag-laranja);min-width:26px;text-align:center;}
 .rank-label{flex:1;font-size:14px;color:var(--ag-text);}
-.rank-btns{display:flex;gap:6px;}
-.rank-btns button{border:1.5px solid var(--ag-border);background:#fff;border-radius:6px;width:32px;height:30px;
-  cursor:pointer;font-size:13px;color:var(--ag-text-secondary);line-height:1;transition:all var(--transition);}
-.rank-btns button:hover{border-color:var(--ag-laranja);color:var(--ag-laranja);}
-.rank-btns button:disabled{opacity:.35;cursor:default;border-color:var(--ag-border);color:var(--ag-text-secondary);}
+.rank-grip{display:flex;align-items:center;color:#B8B4AC;}
+.rank-optout{margin-top:12px;}
 </style>
 
 </head>
@@ -675,25 +676,23 @@ body {
       <div class="range-ends"><span>Nenhum</span><span>Muito alto</span></div>
     </div>
     <div class="question" data-rank="q8">
-      <p>8. Ordene os formatos de apoio, do que você mais prefere (topo) ao que menos prefere.</p>
+      <p>8. Ordene os formatos de apoio por preferência.</p>
+      <p class="rank-hint">Arraste do que você mais prefere (topo) ao que menos prefere (base).</p>
       <div class="rank-list" id="rankList">
         <div class="rank-item" data-val="Reuniões individuais">
           <span class="rank-num">1º</span><span class="rank-label">Reuniões individuais</span>
-          <span class="rank-btns"><button type="button" onclick="mover(this,-1)">▲</button><button type="button" onclick="mover(this,1)">▼</button></span>
+          <span class="rank-grip" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><g fill="currentColor"><circle cx="6" cy="4" r="1.3"/><circle cx="10" cy="4" r="1.3"/><circle cx="6" cy="8" r="1.3"/><circle cx="10" cy="8" r="1.3"/><circle cx="6" cy="12" r="1.3"/><circle cx="10" cy="12" r="1.3"/></g></svg></span>
         </div>
         <div class="rank-item" data-val="Reuniões em grupo com demais parceiros">
           <span class="rank-num">2º</span><span class="rank-label">Reuniões em grupo com demais parceiros</span>
-          <span class="rank-btns"><button type="button" onclick="mover(this,-1)">▲</button><button type="button" onclick="mover(this,1)">▼</button></span>
+          <span class="rank-grip" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><g fill="currentColor"><circle cx="6" cy="4" r="1.3"/><circle cx="10" cy="4" r="1.3"/><circle cx="6" cy="8" r="1.3"/><circle cx="10" cy="8" r="1.3"/><circle cx="6" cy="12" r="1.3"/><circle cx="10" cy="12" r="1.3"/></g></svg></span>
         </div>
         <div class="rank-item" data-val="Material para consulta no seu tempo">
           <span class="rank-num">3º</span><span class="rank-label">Material para consulta no seu tempo</span>
-          <span class="rank-btns"><button type="button" onclick="mover(this,-1)">▲</button><button type="button" onclick="mover(this,1)">▼</button></span>
-        </div>
-        <div class="rank-item" data-val="Tanto faz (sem preferência)">
-          <span class="rank-num">4º</span><span class="rank-label">Tanto faz (sem preferência)</span>
-          <span class="rank-btns"><button type="button" onclick="mover(this,-1)">▲</button><button type="button" onclick="mover(this,1)">▼</button></span>
+          <span class="rank-grip" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><g fill="currentColor"><circle cx="6" cy="4" r="1.3"/><circle cx="10" cy="4" r="1.3"/><circle cx="6" cy="8" r="1.3"/><circle cx="10" cy="8" r="1.3"/><circle cx="6" cy="12" r="1.3"/><circle cx="10" cy="12" r="1.3"/></g></svg></span>
         </div>
       </div>
+      <label class="option rank-optout" onclick="toggleTantoFaz(this)"><input type="checkbox" name="q8_tantofaz" value="Tanto faz (sem preferência)"><span>Tanto faz — não tenho preferência</span></label>
     </div>
     <div class="nav-row">
       <button class="btn btn-secondary" onclick="voltar()">← Voltar</button>
@@ -819,22 +818,41 @@ async function verificarDominioEmail(email){
   return true; // inconclusivo / rede indisponível -> não bloqueia
 }
 // ranking: mover item e renumerar
-function mover(btn, dir){
-  const item = btn.closest('.rank-item');
-  const lista = document.getElementById('rankList');
-  if(dir === -1 && item.previousElementSibling) lista.insertBefore(item, item.previousElementSibling);
-  if(dir === 1 && item.nextElementSibling) lista.insertBefore(item.nextElementSibling, item);
-  renumerarRank();
-}
 function renumerarRank(){
-  const itens = Array.from(document.querySelectorAll('#rankList .rank-item'));
-  itens.forEach((it,i)=>{
-    it.querySelector('.rank-num').textContent = (i+1)+'º';
-    const bts = it.querySelectorAll('.rank-btns button');
-    bts[0].disabled = (i===0);
-    bts[1].disabled = (i===itens.length-1);
-  });
+  document.querySelectorAll('#rankList .rank-item').forEach((it,i)=>{ it.querySelector('.rank-num').textContent = (i+1)+'º'; });
 }
+function toggleTantoFaz(el){
+  const input = el.querySelector('input');
+  input.checked = !input.checked;
+  el.classList.toggle('selected', input.checked);
+  document.getElementById('rankList').classList.toggle('rank-disabled', input.checked);
+}
+(function(){
+  const GAP = 8; let el = null, startY = 0;
+  function pt(e){ return e.clientY; }
+  function down(e){
+    const item = e.target.closest('.rank-item'); if(!item) return;
+    el = item; startY = pt(e); item.classList.add('dragging');
+    try{ item.setPointerCapture(e.pointerId); }catch(_){}
+    e.preventDefault();
+  }
+  function move(e){
+    if(!el) return;
+    const y = pt(e); el.style.transform = 'translateY('+(y-startY)+'px)';
+    const lista = document.getElementById('rankList');
+    const prev = el.previousElementSibling, next = el.nextElementSibling; let r;
+    if(prev){ r = prev.getBoundingClientRect(); if(y < r.top + r.height/2){ lista.insertBefore(el, prev); startY -= (r.height+GAP); el.style.transform='translateY('+(y-startY)+'px)'; renumerarRank(); return; } }
+    if(next){ r = next.getBoundingClientRect(); if(y > r.top + r.height/2){ lista.insertBefore(next, el); startY += (r.height+GAP); el.style.transform='translateY('+(y-startY)+'px)'; renumerarRank(); } }
+  }
+  function up(){ if(!el) return; el.style.transform=''; el.classList.remove('dragging'); el=null; }
+  document.addEventListener('DOMContentLoaded', function(){
+    const lista = document.getElementById('rankList'); if(!lista) return;
+    lista.addEventListener('pointerdown', down);
+    lista.addEventListener('pointermove', move);
+    lista.addEventListener('pointerup', up);
+    lista.addEventListener('pointercancel', up);
+  });
+})();
 
 async function validarSecao(idx){
   const sec = document.querySelector('[data-section="'+idx+'"]');
@@ -919,6 +937,8 @@ function getMulti(name){
   return Array.from(document.querySelectorAll('[name="'+name+'"]:checked')).map(c=>c.value).join(', ');
 }
 function getRank(){
+  const optout = document.querySelector('[name="q8_tantofaz"]');
+  if(optout && optout.checked) return 'Tanto faz (sem preferência)';
   return Array.from(document.querySelectorAll('#rankList .rank-item'))
     .map((it,i)=>(i+1)+'º '+it.dataset.val).join(' · ');
 }
