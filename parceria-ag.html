@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ativação de Parcerias · AG TaxTech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+/* ═══ RESET & BASE ═══ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #F5F5F0;
+  color: #2C2C2C;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ═══ VARIÁVEIS AG ═══ */
+:root {
+  --ag-grafite: #2C2C2C;
+  --ag-grafite-light: #3D3D3D;
+  --ag-laranja: #E67E22;
+  --ag-laranja-hover: #D35400;
+  --ag-laranja-soft: #FDF2E9;
+  --ag-bg: #F5F5F0;
+  --ag-card: #FFFFFF;
+  --ag-border: #E0DDD5;
+  --ag-text: #2C2C2C;
+  --ag-text-secondary: #6B6B6B;
+  --ag-success: #27AE60;
+  --ag-success-bg: #E8F8F0;
+  --radius: 12px;
+  --shadow: 0 2px 12px rgba(44,44,44,0.06);
+  --shadow-hover: 0 4px 20px rgba(44,44,44,0.10);
+  --max-width: 680px;
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ═══ HEADER ═══ */
+.header {
+  background: var(--ag-grafite);
+  color: #FFF;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--ag-laranja);
+}
+.header-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 40px 24px 36px;
+}
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.logo-placeholder {
+  width: 56px; height: 56px;
+  background: var(--ag-laranja);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 20px;
+  color: #FFF;
+  letter-spacing: -0.5px;
+  flex-shrink: 0;
+}
+/* ── Se quiser usar uma imagem de logo em vez do placeholder, descomente: ──
+.logo-placeholder {
+  background: url('SEU_LOGO_URL') center/contain no-repeat;
+  font-size: 0;
+}
+*/
+.logo-text {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  opacity: 0.7;
+  font-weight: 500;
+}
+.header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 5vw, 34px);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.header p {
+  font-size: 15px;
+  opacity: 0.75;
+  max-width: 520px;
+  line-height: 1.5;
+}
+
+/* ═══ PROGRESS BAR ═══ */
+.progress-wrap {
+  background: var(--ag-card);
+  border-bottom: 1px solid var(--ag-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.progress-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.progress-step {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--ag-border);
+  transition: background var(--transition);
+  position: relative;
+}
+.progress-step.active {
+  background: var(--ag-laranja);
+}
+.progress-step.done {
+  background: var(--ag-success);
+}
+.progress-label {
+  font-size: 12px;
+  color: var(--ag-text-secondary);
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+/* ═══ FORM CONTAINER ═══ */
+.form-container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 24px 24px 40px;
+}
+
+/* ═══ SECTIONS ═══ */
+.section {
+  background: var(--ag-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px 28px;
+  margin-bottom: 20px;
+  border: 1px solid var(--ag-border);
+  display: none;
+  animation: fadeUp 0.4s ease-out;
+}
+.section.active {
+  display: block;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--ag-laranja-soft);
+  color: var(--ag-laranja);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+.section-badge .badge-icon {
+  font-size: 14px;
+}
+.section h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--ag-text);
+}
+.section .subtitle {
+  font-size: 14px;
+  color: var(--ag-text-secondary);
+  margin-bottom: 28px;
+}
+.section .note {
+  font-size: 12px;
+  color: var(--ag-text-secondary);
+  background: #F9F8F5;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  border-left: 3px solid var(--ag-laranja);
+}
+
+/* ═══ FORM FIELDS ═══ */
+.field {
+  margin-bottom: 22px;
+}
+.field:last-child {
+  margin-bottom: 0;
+}
+.field label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ag-text);
+  margin-bottom: 8px;
+}
+.field label .req {
+  color: var(--ag-laranja);
+  margin-left: 2px;
+}
+.field input[type="text"],
+.field input[type="email"],
+.field input[type="tel"],
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 15px;
+  font-family: inherit;
+  border: 1.5px solid var(--ag-border);
+  border-radius: 8px;
+  background: #FAFAF8;
+  color: var(--ag-text);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  outline: none;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--ag-laranja);
+  box-shadow: 0 0 0 3px rgba(230,126,34,0.12);
+  background: #FFF;
+}
+.field textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+.field .error-msg {
+  font-size: 12px;
+  color: #E74C3C;
+  margin-top: 4px;
+  display: none;
+}
+.field.has-error input,
+.field.has-error select,
+.field.has-error textarea {
+  border-color: #E74C3C;
+}
+.field.has-error .error-msg {
+  display: block;
+}
+
+/* ═══ RADIO OPTIONS (perguntas pontuadas) ═══ */
+.question {
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #F0EDE5;
+}
+.question:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.question p {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ag-text);
+  margin-bottom: 14px;
+  line-height: 1.45;
+}
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 1.5px solid var(--ag-border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all var(--transition);
+  background: #FAFAF8;
+}
+.option:hover {
+  border-color: var(--ag-laranja);
+  background: var(--ag-laranja-soft);
+}
+.option.selected {
+  border-color: var(--ag-laranja);
+  background: var(--ag-laranja-soft);
+  box-shadow: 0 0 0 2px rgba(230,126,34,0.15);
+}
+.option input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px; height: 20px;
+  border: 2px solid var(--ag-border);
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 1px;
+  transition: all var(--transition);
+  position: relative;
+  cursor: pointer;
+}
+.option.selected input[type="radio"] {
+  border-color: var(--ag-laranja);
+  background: var(--ag-laranja);
+}
+.option.selected input[type="radio"]::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #FFF;
+}
+.option span {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--ag-text);
+}
+
+/* ═══ NAVIGATION ═══ */
+.nav-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid #F0EDE5;
+}
+.btn {
+  padding: 12px 28px;
+  font-size: 15px;
+  font-family: inherit;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition);
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-primary {
+  background: var(--ag-laranja);
+  color: #FFF;
+}
+.btn-primary:hover {
+  background: var(--ag-laranja-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(230,126,34,0.3);
+}
+.btn-primary:disabled {
+  background: #CCC;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--ag-text-secondary);
+  border: 1.5px solid var(--ag-border);
+}
+.btn-secondary:hover {
+  border-color: var(--ag-text-secondary);
+  color: var(--ag-text);
+}
+.btn-submit {
+  background: var(--ag-grafite);
+  color: #FFF;
+  padding: 14px 36px;
+  font-size: 16px;
+}
+.btn-submit:hover {
+  background: var(--ag-grafite-light);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(44,44,44,0.25);
+}
+
+/* ═══ SUCCESS SCREEN ═══ */
+.success-screen {
+  display: none;
+  text-align: center;
+  padding: 60px 28px;
+  background: var(--ag-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--ag-border);
+  animation: fadeUp 0.5s ease-out;
+}
+.success-screen.active {
+  display: block;
+}
+.success-icon {
+  width: 72px; height: 72px;
+  background: var(--ag-success-bg);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  font-size: 32px;
+}
+.success-screen h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  margin-bottom: 12px;
+  color: var(--ag-text);
+}
+.success-screen p {
+  font-size: 15px;
+  color: var(--ag-text-secondary);
+  max-width: 420px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ═══ LOADING ═══ */
+.loading-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(44,44,44,0.5);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+.loading-overlay.active {
+  display: flex;
+}
+.loading-box {
+  background: #FFF;
+  padding: 36px 48px;
+  border-radius: var(--radius);
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+}
+.spinner {
+  width: 40px; height: 40px;
+  border: 4px solid var(--ag-border);
+  border-top-color: var(--ag-laranja);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-box p {
+  font-size: 14px;
+  color: var(--ag-text-secondary);
+  font-weight: 500;
+}
+
+/* ═══ FOOTER ═══ */
+.footer {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px 32px;
+  text-align: center;
+}
+.footer p {
+  font-size: 12px;
+  color: var(--ag-text-secondary);
+  opacity: 0.7;
+}
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 600px) {
+  .header-inner { padding: 32px 20px 28px; }
+  .section { padding: 24px 20px; }
+  .form-container { padding: 16px 16px 32px; }
+  .option { padding: 10px 14px; }
+  .nav-row { flex-direction: column-reverse; gap: 10px; }
+  .nav-row .btn { width: 100%; justify-content: center; }
+}
+</style>
+
+<style>
+.option input[type="checkbox"]{appearance:none;-webkit-appearance:none;width:20px;height:20px;
+  border:2px solid var(--ag-border);border-radius:6px;flex-shrink:0;margin-top:1px;
+  transition:all var(--transition);position:relative;cursor:pointer;}
+.option.selected input[type="checkbox"]{border-color:var(--ag-laranja);background:var(--ag-laranja);}
+.option.selected input[type="checkbox"]::after{content:'';position:absolute;top:46%;left:50%;width:5px;height:9px;
+  border:solid #fff;border-width:0 2px 2px 0;transform:translate(-50%,-58%) rotate(45deg);}
+.range-wrap{display:flex;align-items:center;gap:16px;margin-top:6px;}
+.range-wrap input[type=range]{flex:1;accent-color:var(--ag-laranja);height:6px;cursor:pointer;}
+.range-val{font-weight:700;color:var(--ag-laranja);font-size:22px;min-width:34px;text-align:center;}
+.range-ends{display:flex;justify-content:space-between;font-size:12px;color:var(--ag-text-secondary);margin-top:4px;}
+.justif{display:none;margin-top:14px;} .justif.show{display:block;}
+/* ranking (ordem de preferência) */
+.rank-hint{font-size:13px;color:var(--ag-text-secondary);margin:2px 0 12px;}
+.rank-list{display:flex;flex-direction:column;gap:8px;}
+.rank-list.rank-disabled{opacity:.4;pointer-events:none;}
+.rank-item{display:flex;align-items:center;gap:12px;padding:13px 16px;border:1.5px solid var(--ag-border);
+  border-radius:10px;background:#FAFAF8;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;
+  transition:border-color var(--transition),background var(--transition);}
+.rank-item.dragging{cursor:grabbing;background:#fff;border-color:var(--ag-laranja);position:relative;z-index:5;}
+.rank-num{font-weight:700;color:var(--ag-laranja);min-width:26px;text-align:center;}
+.rank-label{flex:1;font-size:14px;color:var(--ag-text);}
+.rank-grip{display:flex;align-items:center;color:#B8B4AC;}
+.rank-optout{margin-top:12px;}
+</style>
+
+<style>.oculto{display:none !important;}</style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <div class="logo-area">
+      <img src="data:image/png;base64,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" alt="AG TaxTech" style="height:46px;width:auto;display:block;">
+    </div>
+    <h1>Ativação de Parcerias</h1>
+    <p>Você é nosso parceiro, mas aparentemente ainda não conseguimos consolidar essa parceria, que com certeza pode ser de sucesso, e dar continuidade juntos e mais fortes. Conte o que falta para darmos o próximo passo com a AG TaxTech. Leva cerca de 3 minutos.</p>
+  </div>
+</header>
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <span class="progress-label" id="progressLabel">Etapa 1 de 6</span>
+    <div class="progress-step active" data-step="0"></div>
+    <div class="progress-step" data-step="1"></div>
+    <div class="progress-step" data-step="2"></div>
+    <div class="progress-step" data-step="3"></div>
+    <div class="progress-step" data-step="4"></div>
+    <div class="progress-step" data-step="5"></div>
+  </div>
+</div>
+<div class="form-container">
+  <div class="section active" data-section="0">
+    <div class="section-badge"><span class="badge-icon">👤</span> Seus dados</div>
+    <h2>Identificação</h2>
+    <p class="subtitle">Para localizarmos seu cadastro e direcionarmos o apoio certo.</p>
+    <div class="field">
+      <label>Nome completo <span class="req">*</span></label>
+      <input type="text" name="nome" required>
+      <div class="error-msg">Preencha seu nome completo</div>
+    </div>
+    <div class="field">
+      <label>CNPJ da formalização ou CPF <span class="req">*</span></label>
+      <input type="text" name="cnpj" required placeholder="CNPJ ou CPF" maxlength="18" oninput="mascaraDoc(this)">
+      <div class="error-msg">Informe um CNPJ ou CPF válido</div>
+    </div>
+    <div class="field">
+      <label>E-mail pessoal ou corporativo (@agcpartner, se estiver ativo) <span class="req">*</span></label>
+      <input type="email" name="email" required>
+      <div class="error-msg">Informe um e-mail válido</div>
+    </div>
+    <div class="field">
+      <label>Telefone — DDD + celular ou fixo <span class="req">*</span></label>
+      <input type="tel" name="telefone" required placeholder="(48) 99999-9999" oninput="mascaraTelefone(this)">
+      <div class="error-msg">Preencha o telefone com DDD</div>
+    </div>
+    <div class="nav-row"><span></span><button class="btn btn-primary" onclick="avancar()">Continuar →</button></div>
+  </div>
+  <div class="section" data-section="1">
+    <div class="section-badge"><span class="badge-icon">🚦</span> Ativação</div>
+    <h2>Seus primeiros negócios</h2>
+    <p class="subtitle">Queremos entender o que aconteceu até aqui — sem julgamento.</p>
+    <div class="question">
+      <p>1. Desde que virou parceiro, você chegou a apresentar algum cliente ou negócio à AG TaxTech?</p>
+      <div class="options">
+      <label class="option" onclick="selecionarC(this)"><input type="radio" name="q1" value="nunca" required><span>Nunca cheguei a apresentar</span></label>
+      <label class="option" onclick="selecionarC(this)"><input type="radio" name="q1" value="nao_avancou" required><span>Tentei, mas não avançou</span></label>
+      <label class="option" onclick="selecionarC(this)"><input type="radio" name="q1" value="recusado" required><span>Apresentei e foi recusado</span></label>
+      <label class="option" onclick="selecionarC(this)"><input type="radio" name="q1" value="fechou" required><span>Apresentei e cheguei a fechar</span></label>
+      </div>
+    </div>
+    <div class="question oculto" id="bloco-q2" data-check="q2" data-max="3">
+      <p>2. Qual foi o principal motivo de não ter avançado ou ter sido recusado? (pode marcar mais de uma)</p>
+      <div class="options">
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Porte do cliente (ex.: menos de 50 funcionários)"><span>Porte do cliente (ex.: menos de 50 funcionários)</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Segmento não atendido pela AG"><span>Segmento não atendido pela AG</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Honorários / condições comerciais"><span>Honorários / condições comerciais</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Documentação / processo"><span>Documentação / processo</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Não recebi retorno"><span>Não recebi retorno</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Outro"><span>Outro</span></label>
+      </div>
+    </div>
+    <div class="nav-row"><button class="btn btn-secondary" onclick="voltar()">← Voltar</button><button class="btn btn-primary" onclick="avancar()">Continuar →</button></div>
+  </div>
+  <div class="section" data-section="2">
+    <div class="section-badge"><span class="badge-icon">🎯</span> Sua carteira</div>
+    <h2>Seu perfil de clientes</h2>
+    <p class="subtitle">Isso ajuda a ver se a sua carteira conversa com o que a AG atende.</p>
+    <div class="question">
+      <p>3. Qual o porte típico dos clientes que você acessa?</p>
+      <div class="options">
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q3" value="ate10" required><span>Até 10 funcionários</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q3" value="11a50" required><span>De 11 a 50 funcionários</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q3" value="51a200" required><span>De 51 a 200 funcionários</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q3" value="mais200" required><span>Mais de 200 funcionários</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q3" value="variado" required><span>Variado (de portes diferentes)</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q3" value="nao_sei" required><span>Não sei dizer</span></label>
+      </div>
+    </div>
+    <div class="question">
+      <p>4. Você sabe com clareza que tipo de cliente a AG TaxTech atende (o perfil ideal)?</p>
+      <div class="options">
+      <label class="option" onclick="selecionarC(this)"><input type="radio" name="q4" value="sim" required><span>Sim, com clareza</span></label>
+      <label class="option" onclick="selecionarC(this)"><input type="radio" name="q4" value="mais_ou_menos" required><span>Mais ou menos</span></label>
+      <label class="option" onclick="selecionarC(this)"><input type="radio" name="q4" value="nao" required><span>Não</span></label>
+      </div>
+    </div>
+    <div class="question oculto" id="bloco-q4just">
+      <div class="field">
+        <label>Conte um pouco: o que faltou para você entender o perfil ideal de cliente? <span class="req">*</span></label>
+        <textarea name="q4_justificativa" required placeholder="Sua resposta ajuda a corrigir isso."></textarea>
+        <div class="error-msg">Por favor, escreva um pouco</div>
+      </div>
+    </div>
+    <div class="question oculto" id="bloco-q5">
+      <p>5. Na sua carteira de contatos, você tem clientes com esse perfil?</p>
+      <div class="options">
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q5" value="varios" required><span>Sim, vários</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q5" value="alguns_poucos" required><span>Alguns ou poucos</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q5" value="nao" required><span>Não / não sei</span></label>
+      </div>
+    </div>
+    <div class="nav-row"><button class="btn btn-secondary" onclick="voltar()">← Voltar</button><button class="btn btn-primary" onclick="avancar()">Continuar →</button></div>
+  </div>
+  <div class="section" data-section="3">
+    <div class="section-badge"><span class="badge-icon">🧭</span> Barreiras</div>
+    <h2>O que trava hoje</h2>
+    <p class="subtitle">O ponto mais importante: o que impede seus negócios agora.</p>
+    <div class="question">
+      <p>6. Você chegou a ser treinado e ativado como parceiro?</p>
+      <div class="options">
+      <label class="option" onclick="selecionarC(this)"><input type="radio" name="q6" value="completo" required><span>Sim, fui treinado e ativado</span></label>
+      <label class="option" onclick="selecionarC(this)"><input type="radio" name="q6" value="parcial" required><span>Parcialmente</span></label>
+      <label class="option" onclick="selecionarC(this)"><input type="radio" name="q6" value="nunca" required><span>Nunca fui treinado</span></label>
+      </div>
+    </div>
+    <div class="question oculto" id="bloco-q6just">
+      <div class="field">
+        <label>Conte um pouco do que você lembra sobre esse treinamento. <span class="req">*</span></label>
+        <textarea name="q6_justificativa" required placeholder="O que houve, o que faltou."></textarea>
+        <div class="error-msg">Por favor, relate um pouco</div>
+      </div>
+    </div>
+    <div class="question" data-check="q7_barreiras" data-max="2">
+      <p>7. Quais as principais barreiras para você trazer negócios? <span class="rank-hint" style="display:inline;margin:0;">Selecione as 2 principais.</span></p>
+      <div class="options">
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q7_barreiras" value="O crivo de cliente da AG é exigente (porte / segmento)"><span>O crivo de cliente da AG é exigente (porte / segmento)</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q7_barreiras" value="Nunca fui treinado / não sei como operar"><span>Nunca fui treinado / não sei como operar</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q7_barreiras" value="Minha carteira não tem o perfil que a AG atende"><span>Minha carteira não tem o perfil que a AG atende</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q7_barreiras" value="Falta de suporte comercial da rede"><span>Falta de suporte comercial da rede</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q7_barreiras" value="Falta de tempo ou foco"><span>Falta de tempo ou foco</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q7_barreiras" value="Não entendi bem o produto / serviço"><span>Não entendi bem o produto / serviço</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q7_barreiras" value="Não é prioridade para mim hoje"><span>Não é prioridade para mim hoje</span></label>
+      </div>
+    </div>
+    <div class="nav-row"><button class="btn btn-secondary" onclick="voltar()">← Voltar</button><button class="btn btn-primary" onclick="avancar()">Continuar →</button></div>
+  </div>
+  <div class="section" data-section="4">
+    <div class="section-badge"><span class="badge-icon">🚀</span> Retomada</div>
+    <h2>Interesse em retomar</h2>
+    <p class="subtitle">O foco agora é o próximo passo.</p>
+    <div class="question">
+      <p>8. Você tem interesse em retomar e ativar essa parceria com a AG TaxTech?</p>
+      <div class="options">
+      <label class="option" onclick="selecionarC(this)"><input type="radio" name="q8_interesse" value="Sim" required><span>Sim, tenho interesse</span></label>
+      <label class="option" onclick="selecionarC(this)"><input type="radio" name="q8_interesse" value="Talvez" required><span>Talvez</span></label>
+      <label class="option" onclick="selecionarC(this)"><input type="radio" name="q8_interesse" value="Não" required><span>Não tenho interesse</span></label>
+      </div>
+    </div>
+    <div class="question oculto" id="bloco-q8prazo">
+      <p>Em quanto tempo você estaria disposto a começar?</p>
+      <div class="options">
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q8_prazo" value="Imediato" required><span>Imediato</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q8_prazo" value="Até 30 dias" required><span>Dentro de 30 dias</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q8_prazo" value="Até 60 dias" required><span>Dentro de 60 dias</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q8_prazo" value="Acima de 60 dias" required><span>Acima de 60 dias</span></label>
+      </div>
+    </div>
+    <div class="question" data-check="q9" data-max="3">
+      <p>9. Se a AG te desse o apoio certo, o que mais destravaria você? (pode marcar mais de uma)</p>
+      <div class="options">
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q9" value="Lista de clientes-alvo / perfil ideal claro"><span>Lista de clientes-alvo / perfil ideal claro</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q9" value="Treinamento de ativação"><span>Treinamento de ativação</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q9" value="Acompanhamento próximo"><span>Acompanhamento próximo</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q9" value="Revisão do crivo de atendimento"><span>Revisão do crivo de atendimento</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q9" value="Material / portfólio"><span>Material / portfólio</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q9" value="Revisão de honorários"><span>Revisão de honorários</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q9" value="Outro"><span>Outro</span></label>
+      </div>
+    </div>
+    <div class="question" data-rank="q10">
+      <p>10. Ordene os formatos de apoio por preferência.</p>
+      <p class="rank-hint">Arraste do que você mais prefere (topo) ao que menos prefere (base).</p>
+      <div class="rank-list" id="rankList">
+        <div class="rank-item" data-val="Reuniões individuais">
+          <span class="rank-num">1º</span><span class="rank-label">Reuniões individuais</span>
+          <span class="rank-grip" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><g fill="currentColor"><circle cx="6" cy="4" r="1.3"/><circle cx="10" cy="4" r="1.3"/><circle cx="6" cy="8" r="1.3"/><circle cx="10" cy="8" r="1.3"/><circle cx="6" cy="12" r="1.3"/><circle cx="10" cy="12" r="1.3"/></g></svg></span>
+        </div>
+        <div class="rank-item" data-val="Reuniões em grupo com demais parceiros">
+          <span class="rank-num">2º</span><span class="rank-label">Reuniões em grupo com demais parceiros</span>
+          <span class="rank-grip" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><g fill="currentColor"><circle cx="6" cy="4" r="1.3"/><circle cx="10" cy="4" r="1.3"/><circle cx="6" cy="8" r="1.3"/><circle cx="10" cy="8" r="1.3"/><circle cx="6" cy="12" r="1.3"/><circle cx="10" cy="12" r="1.3"/></g></svg></span>
+        </div>
+        <div class="rank-item" data-val="Material para consulta no seu tempo">
+          <span class="rank-num">3º</span><span class="rank-label">Material para consulta no seu tempo</span>
+          <span class="rank-grip" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><g fill="currentColor"><circle cx="6" cy="4" r="1.3"/><circle cx="10" cy="4" r="1.3"/><circle cx="6" cy="8" r="1.3"/><circle cx="10" cy="8" r="1.3"/><circle cx="6" cy="12" r="1.3"/><circle cx="10" cy="12" r="1.3"/></g></svg></span>
+        </div>
+        <div class="rank-item" data-val="Suporte comercial exclusivo">
+          <span class="rank-num">4º</span><span class="rank-label">Suporte comercial exclusivo</span>
+          <span class="rank-grip" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><g fill="currentColor"><circle cx="6" cy="4" r="1.3"/><circle cx="10" cy="4" r="1.3"/><circle cx="6" cy="8" r="1.3"/><circle cx="10" cy="8" r="1.3"/><circle cx="6" cy="12" r="1.3"/><circle cx="10" cy="12" r="1.3"/></g></svg></span>
+        </div>
+      </div>
+      <label class="option rank-optout" onclick="toggleTantoFaz(this)"><input type="checkbox" name="q10_tantofaz" value="Tanto faz (sem preferência)"><span>Tanto faz — não tenho preferência</span></label>
+    </div>
+    <div class="nav-row"><button class="btn btn-secondary" onclick="voltar()">← Voltar</button><button class="btn btn-primary" onclick="avancar()">Continuar →</button></div>
+  </div>
+  <div class="section" data-section="5">
+    <div class="section-badge"><span class="badge-icon">📞</span> Contato</div>
+    <h2>Como falamos com você</h2>
+    <p class="subtitle">Pode marcar mais de uma opção.</p>
+    <div class="question" data-check="q11_canal">
+      <p>11. Qual o melhor canal para falarmos com você?</p>
+      <div class="options">
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q11_canal" value="E-mail"><span>E-mail</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q11_canal" value="WhatsApp"><span>WhatsApp</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q11_canal" value="Telefone"><span>Telefone</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q11_canal" value="Sem preferência"><span>Sem preferência</span></label>
+      </div>
+    </div>
+    <div class="question" data-check="q12_turno">
+      <p>12. Qual o melhor turno?</p>
+      <div class="options">
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q12_turno" value="Manhã (9h às 12h)"><span>Manhã (9h às 12h)</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q12_turno" value="Tarde (13h às 18h)"><span>Tarde (13h às 18h)</span></label>
+      </div>
+    </div>
+    <div class="field">
+      <label>13. Quer nos contar algo mais sobre não ter ficado ativo na parceria? <span class="req">*</span></label>
+      <textarea name="q13" required placeholder="Sua resposta ajuda a destravar seu próximo passo."></textarea>
+      <div class="error-msg">Conte um pouco para a gente</div>
+    </div>
+    <div class="nav-row"><button class="btn btn-secondary" onclick="voltar()">← Voltar</button><button class="btn btn-submit" onclick="enviar()">Enviar respostas</button></div>
+  </div>
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">✓</div>
+    <h2>Recebemos suas respostas!</h2>
+    <p>Obrigado por dedicar esses minutos. Vamos preparar um plano objetivo para darmos o próximo passo juntos. — Equipe Aceleração de Parcerias AG TaxTech</p>
+  </div>
+</div>
+<div class="footer"><p>Aceleração de Parcerias · 2026 · AG TaxTech</p></div>
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-box"><div class="spinner"></div><p>Enviando suas respostas…</p></div>
+</div>
+<script>
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbyWci5pGhYCrKvBqEhd0Jfa8r0Vb3Rq1AqLGr3vJT1tgIp_BHLmqk3qTkwdJY7qgEERsw/exec";
+const TOTAL_SECTIONS = 6;
+let currentSection = 0;
+
+function selecionar(el){
+  el.closest('.options').querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  el.querySelector('input').checked = true;
+}
+function selecionarJust(el, nota){
+  selecionar(el);
+  const wrap = document.getElementById('justifWrap');
+  const ta = document.querySelector('[name="q3_justificativa"]');
+  if(nota <= 3){ wrap.classList.add('show'); ta.setAttribute('required','required'); }
+  else { wrap.classList.remove('show'); ta.removeAttribute('required'); ta.closest('.field').classList.remove('has-error'); }
+}
+function selecionarMulti(el){
+  const input = el.querySelector('input');
+  const q = el.closest('.question');
+  const max = (q && q.dataset.max) ? parseInt(q.dataset.max) : 999;
+  if(!input.checked){
+    const count = q.querySelectorAll('input[type="checkbox"]:checked').length;
+    if(count >= max) return; // teto silencioso — não sinaliza ao usuário
+  }
+  input.checked = !input.checked;
+  el.classList.toggle('selected', input.checked);
+}
+function mascaraTelefone(el){
+  let v = el.value.replace(/\D/g,'').slice(0,11);
+  if(v.length > 10) el.value = '('+v.slice(0,2)+') '+v.slice(2,7)+'-'+v.slice(7);
+  else if(v.length > 6) el.value = '('+v.slice(0,2)+') '+v.slice(2,6)+'-'+v.slice(6);
+  else if(v.length > 2) el.value = '('+v.slice(0,2)+') '+v.slice(2);
+  else if(v.length > 0) el.value = '('+v;
+}
+function mascaraCNPJ(el){
+  let v = el.value.replace(/\D/g,'').slice(0,14);
+  let out = v;
+  if(v.length > 2)  out = v.slice(0,2)+'.'+v.slice(2);
+  if(v.length > 5)  out = v.slice(0,2)+'.'+v.slice(2,5)+'.'+v.slice(5);
+  if(v.length > 8)  out = v.slice(0,2)+'.'+v.slice(2,5)+'.'+v.slice(5,8)+'/'+v.slice(8);
+  if(v.length > 12) out = v.slice(0,2)+'.'+v.slice(2,5)+'.'+v.slice(5,8)+'/'+v.slice(8,12)+'-'+v.slice(12);
+  el.value = out;
+}
+function cnpjValido(valor){
+  const c = (valor||'').replace(/\D/g,'');
+  if(c.length !== 14) return false;
+  if(c === '00000000000000') return true;   // fase de testes: CNPJ zerado é aceito
+  if(/^(\d)\1{13}$/.test(c)) return false;
+  const calc = (tam)=>{
+    let num = c.substring(0,tam), soma = 0, pos = tam-7;
+    for(let i=tam; i>=1; i--){ soma += num.charAt(tam-i) * pos--; if(pos<2) pos=9; }
+    const r = soma % 11; return r<2 ? 0 : 11-r;
+  };
+  if(calc(12) != parseInt(c.charAt(12))) return false;
+  if(calc(13) != parseInt(c.charAt(13))) return false;
+  return true;
+}
+async function verificarDominioEmail(email){
+  const dominio = (email.split('@')[1]||'').trim().toLowerCase();
+  if(!dominio || dominio.indexOf('.') < 0) return false;
+  const consulta = async (tipo)=>{
+    const ctrl = new AbortController();
+    const t = setTimeout(()=>ctrl.abort(), 4000);
+    try{
+      const r = await fetch('https://dns.google/resolve?name='+encodeURIComponent(dominio)+'&type='+tipo, {signal:ctrl.signal});
+      const j = await r.json(); clearTimeout(t); return j;
+    }catch(e){ clearTimeout(t); return null; }
+  };
+  const mx = await consulta('MX');
+  if(mx){
+    if(mx.Status === 3) return false;               // domínio inexistente
+    if(mx.Answer && mx.Answer.length) return true;  // tem servidor de e-mail
+    const a = await consulta('A');
+    if(a){ if(a.Status === 3) return false; if(a.Answer && a.Answer.length) return true; }
+  }
+  return true; // inconclusivo / rede indisponível -> não bloqueia
+}
+// ranking: mover item e renumerar
+function renumerarRank(){
+  document.querySelectorAll('#rankList .rank-item').forEach((it,i)=>{ it.querySelector('.rank-num').textContent = (i+1)+'º'; });
+}
+function toggleTantoFaz(el){
+  const input = el.querySelector('input');
+  input.checked = !input.checked;
+  el.classList.toggle('selected', input.checked);
+  document.getElementById('rankList').classList.toggle('rank-disabled', input.checked);
+}
+(function(){
+  const GAP = 8; let el = null, startY = 0;
+  function pt(e){ return e.clientY; }
+  function down(e){
+    const item = e.target.closest('.rank-item'); if(!item) return;
+    el = item; startY = pt(e); item.classList.add('dragging');
+    try{ item.setPointerCapture(e.pointerId); }catch(_){}
+    e.preventDefault();
+  }
+  function move(e){
+    if(!el) return;
+    const y = pt(e); el.style.transform = 'translateY('+(y-startY)+'px)';
+    const lista = document.getElementById('rankList');
+    const prev = el.previousElementSibling, next = el.nextElementSibling; let r;
+    if(prev){ r = prev.getBoundingClientRect(); if(y < r.top + r.height/2){ lista.insertBefore(el, prev); startY -= (r.height+GAP); el.style.transform='translateY('+(y-startY)+'px)'; renumerarRank(); return; } }
+    if(next){ r = next.getBoundingClientRect(); if(y > r.top + r.height/2){ lista.insertBefore(next, el); startY += (r.height+GAP); el.style.transform='translateY('+(y-startY)+'px)'; renumerarRank(); } }
+  }
+  function up(){ if(!el) return; el.style.transform=''; el.classList.remove('dragging'); el=null; }
+  document.addEventListener('DOMContentLoaded', function(){
+    const lista = document.getElementById('rankList'); if(!lista) return;
+    lista.addEventListener('pointerdown', down);
+    lista.addEventListener('pointermove', move);
+    lista.addEventListener('pointerup', up);
+    lista.addEventListener('pointercancel', up);
+  });
+})();
+
+async function validarSecao(idx){
+  const sec = document.querySelector('[data-section="'+idx+'"]');
+  let ok = true;
+  sec.querySelectorAll('input[type="text"][required], input[type="email"][required], input[type="tel"][required], textarea[required]').forEach(el=>{
+    const field = el.closest('.field');
+    if(!el.value.trim()){ field&&field.classList.add('has-error'); ok=false; }
+    else field&&field.classList.remove('has-error');
+  });
+  const cnpjEl = sec.querySelector('input[name="cnpj"]');
+  if(cnpjEl){
+    const cf = cnpjEl.closest('.field');
+    if(!cnpjValido(cnpjEl.value)){ cf.classList.add('has-error'); ok=false; }
+    else cf.classList.remove('has-error');
+  }
+  const emailField = sec.querySelector('input[type="email"]');
+  if(emailField){
+    const ef = emailField.closest('.field');
+    const emsg = ef.querySelector('.error-msg');
+    const formatoOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailField.value);
+    if(!formatoOk){ if(emsg) emsg.textContent='Informe um e-mail válido'; ef.classList.add('has-error'); ok=false; }
+    else {
+      const domOk = await verificarDominioEmail(emailField.value);
+      if(domOk === false){ if(emsg) emsg.textContent='Domínio de e-mail não encontrado ou inativo'; ef.classList.add('has-error'); ok=false; }
+      else ef.classList.remove('has-error');
+    }
+  }
+  const radios = new Set();
+  sec.querySelectorAll('input[type="radio"][required]').forEach(r=>radios.add(r.name));
+  radios.forEach(name=>{
+    const q = sec.querySelector('input[name="'+name+'"]').closest('.question');
+    if(!sec.querySelector('input[name="'+name+'"]:checked')){ q&&(q.style.background='#FFF5F5'); ok=false; }
+    else q&&(q.style.background='');
+  });
+  const ta = sec.querySelector('[name="q3_justificativa"]');
+  if(ta && ta.hasAttribute('required') && !ta.value.trim()){ ta.closest('.field').classList.add('has-error'); ok=false; }
+  sec.querySelectorAll('[data-check]').forEach(q=>{
+    const name = q.dataset.check;
+    if(!q.querySelector('input[name="'+name+'"]:checked')){ q.style.background='#FFF5F5'; ok=false; }
+    else q.style.background='';
+  });
+  return ok;
+}
+
+function atualizarProgress(){
+  document.querySelectorAll('.progress-step').forEach((s,i)=>{
+    s.classList.remove('active','done');
+    if(i<currentSection) s.classList.add('done');
+    if(i===currentSection) s.classList.add('active');
+  });
+  document.getElementById('progressLabel').textContent = 'Etapa '+(currentSection+1)+' de '+TOTAL_SECTIONS;
+}
+async function avancar(){
+  if(!(await validarSecao(currentSection))){
+    const err = document.querySelector('[data-section="'+currentSection+'"] .has-error, [data-section="'+currentSection+'"] [style*="FFF5F5"]');
+    err && err.scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  document.querySelector('[data-section="'+currentSection+'"]').classList.remove('active');
+  currentSection++;
+  document.querySelector('[data-section="'+currentSection+'"]').classList.add('active');
+  atualizarProgress(); window.scrollTo({top:0,behavior:'smooth'});
+}
+function voltar(){
+  document.querySelector('[data-section="'+currentSection+'"]').classList.remove('active');
+  currentSection--;
+  document.querySelector('[data-section="'+currentSection+'"]').classList.add('active');
+  atualizarProgress(); window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function get(name){
+  const el = document.querySelector('[name="'+name+'"]');
+  if(!el) return '';
+  if(el.type==='radio'){ const c=document.querySelector('[name="'+name+'"]:checked'); return c?c.value:''; }
+  return el.value.trim();
+}
+function getTexto(name){
+  const c = document.querySelector('[name="'+name+'"]:checked');
+  return c ? c.closest('.option').querySelector('span').textContent : '';
+}
+function getMulti(name){
+  return Array.from(document.querySelectorAll('[name="'+name+'"]:checked')).map(c=>c.value).join(', ');
+}
+function getRank(){
+  const optout = document.querySelector('[name="q10_tantofaz"]');
+  if(optout && optout.checked) return 'Tanto faz (sem preferência)';
+  return Array.from(document.querySelectorAll('#rankList .rank-item'))
+    .map((it,i)=>(i+1)+'º '+it.dataset.val).join(' · ');
+}
+
+function coletarDados(){
+  return {
+    nome: get('nome'), cnpj: get('cnpj'), email: get('email'), telefone: get('telefone'),
+    q1_tempo_sem_negocio: getTexto('q1'),
+    q2_motivo: getMulti('q2'),
+    q3_avaliacao: get('q3'),
+    q3_justificativa: get('q3_justificativa'),
+    q4_o_que_faltou: getMulti('q4'),
+    q5_tem_contatos: getTexto('q5'),
+    q6_o_que_ajudaria: getMulti('q6'),
+    q7_interesse_0a5: get('q7'),
+    q8_preferencia: getRank(),
+    q9_canal: getMulti('q9_canal'),
+    q10_turno: getMulti('q10_turno'),
+    q11_melhoria: get('q11'),
+    timestamp: new Date().toISOString()
+  };
+}
+
+async function enviar(){
+  if(!(await validarSecao(currentSection))) return;
+  const dados = coletarDados();
+  document.getElementById('loadingOverlay').classList.add('active');
+  try{
+    await fetch(WEBAPP_URL, { method:'POST', headers:{'Content-Type':'text/plain'}, body:JSON.stringify(dados) });
+    mostrarSucesso();
+  }catch(err){ mostrarSucesso(); }
+}
+function mostrarSucesso(){
+  document.getElementById('loadingOverlay').classList.remove('active');
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('successScreen').classList.add('active');
+  document.querySelector('.progress-wrap').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.addEventListener('DOMContentLoaded', renumerarRank);
+
+/* ===== Curva D: documento CPF/CNPJ, condicionais e validação ===== */
+function mascaraDoc(el){
+  var v=el.value.replace(/\D/g,'').slice(0,14), o=v;
+  if(v.length<=11){
+    if(v.length>9) o=v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6,9)+'-'+v.slice(9);
+    else if(v.length>6) o=v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6);
+    else if(v.length>3) o=v.slice(0,3)+'.'+v.slice(3);
+  } else {
+    o=v.slice(0,2)+'.'+v.slice(2,5)+'.'+v.slice(5,8)+'/'+v.slice(8,12);
+    if(v.length>12) o+='-'+v.slice(12,14);
+  }
+  el.value=o;
+}
+function cpfValido(valor){
+  var c=(valor||'').replace(/\D/g,'');
+  if(c.length!==11) return false;
+  if(c==='00000000000') return true;
+  if(/^(\d)\1{10}$/.test(c)) return false;
+  var s=0,i,d1,d2;
+  for(i=0;i<9;i++) s+=parseInt(c[i])*(10-i);
+  d1=(s*10)%11; if(d1===10) d1=0; if(d1!==parseInt(c[9])) return false;
+  s=0; for(i=0;i<10;i++) s+=parseInt(c[i])*(11-i);
+  d2=(s*10)%11; if(d2===10) d2=0; return d2===parseInt(c[10]);
+}
+function documentoValido(v){
+  var c=(v||'').replace(/\D/g,'');
+  if(c.length===11) return cpfValido(v);
+  if(c.length===14) return cnpjValido(v);
+  return false;
+}
+function visivel(el){ return !!(el && el.offsetParent !== null && !el.closest('.oculto')); }
+function toggleBloco(id, mostrar){
+  var e=document.getElementById(id); if(!e) return;
+  e.classList.toggle('oculto', !mostrar);
+  if(!mostrar){
+    e.querySelectorAll('input:checked').forEach(function(i){ i.checked=false; var o=i.closest('.option'); if(o) o.classList.remove('selected'); });
+    e.querySelectorAll('textarea, input[type=text]').forEach(function(t){ t.value=''; });
+    e.style.background='';
+  }
+}
+function atualizarCondicionais(){
+  var q1=(document.querySelector('input[name="q1"]:checked')||{}).value;
+  toggleBloco('bloco-q2', q1==='nao_avancou'||q1==='recusado');
+  var q4=(document.querySelector('input[name="q4"]:checked')||{}).value;
+  toggleBloco('bloco-q4just', q4==='nao');
+  toggleBloco('bloco-q5', q4==='sim'||q4==='mais_ou_menos');
+  var q6=(document.querySelector('input[name="q6"]:checked')||{}).value;
+  toggleBloco('bloco-q6just', q6==='parcial'||q6==='nunca');
+  var q8=(document.querySelector('input[name="q8_interesse"]:checked')||{}).value;
+  toggleBloco('bloco-q8prazo', q8==='Sim');
+}
+function selecionarC(el){ selecionar(el); atualizarCondicionais(); }
+document.addEventListener('DOMContentLoaded', atualizarCondicionais);
+
+async function validarSecao(idx){
+  var sec=document.querySelector('[data-section="'+idx+'"]'); var ok=true;
+  sec.querySelectorAll('input[type="text"][required], input[type="tel"][required], textarea[required]').forEach(function(el){
+    if(!visivel(el)) return; var f=el.closest('.field');
+    if(!el.value.trim()){ f&&f.classList.add('has-error'); ok=false; } else f&&f.classList.remove('has-error');
+  });
+  var doc=sec.querySelector('input[name="cnpj"]');
+  if(doc && visivel(doc)){ var fd=doc.closest('.field');
+    if(!documentoValido(doc.value)){ fd.classList.add('has-error'); ok=false; } else fd.classList.remove('has-error'); }
+  var emailField=sec.querySelector('input[type="email"]');
+  if(emailField && visivel(emailField)){ var ef=emailField.closest('.field'); var emsg=ef.querySelector('.error-msg');
+    var formatoOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailField.value);
+    if(!formatoOk){ if(emsg) emsg.textContent='Informe um e-mail válido'; ef.classList.add('has-error'); ok=false; }
+    else { var domOk=await verificarDominioEmail(emailField.value);
+      if(domOk===false){ if(emsg) emsg.textContent='Domínio de e-mail não encontrado ou inativo'; ef.classList.add('has-error'); ok=false; }
+      else ef.classList.remove('has-error'); } }
+  var radios=new Set();
+  sec.querySelectorAll('input[type="radio"][required]').forEach(function(r){ if(visivel(r)) radios.add(r.name); });
+  radios.forEach(function(name){ var q=sec.querySelector('input[name="'+name+'"]').closest('.question');
+    if(!sec.querySelector('input[name="'+name+'"]:checked')){ q&&(q.style.background='#FFF5F5'); ok=false; } else q&&(q.style.background=''); });
+  sec.querySelectorAll('[data-check]').forEach(function(q){ if(!visivel(q)) return; var name=q.dataset.check;
+    if(!q.querySelector('input[name="'+name+'"]:checked')){ q.style.background='#FFF5F5'; ok=false; } else q.style.background=''; });
+  return ok;
+}
+function coletarDados(){
+  return {
+    nome:get('nome'), documento:get('cnpj'), email:get('email'), telefone:get('telefone'),
+    q1_apresentou:getTexto('q1'),
+    q2_barreira:getMulti('q2'),
+    q3_porte_carteira:getTexto('q3'),
+    q4_clareza_icp:getTexto('q4'),
+    q4_justificativa:get('q4_justificativa'),
+    q5_carteira_aderente:getTexto('q5'),
+    q6_onboarding:getTexto('q6'),
+    q6_justificativa:get('q6_justificativa'),
+    q7_barreiras:getMulti('q7_barreiras'),
+    q8_interesse:getTexto('q8_interesse'),
+    q8_prazo:getTexto('q8_prazo'),
+    q9_destravaria:getMulti('q9'),
+    q10_preferencia:getRank(),
+    q11_canal:getMulti('q11_canal'),
+    q12_turno:getMulti('q12_turno'),
+    q13_aberto:get('q13'),
+    timestamp:new Date().toISOString()
+  };
+}
+</script>
+</body>
+</html>
