@@ -1054,7 +1054,7 @@ function atualizarCondicionais(){
   var q6=(document.querySelector('input[name="q6"]:checked')||{}).value;
   toggleBloco('bloco-q6just', q6==='parcial'||q6==='nunca');
   var q8=(document.querySelector('input[name="q8_interesse"]:checked')||{}).value;
-  toggleBloco('bloco-q8prazo', q8==='Sim');
+  toggleBloco('bloco-q8prazo', q8==='Sim' || q8==='Talvez');
 }
 function selecionarC(el){ selecionar(el); atualizarCondicionais(); }
 document.addEventListener('DOMContentLoaded', atualizarCondicionais);
