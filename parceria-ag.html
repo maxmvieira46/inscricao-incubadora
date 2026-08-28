@@ -609,8 +609,8 @@ body {
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q3" value="ate10" required><span>Até 10 funcionários</span></label>
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q3" value="11a50" required><span>De 11 a 50 funcionários</span></label>
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q3" value="51a200" required><span>De 51 a 200 funcionários</span></label>
-      <label class="option" onclick="selecionar(this)"><input type="radio" name="q3" value="mais200" required><span>Mais de 200 funcionários</span></label>
-      <label class="option" onclick="selecionar(this)"><input type="radio" name="q3" value="mais500" required><span>Mais de 500 funcionários</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q3" value="200a500" required><span>De 200 a 500 funcionários</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q3" value="acima500" required><span>Acima de 500 funcionários</span></label>
       </div>
     </div>
     <div class="question">
@@ -1029,7 +1029,7 @@ function atualizarCondicionais(){
   toggleBloco('bloco-q1nome', ehRede && valSel('q1_rede_casa')!=='');
   var apres=valSel('q2_apresentou');
   toggleBloco('bloco-motivo', apres.indexOf('avançou')>=0 || apres.indexOf('recusado')>=0);
-  var q4=valSel('q4'); toggleBloco('bloco-q4just', q4==='nao'); toggleBloco('bloco-q5', q4==='sim'||q4==='mais_ou_menos');
+  var q4=valSel('q4'); toggleBloco('bloco-q4just', q4==='nao'); toggleBloco('bloco-q5', q4==='sim');
   var q6=valSel('q6'); toggleBloco('bloco-q6just', q6==='parcial'||q6==='nunca');
   var q8=valSel('q8_interesse'); toggleBloco('bloco-q8prazo', q8==='Sim'||q8==='Talvez');
 }
