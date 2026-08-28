@@ -520,6 +520,7 @@ body {
 .rank-optout{margin-top:12px;}
 </style>
 
+<style>.oculto{display:none !important;}</style>
 </head>
 <body>
 <header class="header">
@@ -552,9 +553,9 @@ body {
       <div class="error-msg">Preencha seu nome completo</div>
     </div>
     <div class="field">
-      <label>CNPJ da formalização da parceria <span class="req">*</span></label>
-      <input type="text" name="cnpj" required placeholder="00.000.000/0000-00" maxlength="18" oninput="mascaraCNPJ(this)">
-      <div class="error-msg">Informe um CNPJ válido</div>
+      <label>CNPJ da formalização ou CPF <span class="req">*</span></label>
+      <input type="text" name="cnpj" required placeholder="CNPJ ou CPF" maxlength="18" oninput="mascaraDoc(this)">
+      <div class="error-msg">Informe um CNPJ ou CPF válido</div>
     </div>
     <div class="field">
       <label>E-mail pessoal ou corporativo (@agcpartner, se estiver ativo) <span class="req">*</span></label>
@@ -563,8 +564,26 @@ body {
     </div>
     <div class="field">
       <label>Telefone — DDD + celular ou fixo <span class="req">*</span></label>
-      <input type="tel" name="telefone" required placeholder="(48) 99999-9999" oninput="mascaraTelefone(this)">
+      <input type="tel" name="telefone" required placeholder="Somente números, com DDD" oninput="mascaraTelefone(this)">
       <div class="error-msg">Preencha o telefone com DDD</div>
+    </div>
+    <div class="question">
+      <p>Qual é o seu perfil de parceria conosco?</p>
+      <div class="options">
+      <label class="option" onclick="selecionarC(this)"><input type="radio" name="perfil" value="Parceria independente com a AG" required><span>Tenho uma parceria independente com a AG</span></label>
+      <label class="option" onclick="selecionarC(this)"><input type="radio" name="perfil" value="Faço parte de uma rede parceira" required><span>Faço parte de uma rede parceira</span></label>
+      </div>
+    </div>
+    <div class="question oculto" id="bloco-c-rede">
+      <p>Essa rede é vinculada a alguma CASA AG?</p>
+      <div class="options">
+      <label class="option" onclick="selecionarC(this)"><input type="radio" name="rede_casa" value="Sim" required><span>Sim</span></label>
+      <label class="option" onclick="selecionarC(this)"><input type="radio" name="rede_casa" value="Não" required><span>Não</span></label>
+      <label class="option" onclick="selecionarC(this)"><input type="radio" name="rede_casa" value="Não sei" required><span>Não sei</span></label>
+      </div>
+    </div>
+    <div class="question oculto" id="bloco-c-nome">
+      <div class="field"><label>Qual o nome da rede ou da CASA AG vinculada? <span class="req">*</span></label><input type="text" name="rede_nome" required placeholder="Nome da rede ou da CASA AG"><div class="error-msg">Informe o nome</div></div>
     </div>
     <div class="nav-row">
       <span></span>
@@ -595,6 +614,7 @@ body {
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Mudei de foco ou atividade"><span>Mudei de foco ou atividade</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Conflito interno da rede"><span>Conflito interno da rede</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Dificuldade de gerar oportunidades"><span>Dificuldade de gerar oportunidades</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Falta de suporte comercial da rede"><span>Falta de suporte comercial da rede</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Outro"><span>Outro</span></label>
       </div>
     </div>
@@ -636,6 +656,7 @@ body {
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q4" value="Falta de Foco"><span>Falta de Foco</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q4" value="Falta de Tempo"><span>Falta de Tempo</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q4" value="Sem Interesse"><span>Sem Interesse</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q4" value="Falta de suporte comercial da rede"><span>Falta de suporte comercial da rede</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q4" value="Outro"><span>Outro</span></label>
       </div>
     </div>
@@ -670,10 +691,18 @@ body {
     <div class="question">
       <p>7. Qual seu nível de interesse em retomar nos próximos 60 dias?</p>
       <div class="range-wrap">
-        <input type="range" name="q7" min="0" max="5" value="0" oninput="document.getElementById('q7val').textContent=this.value;">
+        <input type="range" name="q7" min="0" max="5" value="0" oninput="document.getElementById('q7val').textContent=this.value;atualizarCondicionais();">
         <span class="range-val" id="q7val">0</span>
       </div>
       <div class="range-ends"><span>Nenhum</span><span>Muito alto</span></div>
+    </div>
+    <div class="question oculto" id="bloco-c-prazo">
+      <p>Em quanto tempo você estaria disposto a retomar?</p>
+      <div class="options">
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q7_prazo" value="Imediato" required><span>Imediato</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q7_prazo" value="Nos próximos 30 dias" required><span>Nos próximos 30 dias</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q7_prazo" value="Não sei" required><span>Não sei</span></label>
+      </div>
     </div>
     <div class="question" data-rank="q8">
       <p>8. Ordene os formatos de apoio por preferência.</p>
@@ -689,6 +718,10 @@ body {
         </div>
         <div class="rank-item" data-val="Material para consulta no seu tempo">
           <span class="rank-num">3º</span><span class="rank-label">Material para consulta no seu tempo</span>
+          <span class="rank-grip" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><g fill="currentColor"><circle cx="6" cy="4" r="1.3"/><circle cx="10" cy="4" r="1.3"/><circle cx="6" cy="8" r="1.3"/><circle cx="10" cy="8" r="1.3"/><circle cx="6" cy="12" r="1.3"/><circle cx="10" cy="12" r="1.3"/></g></svg></span>
+        </div>
+        <div class="rank-item" data-val="Suporte comercial exclusivo">
+          <span class="rank-num">4º</span><span class="rank-label">Suporte comercial exclusivo</span>
           <span class="rank-grip" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><g fill="currentColor"><circle cx="6" cy="4" r="1.3"/><circle cx="10" cy="4" r="1.3"/><circle cx="6" cy="8" r="1.3"/><circle cx="10" cy="8" r="1.3"/><circle cx="6" cy="12" r="1.3"/><circle cx="10" cy="12" r="1.3"/></g></svg></span>
         </div>
       </div>
@@ -754,7 +787,7 @@ function selecionarJust(el, nota){
   const wrap = document.getElementById('justifWrap');
   const ta = document.querySelector('[name="q3_justificativa"]');
   if(nota <= 3){ wrap.classList.add('show'); ta.setAttribute('required','required'); }
-  else { wrap.classList.remove('show'); ta.removeAttribute('required'); ta.closest('.field').classList.remove('has-error'); }
+  else { wrap.classList.remove('show'); ta.removeAttribute('required'); ta.value=''; ta.closest('.field').classList.remove('has-error'); }
 }
 function selecionarMulti(el){
   const input = el.querySelector('input');
@@ -857,42 +890,35 @@ function toggleTantoFaz(el){
 async function validarSecao(idx){
   const sec = document.querySelector('[data-section="'+idx+'"]');
   let ok = true;
+  const visivel = (el)=> !!(el && el.offsetParent !== null && !el.closest('.oculto'));
   sec.querySelectorAll('input[type="text"][required], input[type="email"][required], input[type="tel"][required], textarea[required]').forEach(el=>{
+    if(!visivel(el)) return;
     const field = el.closest('.field');
-    if(!el.value.trim()){ field&&field.classList.add('has-error'); ok=false; }
-    else field&&field.classList.remove('has-error');
+    if(!el.value.trim()){ field&&field.classList.add('has-error'); ok=false; } else field&&field.classList.remove('has-error');
   });
   const cnpjEl = sec.querySelector('input[name="cnpj"]');
-  if(cnpjEl){
+  if(cnpjEl && visivel(cnpjEl)){
     const cf = cnpjEl.closest('.field');
-    if(!cnpjValido(cnpjEl.value)){ cf.classList.add('has-error'); ok=false; }
-    else cf.classList.remove('has-error');
+    if(!documentoValido(cnpjEl.value)){ cf.classList.add('has-error'); ok=false; } else cf.classList.remove('has-error');
   }
   const emailField = sec.querySelector('input[type="email"]');
-  if(emailField){
-    const ef = emailField.closest('.field');
-    const emsg = ef.querySelector('.error-msg');
+  if(emailField && visivel(emailField)){
+    const ef = emailField.closest('.field'); const emsg = ef.querySelector('.error-msg');
     const formatoOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailField.value);
     if(!formatoOk){ if(emsg) emsg.textContent='Informe um e-mail válido'; ef.classList.add('has-error'); ok=false; }
-    else {
-      const domOk = await verificarDominioEmail(emailField.value);
+    else { const domOk = await verificarDominioEmail(emailField.value);
       if(domOk === false){ if(emsg) emsg.textContent='Domínio de e-mail não encontrado ou inativo'; ef.classList.add('has-error'); ok=false; }
-      else ef.classList.remove('has-error');
-    }
+      else ef.classList.remove('has-error'); }
   }
   const radios = new Set();
-  sec.querySelectorAll('input[type="radio"][required]').forEach(r=>radios.add(r.name));
+  sec.querySelectorAll('input[type="radio"][required]').forEach(r=>{ if(visivel(r)) radios.add(r.name); });
   radios.forEach(name=>{
     const q = sec.querySelector('input[name="'+name+'"]').closest('.question');
-    if(!sec.querySelector('input[name="'+name+'"]:checked')){ q&&(q.style.background='#FFF5F5'); ok=false; }
-    else q&&(q.style.background='');
+    if(!sec.querySelector('input[name="'+name+'"]:checked')){ q&&(q.style.background='#FFF5F5'); ok=false; } else q&&(q.style.background='');
   });
-  const ta = sec.querySelector('[name="q3_justificativa"]');
-  if(ta && ta.hasAttribute('required') && !ta.value.trim()){ ta.closest('.field').classList.add('has-error'); ok=false; }
   sec.querySelectorAll('[data-check]').forEach(q=>{
-    const name = q.dataset.check;
-    if(!q.querySelector('input[name="'+name+'"]:checked')){ q.style.background='#FFF5F5'; ok=false; }
-    else q.style.background='';
+    if(!visivel(q)) return; const name = q.dataset.check;
+    if(!q.querySelector('input[name="'+name+'"]:checked')){ q.style.background='#FFF5F5'; ok=false; } else q.style.background='';
   });
   return ok;
 }
@@ -946,6 +972,9 @@ function getRank(){
 function coletarDados(){
   return {
     nome: get('nome'), cnpj: get('cnpj'), email: get('email'), telefone: get('telefone'),
+    perfil: getTexto('perfil'),
+    rede_casa: getTexto('rede_casa'),
+    rede_nome: get('rede_nome'),
     q1_tempo_sem_negocio: getTexto('q1'),
     q2_motivo: getMulti('q2'),
     q3_avaliacao: get('q3'),
@@ -954,6 +983,7 @@ function coletarDados(){
     q5_tem_contatos: getTexto('q5'),
     q6_o_que_ajudaria: getMulti('q6'),
     q7_interesse_0a5: get('q7'),
+    q7_prazo: getTexto('q7_prazo'),
     q8_preferencia: getRank(),
     q9_canal: getMulti('q9_canal'),
     q10_turno: getMulti('q10_turno'),
@@ -979,6 +1009,44 @@ function mostrarSucesso(){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 document.addEventListener('DOMContentLoaded', renumerarRank);
+
+/* ===== C: CPF/CNPJ + condicionais (portado do D) ===== */
+function mascaraDoc(el){
+  var v=el.value.replace(/\D/g,'').slice(0,14), o=v;
+  if(v.length<=11){
+    if(v.length>9) o=v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6,9)+'-'+v.slice(9);
+    else if(v.length>6) o=v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6);
+    else if(v.length>3) o=v.slice(0,3)+'.'+v.slice(3);
+  } else { o=v.slice(0,2)+'.'+v.slice(2,5)+'.'+v.slice(5,8)+'/'+v.slice(8,12); if(v.length>12) o+='-'+v.slice(12,14); }
+  el.value=o;
+}
+function cpfValido(valor){
+  var c=(valor||'').replace(/\D/g,''); if(c.length!==11) return false;
+  if(c==='00000000000') return true; if(/^(\d)\1{10}$/.test(c)) return false;
+  var s=0,i,d1,d2;
+  for(i=0;i<9;i++) s+=parseInt(c[i])*(10-i); d1=(s*10)%11; if(d1===10)d1=0; if(d1!==parseInt(c[9])) return false;
+  s=0; for(i=0;i<10;i++) s+=parseInt(c[i])*(11-i); d2=(s*10)%11; if(d2===10)d2=0; return d2===parseInt(c[10]);
+}
+function documentoValido(v){ var c=(v||'').replace(/\D/g,''); if(c.length===11) return cpfValido(v); if(c.length===14) return cnpjValido(v); return false; }
+function toggleBloco(id, mostrar){
+  var e=document.getElementById(id); if(!e) return;
+  e.classList.toggle('oculto', !mostrar);
+  if(!mostrar){
+    e.querySelectorAll('input:checked').forEach(function(i){ i.checked=false; var o=i.closest('.option'); if(o) o.classList.remove('selected'); });
+    e.querySelectorAll('textarea, input[type=text]').forEach(function(t){ t.value=''; });
+    e.style.background='';
+  }
+}
+function valSel(n){ var e=document.querySelector('input[name="'+n+'"]:checked'); return e?e.value:''; }
+function atualizarCondicionais(){
+  var ehRede=(valSel('perfil')==='Faço parte de uma rede parceira');
+  toggleBloco('bloco-c-rede', ehRede);
+  toggleBloco('bloco-c-nome', ehRede && valSel('rede_casa')!=='');
+  var q7=document.querySelector('input[name="q7"]'); var nivel=q7?parseInt(q7.value,10):0;
+  toggleBloco('bloco-c-prazo', nivel>=3);
+}
+function selecionarC(el){ selecionar(el); atualizarCondicionais(); }
+document.addEventListener('DOMContentLoaded', atualizarCondicionais);
 </script>
 </body>
 </html>
