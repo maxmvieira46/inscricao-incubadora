@@ -530,7 +530,7 @@ body {
     </div>
     <p class="header-eyebrow">Reativação 2026</p>
     <h1>Aceleração de Parcerias</h1>
-    <p>Somos da AG TaxTech e vimos em nosso banco de dados que você tem uma parceria de negócios conosco, mas aparentemente ainda não conseguimos consolidar essa parceria, que com certeza pode ser de sucesso, e dar continuidade juntos e mais fortes. Conte o que falta para consolidarmos esta parceria com a AG TaxTech. Leva cerca de 3 minutos.</p>
+    <p>Somos da AG TaxTech e vimos em nosso banco de dados que você tem uma parceria de negócios conosco, mas aparentemente ainda não conseguimos consolidar essa parceria, que com certeza pode ser de sucesso, e dar continuidade juntos e mais fortes.<br><br>Conte o que falta para consolidarmos esta parceria com a AG TaxTech.<br>Leva cerca de 3 minutos.</p>
   </div>
 </header>
 <div class="progress-wrap">
@@ -549,32 +549,16 @@ body {
     <div class="section-badge"><span class="badge-icon">👤</span> Seus dados</div>
     <h2>Identificação</h2>
     <p class="subtitle">Para localizarmos seu cadastro e direcionarmos o apoio certo.</p>
-    <div class="field">
-      <label>Nome completo <span class="req">*</span></label>
-      <input type="text" name="nome" required>
-      <div class="error-msg">Preencha seu nome completo</div>
-    </div>
-    <div class="field">
-      <label>CNPJ da formalização ou CPF <span class="req">*</span></label>
-      <input type="text" name="cnpj" required placeholder="CNPJ ou CPF" maxlength="18" oninput="mascaraDoc(this)">
-      <div class="error-msg">Informe um CNPJ ou CPF válido</div>
-    </div>
-    <div class="field">
-      <label>E-mail pessoal ou corporativo (@agcpartner, se estiver ativo) <span class="req">*</span></label>
-      <input type="email" name="email" required>
-      <div class="error-msg">Informe um e-mail válido</div>
-    </div>
-    <div class="field">
-      <label>Telefone — DDD + celular ou fixo <span class="req">*</span></label>
-      <input type="tel" name="telefone" required placeholder="(48) 99999-9999" oninput="mascaraTelefone(this)">
-      <div class="error-msg">Preencha o telefone com DDD</div>
-    </div>
+    <div class="field"><label>Nome completo <span class="req">*</span></label><input type="text" name="nome" required><div class="error-msg">Preencha seu nome completo</div></div>
+    <div class="field"><label>CNPJ da formalização ou CPF <span class="req">*</span></label><input type="text" name="cnpj" required placeholder="CNPJ ou CPF" maxlength="18" oninput="mascaraDoc(this)"><div class="error-msg">Informe um CNPJ ou CPF válido</div></div>
+    <div class="field"><label>E-mail pessoal ou corporativo (@agcpartner, se estiver ativo) <span class="req">*</span></label><input type="email" name="email" required><div class="error-msg">Informe um e-mail válido</div></div>
+    <div class="field"><label>Telefone — DDD + celular ou fixo <span class="req">*</span></label><input type="tel" name="telefone" required placeholder="Somente números, com DDD" oninput="mascaraTelefone(this)"><div class="error-msg">Preencha o telefone com DDD</div></div>
     <div class="nav-row"><span></span><button class="btn btn-primary" onclick="avancar()">Continuar →</button></div>
   </div>
   <div class="section" data-section="1">
-    <div class="section-badge"><span class="badge-icon">🚦</span> Ativação</div>
-    <h2>Seus primeiros negócios</h2>
-    <p class="subtitle">Queremos entender o que aconteceu até aqui — sem julgamento.</p>
+    <div class="section-badge"><span class="badge-icon">🚦</span> Sua parceria</div>
+    <h2>Seu perfil e seus primeiros negócios</h2>
+    <p class="subtitle">Queremos entender o seu vínculo e o que aconteceu até aqui.</p>
     <div class="question">
       <p>1. Qual é o seu perfil de parceria conosco?</p>
       <div class="options">
@@ -583,35 +567,34 @@ body {
       </div>
     </div>
     <div class="question oculto" id="bloco-q1rede">
-      <div class="field">
-        <label>Qual é o nome da rede parceira? <span class="req">*</span></label>
-        <input type="text" name="q1_rede_nome" required placeholder="Nome da rede">
-        <div class="error-msg">Informe o nome da rede</div>
-      </div>
-      <p style="margin-top:4px;">Essa rede faz parte de uma das unidades das CASAs AG?</p>
+      <p>Essa rede é vinculada a alguma CASA AG?</p>
       <div class="options">
       <label class="option" onclick="selecionarC(this)"><input type="radio" name="q1_rede_casa" value="Sim" required><span>Sim</span></label>
       <label class="option" onclick="selecionarC(this)"><input type="radio" name="q1_rede_casa" value="Não" required><span>Não</span></label>
       <label class="option" onclick="selecionarC(this)"><input type="radio" name="q1_rede_casa" value="Não sei" required><span>Não sei</span></label>
       </div>
-      <div class="oculto" id="bloco-q1casa" style="margin-top:12px;">
-        <div class="field">
-          <label>Qual unidade CASA AG? <span class="req">*</span></label>
-          <input type="text" name="q1_rede_casa_qual" required placeholder="Nome da unidade">
-          <div class="error-msg">Informe a unidade</div>
-        </div>
+    </div>
+    <div class="question oculto" id="bloco-q1nome">
+      <div class="field"><label>Qual o nome da rede ou da CASA AG vinculada? <span class="req">*</span></label><input type="text" name="q1_rede_nome" required placeholder="Nome da rede ou da CASA AG"><div class="error-msg">Informe o nome</div></div>
+    </div>
+    <div class="question">
+      <p>2. Desde que virou parceiro, você chegou a apresentar algum cliente ou negócio à AG TaxTech?</p>
+      <div class="options">
+      <label class="option" onclick="selecionarC(this)"><input type="radio" name="q2_apresentou" value="Nunca cheguei a apresentar" required><span>Nunca cheguei a apresentar</span></label>
+      <label class="option" onclick="selecionarC(this)"><input type="radio" name="q2_apresentou" value="Tentei, mas não avançou" required><span>Tentei, mas não avançou</span></label>
+      <label class="option" onclick="selecionarC(this)"><input type="radio" name="q2_apresentou" value="Apresentei e foi recusado" required><span>Apresentei e foi recusado</span></label>
+      <label class="option" onclick="selecionarC(this)"><input type="radio" name="q2_apresentou" value="Apresentei e cheguei a fechar" required><span>Apresentei e cheguei a fechar</span></label>
       </div>
     </div>
-    <div class="question" data-check="q2" data-max="3">
-      <p>2. Se você chegou a apresentar um negócio e ele não avançou ou foi recusado, qual foi o motivo? (pode marcar mais de uma)</p>
+    <div class="question oculto" id="bloco-motivo" data-check="q2_motivo" data-max="3">
+      <p>Qual foi o principal motivo de não ter avançado ou ter sido recusado? (pode marcar mais de uma)</p>
       <div class="options">
-      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Porte do cliente (ex.: menos de 50 funcionários)"><span>Porte do cliente (ex.: menos de 50 funcionários)</span></label>
-      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Segmento não atendido pela AG"><span>Segmento não atendido pela AG</span></label>
-      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Honorários / condições comerciais"><span>Honorários / condições comerciais</span></label>
-      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Documentação / processo"><span>Documentação / processo</span></label>
-      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Não recebi retorno"><span>Não recebi retorno</span></label>
-      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Ainda não cheguei a apresentar"><span>Ainda não cheguei a apresentar</span></label>
-      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Outro"><span>Outro</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2_motivo" value="Porte do cliente (ex.: menos de 50 funcionários)"><span>Porte do cliente (ex.: menos de 50 funcionários)</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2_motivo" value="Segmento não atendido pela AG"><span>Segmento não atendido pela AG</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2_motivo" value="Honorários / condições comerciais"><span>Honorários / condições comerciais</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2_motivo" value="Documentação / processo"><span>Documentação / processo</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2_motivo" value="Não recebi retorno"><span>Não recebi retorno</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2_motivo" value="Outro"><span>Outro</span></label>
       </div>
     </div>
     <div class="nav-row"><button class="btn btn-secondary" onclick="voltar()">← Voltar</button><button class="btn btn-primary" onclick="avancar()">Continuar →</button></div>
@@ -627,8 +610,7 @@ body {
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q3" value="11a50" required><span>De 11 a 50 funcionários</span></label>
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q3" value="51a200" required><span>De 51 a 200 funcionários</span></label>
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q3" value="mais200" required><span>Mais de 200 funcionários</span></label>
-      <label class="option" onclick="selecionar(this)"><input type="radio" name="q3" value="variado" required><span>Variado (de portes diferentes)</span></label>
-      <label class="option" onclick="selecionar(this)"><input type="radio" name="q3" value="nao_sei" required><span>Não sei dizer</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q3" value="mais500" required><span>Mais de 500 funcionários</span></label>
       </div>
     </div>
     <div class="question">
@@ -640,11 +622,7 @@ body {
       </div>
     </div>
     <div class="question oculto" id="bloco-q4just">
-      <div class="field">
-        <label>Conte um pouco: o que faltou para você entender o perfil ideal de cliente? <span class="req">*</span></label>
-        <textarea name="q4_justificativa" required placeholder="Sua resposta ajuda a corrigir isso."></textarea>
-        <div class="error-msg">Por favor, escreva um pouco</div>
-      </div>
+      <div class="field"><label>Conte um pouco: o que faltou para você entender o perfil ideal de cliente? <span class="req">*</span></label><textarea name="q4_justificativa" required placeholder="Sua resposta ajuda a corrigir isso."></textarea><div class="error-msg">Por favor, escreva um pouco</div></div>
     </div>
     <div class="question oculto" id="bloco-q5">
       <p>5. Na sua carteira de contatos, você tem clientes com esse perfil?</p>
@@ -669,11 +647,7 @@ body {
       </div>
     </div>
     <div class="question oculto" id="bloco-q6just">
-      <div class="field">
-        <label>Conte um pouco do que você lembra sobre esse treinamento. <span class="req">*</span></label>
-        <textarea name="q6_justificativa" required placeholder="O que houve, o que faltou."></textarea>
-        <div class="error-msg">Por favor, relate um pouco</div>
-      </div>
+      <div class="field"><label>Conte um pouco do que você lembra sobre esse treinamento. <span class="req">*</span></label><textarea name="q6_justificativa" required placeholder="O que houve, o que faltou."></textarea><div class="error-msg">Por favor, relate um pouco</div></div>
     </div>
     <div class="question" data-check="q7_barreiras" data-max="2">
       <p>7. Quais as principais barreiras para você trazer negócios? <span class="rank-hint" style="display:inline;margin:0;">Selecione as 2 principais.</span></p>
@@ -705,9 +679,8 @@ body {
       <p>Em quanto tempo você estaria disposto a começar?</p>
       <div class="options">
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q8_prazo" value="Imediato" required><span>Imediato</span></label>
-      <label class="option" onclick="selecionar(this)"><input type="radio" name="q8_prazo" value="Até 30 dias" required><span>Dentro de 30 dias</span></label>
-      <label class="option" onclick="selecionar(this)"><input type="radio" name="q8_prazo" value="Até 60 dias" required><span>Dentro de 60 dias</span></label>
-      <label class="option" onclick="selecionar(this)"><input type="radio" name="q8_prazo" value="Acima de 60 dias" required><span>Acima de 60 dias</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q8_prazo" value="Nos próximos 30 dias" required><span>Nos próximos 30 dias</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q8_prazo" value="Não sei" required><span>Não sei</span></label>
       </div>
     </div>
     <div class="question" data-check="q9" data-max="3">
@@ -750,28 +723,24 @@ body {
   <div class="section" data-section="5">
     <div class="section-badge"><span class="badge-icon">📞</span> Contato</div>
     <h2>Como falamos com você</h2>
-    <p class="subtitle">Pode marcar mais de uma opção.</p>
-    <div class="question" data-check="q11_canal">
-      <p>11. Qual o melhor canal para falarmos com você?</p>
+    <p class="subtitle">Escolha o canal de preferência.</p>
+    <div class="question">
+      <p>11. Qual o seu canal de preferência para falarmos com você? <span class="rank-hint" style="display:inline;margin:0;">Escolha apenas um.</span></p>
       <div class="options">
-      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q11_canal" value="E-mail"><span>E-mail</span></label>
-      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q11_canal" value="WhatsApp"><span>WhatsApp</span></label>
-      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q11_canal" value="Telefone"><span>Telefone</span></label>
-      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q11_canal" value="Sem preferência"><span>Sem preferência</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q11_canal" value="E-mail" required><span>E-mail</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q11_canal" value="WhatsApp" required><span>WhatsApp</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q11_canal" value="Telefone" required><span>Telefone</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q11_canal" value="Sem preferência" required><span>Sem preferência</span></label>
       </div>
     </div>
     <div class="question" data-check="q12_turno">
-      <p>12. Qual o melhor turno?</p>
+      <p>12. Qual o melhor turno? (pode marcar mais de uma)</p>
       <div class="options">
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q12_turno" value="Manhã (9h às 12h)"><span>Manhã (9h às 12h)</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q12_turno" value="Tarde (13h às 18h)"><span>Tarde (13h às 18h)</span></label>
       </div>
     </div>
-    <div class="field">
-      <label>13. Quer nos contar algo mais sobre não ter ficado ativo na parceria? <span class="req">*</span></label>
-      <textarea name="q13" required placeholder="Sua resposta ajuda a destravar seu próximo passo."></textarea>
-      <div class="error-msg">Conte um pouco para a gente</div>
-    </div>
+    <div class="field"><label>13. Quer nos contar algo mais sobre não ter ficado ativo na parceria? <span class="req">*</span></label><textarea name="q13" required placeholder="Sua resposta ajuda a destravar seu próximo passo."></textarea><div class="error-msg">Conte um pouco para a gente</div></div>
     <div class="nav-row"><button class="btn btn-secondary" onclick="voltar()">← Voltar</button><button class="btn btn-submit" onclick="enviar()">Enviar respostas</button></div>
   </div>
   <div class="success-screen" id="successScreen">
@@ -1025,36 +994,24 @@ function mostrarSucesso(){
 }
 document.addEventListener('DOMContentLoaded', renumerarRank);
 
-/* ===== Curva D: documento CPF/CNPJ, condicionais e validação ===== */
+/* ===== Curva D ===== */
 function mascaraDoc(el){
   var v=el.value.replace(/\D/g,'').slice(0,14), o=v;
   if(v.length<=11){
     if(v.length>9) o=v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6,9)+'-'+v.slice(9);
     else if(v.length>6) o=v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6);
     else if(v.length>3) o=v.slice(0,3)+'.'+v.slice(3);
-  } else {
-    o=v.slice(0,2)+'.'+v.slice(2,5)+'.'+v.slice(5,8)+'/'+v.slice(8,12);
-    if(v.length>12) o+='-'+v.slice(12,14);
-  }
+  } else { o=v.slice(0,2)+'.'+v.slice(2,5)+'.'+v.slice(5,8)+'/'+v.slice(8,12); if(v.length>12) o+='-'+v.slice(12,14); }
   el.value=o;
 }
 function cpfValido(valor){
-  var c=(valor||'').replace(/\D/g,'');
-  if(c.length!==11) return false;
-  if(c==='00000000000') return true;
-  if(/^(\d)\1{10}$/.test(c)) return false;
+  var c=(valor||'').replace(/\D/g,''); if(c.length!==11) return false;
+  if(c==='00000000000') return true; if(/^(\d)\1{10}$/.test(c)) return false;
   var s=0,i,d1,d2;
-  for(i=0;i<9;i++) s+=parseInt(c[i])*(10-i);
-  d1=(s*10)%11; if(d1===10) d1=0; if(d1!==parseInt(c[9])) return false;
-  s=0; for(i=0;i<10;i++) s+=parseInt(c[i])*(11-i);
-  d2=(s*10)%11; if(d2===10) d2=0; return d2===parseInt(c[10]);
+  for(i=0;i<9;i++) s+=parseInt(c[i])*(10-i); d1=(s*10)%11; if(d1===10)d1=0; if(d1!==parseInt(c[9])) return false;
+  s=0; for(i=0;i<10;i++) s+=parseInt(c[i])*(11-i); d2=(s*10)%11; if(d2===10)d2=0; return d2===parseInt(c[10]);
 }
-function documentoValido(v){
-  var c=(v||'').replace(/\D/g,'');
-  if(c.length===11) return cpfValido(v);
-  if(c.length===14) return cnpjValido(v);
-  return false;
-}
+function documentoValido(v){ var c=(v||'').replace(/\D/g,''); if(c.length===11) return cpfValido(v); if(c.length===14) return cnpjValido(v); return false; }
 function visivel(el){ return !!(el && el.offsetParent !== null && !el.closest('.oculto')); }
 function toggleBloco(id, mostrar){
   var e=document.getElementById(id); if(!e) return;
@@ -1067,17 +1024,14 @@ function toggleBloco(id, mostrar){
 }
 function valSel(n){ var e=document.querySelector('input[name="'+n+'"]:checked'); return e?e.value:''; }
 function atualizarCondicionais(){
-  var perfil=valSel('q1_perfil');
-  var ehRede=(perfil==='Faço parte de uma rede parceira');
+  var perfil=valSel('q1_perfil'); var ehRede=(perfil==='Faço parte de uma rede parceira');
   toggleBloco('bloco-q1rede', ehRede);
-  toggleBloco('bloco-q1casa', ehRede && valSel('q1_rede_casa')==='Sim');
-  var q4=valSel('q4');
-  toggleBloco('bloco-q4just', q4==='nao');
-  toggleBloco('bloco-q5', q4==='sim'||q4==='mais_ou_menos');
-  var q6=valSel('q6');
-  toggleBloco('bloco-q6just', q6==='parcial'||q6==='nunca');
-  var q8=valSel('q8_interesse');
-  toggleBloco('bloco-q8prazo', q8==='Sim'||q8==='Talvez');
+  toggleBloco('bloco-q1nome', ehRede && valSel('q1_rede_casa')!=='');
+  var apres=valSel('q2_apresentou');
+  toggleBloco('bloco-motivo', apres.indexOf('avançou')>=0 || apres.indexOf('recusado')>=0);
+  var q4=valSel('q4'); toggleBloco('bloco-q4just', q4==='nao'); toggleBloco('bloco-q5', q4==='sim'||q4==='mais_ou_menos');
+  var q6=valSel('q6'); toggleBloco('bloco-q6just', q6==='parcial'||q6==='nunca');
+  var q8=valSel('q8_interesse'); toggleBloco('bloco-q8prazo', q8==='Sim'||q8==='Talvez');
 }
 function selecionarC(el){ selecionar(el); atualizarCondicionais(); }
 document.addEventListener('DOMContentLoaded', atualizarCondicionais);
@@ -1089,15 +1043,13 @@ async function validarSecao(idx){
     if(!el.value.trim()){ f&&f.classList.add('has-error'); ok=false; } else f&&f.classList.remove('has-error');
   });
   var doc=sec.querySelector('input[name="cnpj"]');
-  if(doc && visivel(doc)){ var fd=doc.closest('.field');
-    if(!documentoValido(doc.value)){ fd.classList.add('has-error'); ok=false; } else fd.classList.remove('has-error'); }
+  if(doc && visivel(doc)){ var fd=doc.closest('.field'); if(!documentoValido(doc.value)){ fd.classList.add('has-error'); ok=false; } else fd.classList.remove('has-error'); }
   var emailField=sec.querySelector('input[type="email"]');
   if(emailField && visivel(emailField)){ var ef=emailField.closest('.field'); var emsg=ef.querySelector('.error-msg');
     var formatoOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailField.value);
     if(!formatoOk){ if(emsg) emsg.textContent='Informe um e-mail válido'; ef.classList.add('has-error'); ok=false; }
     else { var domOk=await verificarDominioEmail(emailField.value);
-      if(domOk===false){ if(emsg) emsg.textContent='Domínio de e-mail não encontrado ou inativo'; ef.classList.add('has-error'); ok=false; }
-      else ef.classList.remove('has-error'); } }
+      if(domOk===false){ if(emsg) emsg.textContent='Domínio de e-mail não encontrado ou inativo'; ef.classList.add('has-error'); ok=false; } else ef.classList.remove('has-error'); } }
   var radios=new Set();
   sec.querySelectorAll('input[type="radio"][required]').forEach(function(r){ if(visivel(r)) radios.add(r.name); });
   radios.forEach(function(name){ var q=sec.querySelector('input[name="'+name+'"]').closest('.question');
@@ -1110,10 +1062,10 @@ function coletarDados(){
   return {
     nome:get('nome'), documento:get('cnpj'), email:get('email'), telefone:get('telefone'),
     q1_perfil:getTexto('q1_perfil'),
-    q1_rede_nome:get('q1_rede_nome'),
     q1_rede_casa:getTexto('q1_rede_casa'),
-    q1_rede_casa_qual:get('q1_rede_casa_qual'),
-    q2_barreira:getMulti('q2'),
+    q1_rede_nome:get('q1_rede_nome'),
+    q2_apresentou:getTexto('q2_apresentou'),
+    q2_motivo:getMulti('q2_motivo'),
     q3_porte_carteira:getTexto('q3'),
     q4_clareza_icp:getTexto('q4'),
     q4_justificativa:get('q4_justificativa'),
@@ -1125,7 +1077,7 @@ function coletarDados(){
     q8_prazo:getTexto('q8_prazo'),
     q9_destravaria:getMulti('q9'),
     q10_preferencia:getRank(),
-    q11_canal:getMulti('q11_canal'),
+    q11_canal:getTexto('q11_canal'),
     q12_turno:getMulti('q12_turno'),
     q13_aberto:get('q13'),
     timestamp:new Date().toISOString()
