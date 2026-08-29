@@ -632,8 +632,8 @@ body {
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Dificuldade de gerar oportunidades"><span>Dificuldade de gerar oportunidades</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Falta de suporte comercial da rede"><span>Falta de suporte comercial da rede</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Outro"><span>Outro</span></label>
-      <div class="question oculto" id="bloco-c-q2-outro" style="margin-top:10px;"><div class="field"><label>Qual outro motivo? <span class="req">*</span></label><textarea name="q2_outro" required placeholder="Conte o motivo."></textarea><div class="error-msg">Descreva o motivo</div></div></div>
       </div>
+      <div class="question oculto" id="bloco-c-q2-outro" style="margin-top:10px;"><div class="field"><label>Qual outro motivo? <span class="req">*</span></label><textarea name="q2_outro" required placeholder="Conte o motivo."></textarea><div class="error-msg">Descreva o motivo</div></div></div>
     </div>
     <div class="question" data-radio-just="q3">
       <p>3. Como você avalia o acompanhamento que recebeu?</p>
@@ -665,6 +665,7 @@ body {
     <p class="subtitle">Pode marcar mais de uma opção.</p>
     <div class="question" data-check="q4" data-max="3">
       <p>4. O que mais faltou para você converter?</p>
+      <p class="rank-hint">Pode selecionar até 3 opções.</p>
       <div class="options cols2">
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q4" value="Leads / contatos"><span>Leads / contatos</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q4" value="Treinamento"><span>Treinamento</span></label>
@@ -677,8 +678,8 @@ body {
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q4" value="Sem Interesse"><span>Sem Interesse</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q4" value="Falta de suporte comercial da rede"><span>Falta de suporte comercial da rede</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q4" value="Outro"><span>Outro</span></label>
-      <div class="question oculto" id="bloco-c-q4-outro" style="margin-top:10px;"><div class="field"><label>Qual outro ponto? <span class="req">*</span></label><textarea name="q4_outro" required placeholder="Conte o que faltou."></textarea><div class="error-msg">Descreva o ponto</div></div></div>
       </div>
+      <div class="question oculto" id="bloco-c-q4-outro" style="margin-top:10px;"><div class="field"><label>Qual outro ponto? <span class="req">*</span></label><textarea name="q4_outro" required placeholder="Conte o que faltou."></textarea><div class="error-msg">Descreva o ponto</div></div></div>
     </div>
     <div class="question">
       <p>5. Você ainda tem contatos que poderiam virar negócio com a AG TaxTech?</p>
@@ -690,7 +691,7 @@ body {
     </div>
     <div class="question">
       <p>Qual o porte típico das empresas que você atende (em número de funcionários)?</p>
-      <div class="options cols2">
+      <div class="options">
       <label class="option" onclick="selecionar(this)"><input type="radio" name="porte" value="acima5000" required><span>Acima de 5.000 funcionários</span></label>
       <label class="option" onclick="selecionar(this)"><input type="radio" name="porte" value="1000a5000" required><span>1.000 a 5.000 funcionários</span></label>
       <label class="option" onclick="selecionar(this)"><input type="radio" name="porte" value="200a999" required><span>200 a 999 funcionários</span></label>
@@ -709,6 +710,7 @@ body {
     <p class="subtitle">O foco agora é o próximo passo.</p>
     <div class="question" data-check="q6" data-max="3">
       <p>6. O que mais te ajudaria a voltar a produzir agora?</p>
+      <p class="rank-hint">Pode selecionar até 3 opções.</p>
       <div class="options cols2">
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q6" value="Reativar meus contatos antigos"><span>Reativar meus contatos antigos</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q6" value="Treino de objeções"><span>Treino de objeções</span></label>
@@ -717,6 +719,7 @@ body {
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q6" value="Revisão de honorários"><span>Revisão de honorários</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q6" value="Outro"><span>Outro</span></label>
       </div>
+      <div class="question oculto" id="bloco-c-q6-outro" style="margin-top:10px;"><div class="field"><label>Qual outro apoio? <span class="req">*</span></label><textarea name="q6_outro" required placeholder="Conte o que ajudaria."></textarea><div class="error-msg">Descreva o apoio</div></div></div>
     </div>
     <div class="question">
       <p>7. Você tem interesse em retomar e ativar essa parceria com a AG TaxTech?</p>
@@ -1031,6 +1034,7 @@ function coletarDados(){
     q5_tem_contatos: getTexto('q5'),
     porte: getTexto('porte'),
     q6_o_que_ajudaria: getMulti('q6'),
+    q6_outro: get('q6_outro'),
     q7_interesse: getTexto('q7_interesse'),
     q7_prazo: getTexto('q7_prazo'),
     disponibilidade: getTexto('disponibilidade'),
@@ -1102,6 +1106,7 @@ function atualizarCondicionais(){
   toggleBloco('bloco-c-bg-outro', bg==='Outro perfil');
   toggleBloco('bloco-c-q2-outro', marcado('q2','Outro'));
   toggleBloco('bloco-c-q4-outro', marcado('q4','Outro'));
+  toggleBloco('bloco-c-q6-outro', marcado('q6','Outro'));
   var comInteresse=(valSel('q7_interesse')==='Sim, tenho interesse'||valSel('q7_interesse')==='Talvez');
   toggleBloco('bloco-c-prazo', comInteresse);
   toggleBloco('bloco-c-dispo', comInteresse);
