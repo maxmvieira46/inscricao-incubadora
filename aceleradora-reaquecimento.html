@@ -493,7 +493,7 @@ body {
   .nav-row { flex-direction: column-reverse; gap: 10px; }
   .nav-row .btn { width: 100%; justify-content: center; }
 }
-.header-eyebrow{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#E8843C;margin:0 0 6px;}.options.cols2{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}.options.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}.options.cols2 .option,.options.cols3 .option{margin:0;}@media(max-width:480px){.options.cols3{grid-template-columns:repeat(2,1fr);}}</style>
+.header-eyebrow{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#E8843C;margin:0 0 6px;}.options.cols2{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}.options.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}.options.cols2 .option,.options.cols3 .option{margin:0;}@media(max-width:480px){.options.cols3{grid-template-columns:repeat(2,1fr);}}.limite-selecao{display:inline-block;font-size:12.5px;font-weight:700;color:var(--ag-laranja);background:var(--ag-laranja-soft);padding:5px 12px;border-radius:20px;margin:0 0 12px;}.limite-selecao.pulse{animation:pulseLim .5s ease;}@keyframes pulseLim{0%{transform:scale(1);}40%{transform:scale(1.08);box-shadow:0 0 0 4px rgba(230,126,34,.20);}100%{transform:scale(1);}}</style>
 
 <style>
 .option input[type="checkbox"]{appearance:none;-webkit-appearance:none;width:20px;height:20px;
@@ -620,7 +620,7 @@ body {
     </div>
     <div class="question" data-check="q2" data-max="3">
       <p>2. O que levou você a reduzir ou parar?</p>
-      <p class="rank-hint">Pode selecionar até 3 opções.</p>
+      <p class="limite-selecao">Pode selecionar até 3 opções.</p>
       <div class="options cols2">
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Falta de tempo"><span>Falta de tempo</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2" value="Não fechei negócios"><span>Não fechei negócios</span></label>
@@ -665,7 +665,7 @@ body {
     <p class="subtitle">Pode marcar mais de uma opção.</p>
     <div class="question" data-check="q4" data-max="3">
       <p>4. O que mais faltou para você converter?</p>
-      <p class="rank-hint">Pode selecionar até 3 opções.</p>
+      <p class="limite-selecao">Pode selecionar até 3 opções.</p>
       <div class="options cols2">
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q4" value="Leads / contatos"><span>Leads / contatos</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q4" value="Treinamento"><span>Treinamento</span></label>
@@ -710,7 +710,7 @@ body {
     <p class="subtitle">O foco agora é o próximo passo.</p>
     <div class="question" data-check="q6" data-max="3">
       <p>6. O que mais te ajudaria a voltar a produzir agora?</p>
-      <p class="rank-hint">Pode selecionar até 3 opções.</p>
+      <p class="limite-selecao">Pode selecionar até 3 opções.</p>
       <div class="options cols2">
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q6" value="Reativar meus contatos antigos"><span>Reativar meus contatos antigos</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q6" value="Treino de objeções"><span>Treino de objeções</span></label>
@@ -779,6 +779,7 @@ body {
     <p class="subtitle">Pode marcar mais de uma opção.</p>
     <div class="question" data-check="q9_canal">
       <p>9. Qual o melhor canal para falarmos com você?</p>
+      <p class="limite-selecao">Pode selecionar mais de uma opção.</p>
       <div class="options inline">
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q9_canal" value="E-mail"><span>E-mail</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q9_canal" value="WhatsApp"><span>WhatsApp</span></label>
@@ -788,6 +789,7 @@ body {
     </div>
     <div class="question" data-check="q10_turno">
       <p>10. Qual o melhor turno?</p>
+      <p class="limite-selecao">Pode selecionar mais de uma opção.</p>
       <div class="options inline">
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q10_turno" value="Manhã (9h às 12h)"><span>Manhã (9h às 12h)</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q10_turno" value="Tarde (13h às 18h)"><span>Tarde (13h às 18h)</span></label>
@@ -836,7 +838,11 @@ function selecionarMulti(el){
   const max = (q && q.dataset.max) ? parseInt(q.dataset.max) : 999;
   if(!input.checked){
     const count = q.querySelectorAll('input[type="checkbox"]:checked').length;
-    if(count >= max) return; // teto silencioso — não sinaliza ao usuário
+    if(count >= max){
+      var dica = q.querySelector('.limite-selecao');
+      if(dica){ dica.classList.remove('pulse'); void dica.offsetWidth; dica.classList.add('pulse'); setTimeout(function(){ dica.classList.remove('pulse'); }, 650); }
+      return;
+    }
   }
   input.checked = !input.checked;
   el.classList.toggle('selected', input.checked);
