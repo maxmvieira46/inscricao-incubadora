@@ -493,7 +493,7 @@ body {
   .nav-row { flex-direction: column-reverse; gap: 10px; }
   .nav-row .btn { width: 100%; justify-content: center; }
 }
-.options.cols2{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}.options.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}.options.cols2 .option,.options.cols3 .option{margin:0;}@media(max-width:480px){.options.cols3{grid-template-columns:repeat(2,1fr);}}</style>
+.options.cols2{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}.options.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}.options.cols2 .option,.options.cols3 .option{margin:0;}@media(max-width:480px){.options.cols3{grid-template-columns:repeat(2,1fr);}}.limite-selecao{display:inline-block;font-size:12.5px;font-weight:700;color:var(--ag-laranja);background:var(--ag-laranja-soft);padding:5px 12px;border-radius:20px;margin:0 0 12px;}.limite-selecao.pulse{animation:pulseLim .5s ease;}@keyframes pulseLim{0%{transform:scale(1);}40%{transform:scale(1.08);box-shadow:0 0 0 4px rgba(230,126,34,.20);}100%{transform:scale(1);}}</style>
 
 <style>
 .option input[type="checkbox"]{appearance:none;-webkit-appearance:none;width:20px;height:20px;
@@ -602,7 +602,7 @@ body {
     </div>
     <div class="question oculto" id="bloco-motivo" data-check="q2_motivo" data-max="3">
       <p>Qual foi o principal motivo de não ter avançado ou ter sido recusado?</p>
-      <p class="rank-hint">Pode selecionar até 3 opções.</p>
+      <p class="limite-selecao">Pode selecionar até 3 opções.</p>
       <div class="options cols2">
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2_motivo" value="Porte do cliente (ex.: menos de 50 funcionários)"><span>Porte do cliente (ex.: menos de 50 funcionários)</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2_motivo" value="Segmento não atendido pela AG TaxTech"><span>Segmento não atendido pela AG TaxTech</span></label>
@@ -667,7 +667,7 @@ body {
     </div>
     <div class="question" data-check="q7_barreiras" data-max="2">
       <p>7. Quais as principais barreiras para você trazer negócios?</p>
-      <p class="rank-hint">Selecione as 2 principais.</p>
+      <p class="limite-selecao">Selecione as 2 principais.</p>
       <div class="options cols2">
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q7_barreiras" value="O crivo de cliente da AG TaxTech é exigente (porte / segmento)"><span>O crivo de cliente da AG TaxTech é exigente (porte / segmento)</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q7_barreiras" value="Nunca fui treinado / não sei como operar"><span>Nunca fui treinado / não sei como operar</span></label>
@@ -676,7 +676,9 @@ body {
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q7_barreiras" value="Falta de tempo ou foco"><span>Falta de tempo ou foco</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q7_barreiras" value="Não entendi bem o produto / serviço"><span>Não entendi bem o produto / serviço</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q7_barreiras" value="Não é prioridade para mim hoje"><span>Não é prioridade para mim hoje</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q7_barreiras" value="Outro"><span>Outro</span></label>
       </div>
+      <div class="question oculto" id="bloco-q7-outro" style="margin-top:10px;"><div class="field"><label>Qual outra barreira? <span class="req">*</span></label><textarea name="q7_outro" required placeholder="Conte a barreira."></textarea><div class="error-msg">Descreva a barreira</div></div></div>
     </div>
     <div class="nav-row"><button class="btn btn-secondary" onclick="voltar()">← Voltar</button><button class="btn btn-primary" onclick="avancar()">Continuar →</button></div>
   </div>
@@ -710,7 +712,7 @@ body {
     </div>
     <div class="question" data-check="q9" data-max="3">
       <p>9. Se a AG TaxTech te desse o apoio certo, o que mais destravaria você?</p>
-      <p class="rank-hint">Pode selecionar até 3 opções.</p>
+      <p class="limite-selecao">Pode selecionar até 3 opções.</p>
       <div class="options cols2">
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q9" value="Lista de clientes-alvo / perfil ideal claro"><span>Lista de clientes-alvo / perfil ideal claro</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q9" value="Treinamento de ativação"><span>Treinamento de ativação</span></label>
@@ -753,7 +755,7 @@ body {
     <p class="subtitle">Escolha o canal de preferência.</p>
     <div class="question">
       <p>11. Qual o seu canal de preferência para falarmos com você?</p>
-      <p class="rank-hint">Escolha apenas um.</p>
+      <p class="limite-selecao">Escolha apenas um.</p>
       <div class="options inline">
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q11_canal" value="E-mail" required><span>E-mail</span></label>
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q11_canal" value="WhatsApp" required><span>WhatsApp</span></label>
@@ -763,7 +765,7 @@ body {
     </div>
     <div class="question" data-check="q12_turno">
       <p>12. Qual o melhor turno?</p>
-      <p class="rank-hint">Pode selecionar mais de uma opção.</p>
+      <p class="limite-selecao">Pode selecionar mais de uma opção.</p>
       <div class="options inline">
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q12_turno" value="Manhã (9h às 12h)"><span>Manhã (9h às 12h)</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q12_turno" value="Tarde (13h às 18h)"><span>Tarde (13h às 18h)</span></label>
@@ -805,7 +807,11 @@ function selecionarMulti(el){
   const max = (q && q.dataset.max) ? parseInt(q.dataset.max) : 999;
   if(!input.checked){
     const count = q.querySelectorAll('input[type="checkbox"]:checked').length;
-    if(count >= max) return; // teto silencioso — não sinaliza ao usuário
+    if(count >= max){
+      var dica = q.querySelector('.limite-selecao');
+      if(dica){ dica.classList.remove('pulse'); void dica.offsetWidth; dica.classList.add('pulse'); setTimeout(function(){ dica.classList.remove('pulse'); }, 650); }
+      return;
+    }
   }
   input.checked = !input.checked;
   el.classList.toggle('selected', input.checked);
@@ -990,25 +996,6 @@ function getRank(){
     .map((it,i)=>(i+1)+'º '+it.dataset.val).join(' · ');
 }
 
-function coletarDados(){
-  return {
-    nome: get('nome'), cnpj: get('cnpj'), email: get('email'), telefone: get('telefone'),
-    q1_tempo_sem_negocio: getTexto('q1'),
-    q2_motivo: getMulti('q2'),
-    q3_avaliacao: get('q3'),
-    q3_justificativa: get('q3_justificativa'),
-    q4_o_que_faltou: getMulti('q4'),
-    q5_tem_contatos: getTexto('q5'),
-    q6_o_que_ajudaria: getMulti('q6'),
-    q7_interesse_0a5: get('q7'),
-    q8_preferencia: getRank(),
-    q9_canal: getMulti('q9_canal'),
-    q10_turno: getMulti('q10_turno'),
-    q11_melhoria: get('q11'),
-    timestamp: new Date().toISOString()
-  };
-}
-
 async function enviar(){
   if(!(await validarSecao(currentSection))){ sinalizarPendencia(); return; }
   const dados = coletarDados();
@@ -1074,6 +1061,7 @@ function atualizarCondicionais(){
   toggleBloco('bloco-q8prazo', comInteresse);
   toggleBloco('bloco-dispo', comInteresse);
   toggleBloco('bloco-q9-outro', marcado('q9','Outro'));
+  toggleBloco('bloco-q7-outro', marcado('q7_barreiras','Outro'));
   var bg=(document.querySelector('[name="background"]')||{}).value;
   toggleBloco('bloco-bg-outro', bg==='Outro perfil');
   toggleBloco('bloco-q1unidade', ehRede && casa==='Sim');
@@ -1118,7 +1106,7 @@ function coletarDados(){
     q5_carteira_aderente:getTexto('q5'),
     q6_onboarding:getTexto('q6'),
     q6_justificativa:get('q6_justificativa'),
-    q7_barreiras:getMulti('q7_barreiras'),
+    q7_barreiras:getMulti('q7_barreiras'), q7_outro:get('q7_outro'),
     q8_interesse:getTexto('q8_interesse'),
     q8_prazo:getTexto('q8_prazo'), disponibilidade:getTexto('disponibilidade'),
     q9_destravaria:getMulti('q9'), q9_outro:get('q9_outro'),
