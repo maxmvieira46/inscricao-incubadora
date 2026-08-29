@@ -663,9 +663,9 @@ body {
     <div class="section-badge"><span class="badge-icon">🧩</span> Conversão</div>
     <h2>O que faltou</h2>
     <p class="subtitle">Pode marcar mais de uma opção.</p>
-    <div class="question" data-check="q4" data-max="3">
+    <div class="question" data-check="q4" data-max="2">
       <p>4. O que mais faltou para você converter?</p>
-      <p class="limite-selecao">Pode selecionar até 3 opções.</p>
+      <p class="limite-selecao">Pode selecionar até 2 opções.</p>
       <div class="options cols2">
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q4" value="Leads / contatos"><span>Leads / contatos</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q4" value="Treinamento"><span>Treinamento</span></label>
@@ -708,9 +708,9 @@ body {
     <div class="section-badge"><span class="badge-icon">🚀</span> Retomada</div>
     <h2>O que faria você voltar</h2>
     <p class="subtitle">O foco agora é o próximo passo.</p>
-    <div class="question" data-check="q6" data-max="3">
+    <div class="question" data-check="q6" data-max="2">
       <p>6. O que mais te ajudaria a voltar a produzir agora?</p>
-      <p class="limite-selecao">Pode selecionar até 3 opções.</p>
+      <p class="limite-selecao">Pode selecionar até 2 opções.</p>
       <div class="options cols2">
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q6" value="Reativar meus contatos antigos"><span>Reativar meus contatos antigos</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q6" value="Treino de objeções"><span>Treino de objeções</span></label>
@@ -777,22 +777,22 @@ body {
     <div class="section-badge"><span class="badge-icon">📞</span> Contato</div>
     <h2>Como falamos com você</h2>
     <p class="subtitle">Pode marcar mais de uma opção.</p>
-    <div class="question" data-check="q9_canal">
+    <div class="question">
       <p>9. Qual o melhor canal para falarmos com você?</p>
-      <p class="limite-selecao">Pode selecionar mais de uma opção.</p>
+      <p class="limite-selecao">Escolha apenas uma opção.</p>
       <div class="options inline">
-      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q9_canal" value="E-mail"><span>E-mail</span></label>
-      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q9_canal" value="WhatsApp"><span>WhatsApp</span></label>
-      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q9_canal" value="Telefone"><span>Telefone</span></label>
-      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q9_canal" value="Sem preferência"><span>Sem preferência</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q9_canal" value="E-mail" required><span>E-mail</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q9_canal" value="WhatsApp" required><span>WhatsApp</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q9_canal" value="Telefone" required><span>Telefone</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q9_canal" value="Sem preferência" required><span>Sem preferência</span></label>
       </div>
     </div>
-    <div class="question" data-check="q10_turno">
+    <div class="question">
       <p>10. Qual o melhor turno?</p>
-      <p class="limite-selecao">Pode selecionar mais de uma opção.</p>
+      <p class="limite-selecao">Escolha apenas uma opção.</p>
       <div class="options inline">
-      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q10_turno" value="Manhã (9h às 12h)"><span>Manhã (9h às 12h)</span></label>
-      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q10_turno" value="Tarde (13h às 18h)"><span>Tarde (13h às 18h)</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q10_turno" value="Manhã (9h às 12h)" required><span>Manhã (9h às 12h)</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q10_turno" value="Tarde (13h às 18h)" required><span>Tarde (13h às 18h)</span></label>
       </div>
     </div>
     <div class="field">
@@ -1045,8 +1045,8 @@ function coletarDados(){
     q7_prazo: getTexto('q7_prazo'),
     disponibilidade: getTexto('disponibilidade'),
     q8_preferencia: getRank(),
-    q9_canal: getMulti('q9_canal'),
-    q10_turno: getMulti('q10_turno'),
+    q9_canal: getTexto('q9_canal'),
+    q10_turno: getTexto('q10_turno'),
     q11_melhoria: get('q11'),
     timestamp: new Date().toISOString()
   };
