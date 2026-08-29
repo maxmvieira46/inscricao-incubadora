@@ -710,9 +710,9 @@ body {
       <label class="option" onclick="selecionar(this)"><input type="radio" name="disponibilidade" value="Pontual, disponibilidade limitada (menos de 10h por semana)" required><span>Pontual, disponibilidade limitada (menos de 10h por semana)</span></label>
       </div>
     </div>
-    <div class="question" data-check="q9" data-max="3">
+    <div class="question" data-check="q9" data-max="2">
       <p>9. Se a AG TaxTech te desse o apoio certo, o que mais destravaria você?</p>
-      <p class="limite-selecao">Pode selecionar até 3 opções.</p>
+      <p class="limite-selecao">Pode selecionar até 2 opções.</p>
       <div class="options cols2">
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q9" value="Lista de clientes-alvo / perfil ideal claro"><span>Lista de clientes-alvo / perfil ideal claro</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q9" value="Treinamento de ativação"><span>Treinamento de ativação</span></label>
@@ -754,8 +754,8 @@ body {
     <h2>Como falamos com você</h2>
     <p class="subtitle">Escolha o canal de preferência.</p>
     <div class="question">
-      <p>11. Qual o seu canal de preferência para falarmos com você?</p>
-      <p class="limite-selecao">Escolha apenas um.</p>
+      <p>11. Qual o melhor canal para falarmos com você?</p>
+      <p class="limite-selecao">Escolha apenas uma opção.</p>
       <div class="options inline">
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q11_canal" value="E-mail" required><span>E-mail</span></label>
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q11_canal" value="WhatsApp" required><span>WhatsApp</span></label>
@@ -763,12 +763,12 @@ body {
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q11_canal" value="Sem preferência" required><span>Sem preferência</span></label>
       </div>
     </div>
-    <div class="question" data-check="q12_turno">
+    <div class="question">
       <p>12. Qual o melhor turno?</p>
-      <p class="limite-selecao">Pode selecionar mais de uma opção.</p>
+      <p class="limite-selecao">Escolha apenas uma opção.</p>
       <div class="options inline">
-      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q12_turno" value="Manhã (9h às 12h)"><span>Manhã (9h às 12h)</span></label>
-      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q12_turno" value="Tarde (13h às 18h)"><span>Tarde (13h às 18h)</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q12_turno" value="Manhã (9h às 12h)" required><span>Manhã (9h às 12h)</span></label>
+      <label class="option" onclick="selecionar(this)"><input type="radio" name="q12_turno" value="Tarde (13h às 18h)" required><span>Tarde (13h às 18h)</span></label>
       </div>
     </div>
     <div class="field"><label>13. Quer nos contar algo mais sobre não ter ficado ativo na parceria? <span class="req">*</span></label><textarea name="q13" required placeholder="Sua resposta ajuda a destravar seu próximo passo."></textarea><div class="error-msg">Conte um pouco para a gente</div></div>
@@ -1112,7 +1112,7 @@ function coletarDados(){
     q9_destravaria:getMulti('q9'), q9_outro:get('q9_outro'),
     q10_preferencia:getRank(),
     q11_canal:getTexto('q11_canal'),
-    q12_turno:getMulti('q12_turno'),
+    q12_turno:getTexto('q12_turno'),
     q13_aberto:get('q13'),
     timestamp:new Date().toISOString()
   };
