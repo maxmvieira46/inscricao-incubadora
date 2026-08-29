@@ -492,7 +492,7 @@ body {
   .nav-row { flex-direction: column-reverse; gap: 10px; }
   .nav-row .btn { width: 100%; justify-content: center; }
 }
-</style>
+.options.cols2{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}.options.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}.options.cols2 .option,.options.cols3 .option{margin:0;}@media(max-width:480px){.options.cols3{grid-template-columns:repeat(2,1fr);}}</style>
 
 <style>
 .option input[type="checkbox"]{appearance:none;-webkit-appearance:none;width:20px;height:20px;
@@ -601,7 +601,7 @@ body {
     <div class="question oculto" id="bloco-motivo" data-check="q2_motivo" data-max="3">
       <p>Qual foi o principal motivo de não ter avançado ou ter sido recusado?</p>
       <p class="rank-hint">Pode selecionar até 3 opções.</p>
-      <div class="options">
+      <div class="options cols2">
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2_motivo" value="Porte do cliente (ex.: menos de 50 funcionários)"><span>Porte do cliente (ex.: menos de 50 funcionários)</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2_motivo" value="Segmento não atendido pela AG TaxTech"><span>Segmento não atendido pela AG TaxTech</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2_motivo" value="Honorários / condições comerciais"><span>Honorários / condições comerciais</span></label>
@@ -619,7 +619,7 @@ body {
     <p class="subtitle">Isso ajuda a ver se a sua carteira conversa com o que a AG TaxTech atende.</p>
     <div class="question">
       <p>3. Qual o porte típico das empresas que você atende (em número de funcionários)?</p>
-      <div class="options">
+      <div class="options cols2">
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q3" value="acima5000" required><span>Acima de 5.000 funcionários</span></label>
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q3" value="1000a5000" required><span>1.000 a 5.000 funcionários</span></label>
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q3" value="200a999" required><span>200 a 999 funcionários</span></label>
@@ -654,7 +654,7 @@ body {
     <p class="subtitle">O ponto mais importante: o que impede seus negócios agora.</p>
     <div class="question">
       <p>6. Você chegou a ser treinado e ativado como parceiro?</p>
-      <div class="options inline">
+      <div class="options cols3">
       <label class="option" onclick="selecionarC(this)"><input type="radio" name="q6" value="completo" required><span>Sim, fui treinado e ativado</span></label>
       <label class="option" onclick="selecionarC(this)"><input type="radio" name="q6" value="parcial" required><span>Parcialmente</span></label>
       <label class="option" onclick="selecionarC(this)"><input type="radio" name="q6" value="nunca" required><span>Nunca fui treinado</span></label>
@@ -666,7 +666,7 @@ body {
     <div class="question" data-check="q7_barreiras" data-max="2">
       <p>7. Quais as principais barreiras para você trazer negócios?</p>
       <p class="rank-hint">Selecione as 2 principais.</p>
-      <div class="options">
+      <div class="options cols2">
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q7_barreiras" value="O crivo de cliente da AG TaxTech é exigente (porte / segmento)"><span>O crivo de cliente da AG TaxTech é exigente (porte / segmento)</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q7_barreiras" value="Nunca fui treinado / não sei como operar"><span>Nunca fui treinado / não sei como operar</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q7_barreiras" value="Minha carteira não tem o perfil que a AG TaxTech atende"><span>Minha carteira não tem o perfil que a AG TaxTech atende</span></label>
@@ -709,7 +709,7 @@ body {
     <div class="question" data-check="q9" data-max="3">
       <p>9. Se a AG TaxTech te desse o apoio certo, o que mais destravaria você?</p>
       <p class="rank-hint">Pode selecionar até 3 opções.</p>
-      <div class="options">
+      <div class="options cols2">
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q9" value="Lista de clientes-alvo / perfil ideal claro"><span>Lista de clientes-alvo / perfil ideal claro</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q9" value="Treinamento de ativação"><span>Treinamento de ativação</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q9" value="Acompanhamento próximo"><span>Acompanhamento próximo</span></label>
@@ -1062,9 +1062,7 @@ function atualizarCondicionais(){
   var casa=valSel('q1_rede_casa');
   toggleBloco('bloco-q1nome', ehRede && casa!=='');
   var lbl=document.getElementById('lbl-q1nome');
-  if(lbl){ lbl.innerHTML = (casa==='Sim')
-      ? 'Qual o nome da rede ou da CASA AG que te conectou à AG TaxTech?<span class="req"> *</span>'
-      : 'Qual o nome da empresa ou de quem te conectou à AG TaxTech?<span class="req"> *</span>'; }
+  if(lbl){ lbl.innerHTML = 'Qual o nome da empresa ou de quem te conectou à AG TaxTech?<span class="req"> *</span>'; }
   var apres=valSel('q2_apresentou');
   toggleBloco('bloco-motivo', apres.indexOf('avançou')>=0 || apres.indexOf('recusado')>=0);
   toggleBloco('bloco-motivo-outro', marcado('q2_motivo','Outro'));
