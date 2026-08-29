@@ -520,7 +520,7 @@ body {
 .rank-optout{margin-top:12px;}
 </style>
 
-<style>.oculto{display:none !important;}.field select{width:100%;padding:14px 16px;border:1.5px solid var(--ag-border);border-radius:10px;font-size:15px;font-family:inherit;background:#fff;color:var(--ag-text);}.options.inline{flex-direction:row;flex-wrap:wrap;}.options.inline .option{flex:1 1 140px;}.field-row{display:flex;gap:12px;flex-wrap:wrap;}.field-row>*{flex:1 1 220px;}.field-row .field{margin:0;}.form-alert{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#C0392B;color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;box-shadow:0 6px 20px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .25s;z-index:9999;max-width:90%;text-align:center;}.form-alert.show{opacity:1;}</style>
+<style>.oculto{display:none !important;}.field select{width:100%;padding:14px 16px;border:1.5px solid var(--ag-border);border-radius:10px;font-size:15px;font-family:inherit;background:#fff;color:var(--ag-text);}.options.inline{flex-direction:row;flex-wrap:wrap;}.options.inline .option{flex:1 1 auto;min-width:100px;}.options.grid2{flex-direction:row;flex-wrap:wrap;}.options.grid2 .option{flex:1 1 44%;}.options.regua{flex-flow:row nowrap;gap:6px;}.options.regua .option{flex:1 1 0;min-width:0;padding:12px 4px;justify-content:center;text-align:center;gap:0;}.options.regua .option input{display:none;}.lbl-destaque{display:inline-block;color:var(--ag-laranja);font-weight:700;background:var(--ag-laranja-soft);padding:4px 10px;border-radius:6px;margin-bottom:6px;}.field-row{display:flex;gap:12px;flex-wrap:wrap;}.field-row>*{flex:1 1 220px;}.field-row .field{margin:0;}.form-alert{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#C0392B;color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;box-shadow:0 6px 20px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .25s;z-index:9999;max-width:90%;text-align:center;}.form-alert.show{opacity:1;}</style>
 </head>
 <body>
 <header class="header">
@@ -603,12 +603,12 @@ body {
     <div class="question oculto" id="bloco-c-nome">
       <div class="field-row">
         <div class="field"><label id="lbl-c-nome">Qual o nome da empresa ou de quem te conectou à AG TaxTech?<span class="req"> *</span></label><input type="text" name="rede_nome" required placeholder="Nome da empresa, rede ou pessoa"><div class="error-msg">Informe o nome</div></div>
-        <div class="field oculto" id="bloco-c-unidade"><label>Unidade da CASA AG</label><select name="rede_unidade"><option value="">Selecione</option><option>AG Rio</option><option>AG BH</option><option>AG Brasília</option><option>AG Recife</option><option>AG Curitiba</option><option>AG Salvador</option><option>AG Manaus</option><option>AG São Luís</option><option>AG Cuiabá</option><option>AG Araçatuba</option><option>AG Belém</option><option>AG Campinas</option><option>AG Chapecó</option><option>AG Fortaleza</option><option>AG Goiânia</option><option>AG João Pessoa</option><option>AG Jundiaí</option><option>AG Maceió</option><option>AG Maringá</option><option>AG São Caetano</option><option>AG São José dos Campos</option><option>AG Uberaba</option><option>AG Vitória</option><option>Não sei</option></select></div>
+        <div class="field oculto" id="bloco-c-unidade"><label class="lbl-destaque">Selecione ao lado a CASA AG vinculada <span class="req">*</span></label><select name="rede_unidade" required><option value="">Selecione</option><option>AG Rio</option><option>AG BH</option><option>AG Brasília</option><option>AG Recife</option><option>AG Curitiba</option><option>AG Salvador</option><option>AG Manaus</option><option>AG São Luís</option><option>AG Cuiabá</option><option>AG Araçatuba</option><option>AG Belém</option><option>AG Campinas</option><option>AG Chapecó</option><option>AG Fortaleza</option><option>AG Goiânia</option><option>AG João Pessoa</option><option>AG Jundiaí</option><option>AG Maceió</option><option>AG Maringá</option><option>AG São Caetano</option><option>AG São José dos Campos</option><option>AG Uberaba</option><option>AG Vitória</option><option>Não sei</option></select><div class="error-msg">Selecione a CASA AG vinculada</div></div>
       </div>
     </div>
     <div class="question">
       <p>1. Há quanto tempo você não gera negócios efetivos com a AG TaxTech?</p>
-      <div class="options inline">
+      <div class="options grid2">
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q1" value="1" required><span>Menos de 3 meses</span></label>
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q1" value="2" required><span>De 3 a 6 meses</span></label>
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q1" value="3" required><span>De 6 a 12 meses</span></label>
@@ -635,7 +635,7 @@ body {
     <div class="question" data-radio-just="q3">
       <p>3. Como você avalia o acompanhamento que recebeu?</p>
       <p class="rank-hint">0 = muito ruim · 5 = excelente</p>
-      <div class="options inline">
+      <div class="options regua">
         <label class="option" onclick="selecionarJust(this,0)"><input type="radio" name="q3" value="0" required><span>0</span></label>
         <label class="option" onclick="selecionarJust(this,1)"><input type="radio" name="q3" value="1" required><span>1</span></label>
         <label class="option" onclick="selecionarJust(this,2)"><input type="radio" name="q3" value="2" required><span>2</span></label>
@@ -662,7 +662,7 @@ body {
     <p class="subtitle">Pode marcar mais de uma opção.</p>
     <div class="question" data-check="q4" data-max="3">
       <p>4. O que mais faltou para você converter?</p>
-      <div class="options">
+      <div class="options inline">
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q4" value="Leads / contatos"><span>Leads / contatos</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q4" value="Treinamento"><span>Treinamento</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q4" value="Acompanhamento próximo"><span>Acompanhamento próximo</span></label>
@@ -1081,6 +1081,7 @@ function toggleBloco(id, mostrar){
   if(!mostrar){
     e.querySelectorAll('input:checked').forEach(function(i){ i.checked=false; var o=i.closest('.option'); if(o) o.classList.remove('selected'); });
     e.querySelectorAll('textarea, input[type=text]').forEach(function(t){ t.value=''; });
+    e.querySelectorAll('select').forEach(function(sel){ sel.selectedIndex=0; });
     e.style.background='';
   }
 }
