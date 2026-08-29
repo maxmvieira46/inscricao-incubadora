@@ -520,7 +520,7 @@ body {
 .rank-optout{margin-top:12px;}
 </style>
 
-<style>.oculto{display:none !important;}.header-eyebrow{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#E8843C;margin:0 0 6px;}.field select{width:100%;padding:14px 16px;border:1.5px solid var(--ag-border);border-radius:10px;font-size:15px;font-family:inherit;background:#fff;color:var(--ag-text);}</style>
+<style>.oculto{display:none !important;}.header-eyebrow{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#E8843C;margin:0 0 6px;}.field select{width:100%;padding:14px 16px;border:1.5px solid var(--ag-border);border-radius:10px;font-size:15px;font-family:inherit;background:#fff;color:var(--ag-text);}.options.inline{flex-direction:row;flex-wrap:wrap;}.options.inline .option{flex:1 1 140px;}.field-row{display:flex;gap:12px;flex-wrap:wrap;}.field-row>*{flex:1 1 220px;}.field-row .field{margin:0;}.form-alert{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#C0392B;color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;box-shadow:0 6px 20px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .25s;z-index:9999;max-width:90%;text-align:center;}.form-alert.show{opacity:1;}</style>
 </head>
 <body>
 <header class="header">
@@ -554,19 +554,10 @@ body {
     <div class="field"><label>E-mail pessoal ou corporativo (@agcpartner, se estiver ativo) <span class="req">*</span></label><input type="email" name="email" required><div class="error-msg">Informe um e-mail válido</div></div>
     <div class="field"><label>Telefone — DDD + celular ou fixo <span class="req">*</span></label><input type="tel" name="telefone" required placeholder="Somente números, com DDD" oninput="mascaraTelefone(this)"><div class="error-msg">Preencha o telefone com DDD</div></div>
     <div class="field"><label>UF (estado) <span class="req">*</span></label><select name="uf" required><option value="">Selecione</option><option>AC</option><option>AL</option><option>AP</option><option>AM</option><option>BA</option><option>CE</option><option>DF</option><option>ES</option><option>GO</option><option>MA</option><option>MT</option><option>MS</option><option>MG</option><option>PA</option><option>PB</option><option>PR</option><option>PE</option><option>PI</option><option>RJ</option><option>RN</option><option>RS</option><option>RO</option><option>RR</option><option>SC</option><option>SP</option><option>SE</option><option>TO</option></select><div class="error-msg">Selecione o estado</div></div>
-    <div class="question">
-      <p>Qual é o seu background profissional principal?</p>
-      <div class="options">
-      <label class="option" onclick="selecionarC(this)"><input type="radio" name="background" value="Ex-bancário PJ (gerente de conta empresarial: Bradesco, Itaú, Santander, BB, Caixa)" required><span>Ex-bancário PJ (gerente de conta empresarial: Bradesco, Itaú, Santander, BB, Caixa)</span></label>
-      <label class="option" onclick="selecionarC(this)"><input type="radio" name="background" value="Assessor de Investimento Autônomo (XP, BTG, Rico ou similar)" required><span>Assessor de Investimento Autônomo (XP, BTG, Rico ou similar)</span></label>
-      <label class="option" onclick="selecionarC(this)"><input type="radio" name="background" value="Advogado tributarista (compliance ou planejamento)" required><span>Advogado tributarista (compliance ou planejamento)</span></label>
-      <label class="option" onclick="selecionarC(this)"><input type="radio" name="background" value="Representante Comercial B2B" required><span>Representante Comercial B2B</span></label>
-      <label class="option" onclick="selecionarC(this)"><input type="radio" name="background" value="Consultor Empresarial ou CFO Freelance" required><span>Consultor Empresarial ou CFO Freelance</span></label>
-      <label class="option" onclick="selecionarC(this)"><input type="radio" name="background" value="Empresário / Empreendedor com rede de contatos empresariais" required><span>Empresário / Empreendedor com rede de contatos empresariais</span></label>
-      <label class="option" onclick="selecionarC(this)"><input type="radio" name="background" value="Corretor de Seguros Empresariais" required><span>Corretor de Seguros Empresariais</span></label>
-      <label class="option" onclick="selecionarC(this)"><input type="radio" name="background" value="Publicitário ou Agente de Relacionamento Local" required><span>Publicitário ou Agente de Relacionamento Local</span></label>
-      <label class="option" onclick="selecionarC(this)"><input type="radio" name="background" value="Outro perfil" required><span>Outro perfil</span></label>
-      </div>
+        <div class="field">
+      <label>Qual é o seu background profissional principal? <span class="req">*</span></label>
+      <select name="background" required onchange="atualizarCondicionais()"><option value="">Selecione</option><option>Ex-bancário PJ (gerente de conta empresarial: Bradesco, Itaú, Santander, BB, Caixa)</option><option>Assessor de Investimento Autônomo (XP, BTG, Rico ou similar)</option><option>Advogado tributarista (compliance ou planejamento)</option><option>Representante Comercial B2B</option><option>Consultor Empresarial ou CFO Freelance</option><option>Empresário / Empreendedor com rede de contatos empresariais</option><option>Corretor de Seguros Empresariais</option><option>Publicitário ou Agente de Relacionamento Local</option><option>Outro perfil</option></select>
+      <div class="error-msg">Selecione seu perfil</div>
     </div>
     <div class="question oculto" id="bloco-bg-outro">
       <div class="field"><label>Conte qual é o seu perfil. <span class="req">*</span></label><textarea name="background_outro" required placeholder="Descreva seu perfil profissional."></textarea><div class="error-msg">Descreva seu perfil</div></div>
@@ -580,20 +571,23 @@ body {
     <div class="question">
       <p>1. Qual é o seu perfil de parceria conosco?</p>
       <div class="options">
-      <label class="option" onclick="selecionarC(this)"><input type="radio" name="q1_perfil" value="Parceria independente com a AG" required><span>Tenho uma parceria independente com a AG</span></label>
+      <label class="option" onclick="selecionarC(this)"><input type="radio" name="q1_perfil" value="Parceria independente com a AG TaxTech" required><span>Tenho uma parceria independente com a AG TaxTech</span></label>
       <label class="option" onclick="selecionarC(this)"><input type="radio" name="q1_perfil" value="Faço parte de uma rede parceira" required><span>Faço parte de uma rede parceira</span></label>
       </div>
     </div>
     <div class="question oculto" id="bloco-q1rede">
       <p>Essa rede é vinculada a alguma CASA AG?</p>
-      <div class="options">
+      <div class="options inline">
       <label class="option" onclick="selecionarC(this)"><input type="radio" name="q1_rede_casa" value="Sim" required><span>Sim</span></label>
       <label class="option" onclick="selecionarC(this)"><input type="radio" name="q1_rede_casa" value="Não" required><span>Não</span></label>
       <label class="option" onclick="selecionarC(this)"><input type="radio" name="q1_rede_casa" value="Não sei" required><span>Não sei</span></label>
       </div>
     </div>
     <div class="question oculto" id="bloco-q1nome">
-      <div class="field"><label id="lbl-q1nome">Qual o nome da empresa ou de quem te conectou à AG?<span class="req"> *</span></label><input type="text" name="q1_rede_nome" required placeholder="Nome da rede ou da CASA AG"><div class="error-msg">Informe o nome</div></div>
+      <div class="field-row">
+        <div class="field"><label id="lbl-q1nome">Qual o nome da empresa ou de quem te conectou à AG TaxTech?<span class="req"> *</span></label><input type="text" name="q1_rede_nome" required placeholder="Nome da empresa, rede ou pessoa"><div class="error-msg">Informe o nome</div></div>
+        <div class="field oculto" id="bloco-q1unidade"><label>Unidade da CASA AG</label><select name="q1_rede_unidade"><option value="">Selecione</option><option>AG BH</option><option>AG Brasília</option><option>AG Cuiabá</option><option>AG Curitiba</option><option>AG Fortaleza</option><option>AG João Pessoa</option><option>AG Jundiaí</option><option>AG Manaus</option><option>AG RJ</option><option>AG Recife</option><option>AG Salvador</option><option>AG São Caetano do Sul</option><option>AG São José dos Campos</option><option>AG São Luís</option><option>Hunter SP - Mário Marques</option><option>Hunter SP - Vanessa Cotosck</option><option>Não sei</option></select></div>
+      </div>
     </div>
     <div class="question">
       <p>2. Desde que virou parceiro, você chegou a apresentar algum cliente ou negócio à AG TaxTech?</p>
@@ -605,10 +599,11 @@ body {
       </div>
     </div>
     <div class="question oculto" id="bloco-motivo" data-check="q2_motivo" data-max="3">
-      <p>Qual foi o principal motivo de não ter avançado ou ter sido recusado? (pode marcar mais de uma)</p>
+      <p>Qual foi o principal motivo de não ter avançado ou ter sido recusado?</p>
+      <p class="rank-hint">Pode selecionar até 3 opções.</p>
       <div class="options">
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2_motivo" value="Porte do cliente (ex.: menos de 50 funcionários)"><span>Porte do cliente (ex.: menos de 50 funcionários)</span></label>
-      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2_motivo" value="Segmento não atendido pela AG"><span>Segmento não atendido pela AG</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2_motivo" value="Segmento não atendido pela AG TaxTech"><span>Segmento não atendido pela AG TaxTech</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2_motivo" value="Honorários / condições comerciais"><span>Honorários / condições comerciais</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2_motivo" value="Documentação / processo"><span>Documentação / processo</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q2_motivo" value="Não recebi retorno"><span>Não recebi retorno</span></label>
@@ -621,7 +616,7 @@ body {
   <div class="section" data-section="2">
     <div class="section-badge"><span class="badge-icon">🎯</span> Sua carteira</div>
     <h2>Seu perfil de clientes</h2>
-    <p class="subtitle">Isso ajuda a ver se a sua carteira conversa com o que a AG atende.</p>
+    <p class="subtitle">Isso ajuda a ver se a sua carteira conversa com o que a AG TaxTech atende.</p>
     <div class="question">
       <p>3. Qual o porte típico das empresas que você atende (em número de funcionários)?</p>
       <div class="options">
@@ -634,7 +629,7 @@ body {
     </div>
     <div class="question">
       <p>4. Você sabe com clareza que tipo de cliente a AG TaxTech atende (o perfil ideal)?</p>
-      <div class="options">
+      <div class="options inline">
       <label class="option" onclick="selecionarC(this)"><input type="radio" name="q4" value="sim" required><span>Sim, com clareza</span></label>
       <label class="option" onclick="selecionarC(this)"><input type="radio" name="q4" value="mais_ou_menos" required><span>Mais ou menos</span></label>
       <label class="option" onclick="selecionarC(this)"><input type="radio" name="q4" value="nao" required><span>Não</span></label>
@@ -659,21 +654,22 @@ body {
     <p class="subtitle">O ponto mais importante: o que impede seus negócios agora.</p>
     <div class="question">
       <p>6. Você chegou a ser treinado e ativado como parceiro?</p>
-      <div class="options">
+      <div class="options inline">
       <label class="option" onclick="selecionarC(this)"><input type="radio" name="q6" value="completo" required><span>Sim, fui treinado e ativado</span></label>
       <label class="option" onclick="selecionarC(this)"><input type="radio" name="q6" value="parcial" required><span>Parcialmente</span></label>
       <label class="option" onclick="selecionarC(this)"><input type="radio" name="q6" value="nunca" required><span>Nunca fui treinado</span></label>
       </div>
     </div>
     <div class="question oculto" id="bloco-q6just">
-      <div class="field"><label>Conte um pouco do que você lembra sobre esse treinamento. <span class="req">*</span></label><textarea name="q6_justificativa" required placeholder="O que houve, o que faltou."></textarea><div class="error-msg">Por favor, relate um pouco</div></div>
+      <div class="field"><label>Conte um pouco do que você lembra desse treinamento e por que sentiu que foi parcial. <span class="req">*</span></label><textarea name="q6_justificativa" required placeholder="O que houve, o que faltou."></textarea><div class="error-msg">Por favor, relate um pouco</div></div>
     </div>
     <div class="question" data-check="q7_barreiras" data-max="2">
-      <p>7. Quais as principais barreiras para você trazer negócios? <span class="rank-hint" style="display:inline;margin:0;">Selecione as 2 principais.</span></p>
+      <p>7. Quais as principais barreiras para você trazer negócios?</p>
+      <p class="rank-hint">Selecione as 2 principais.</p>
       <div class="options">
-      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q7_barreiras" value="O crivo de cliente da AG é exigente (porte / segmento)"><span>O crivo de cliente da AG é exigente (porte / segmento)</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q7_barreiras" value="O crivo de cliente da AG TaxTech é exigente (porte / segmento)"><span>O crivo de cliente da AG TaxTech é exigente (porte / segmento)</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q7_barreiras" value="Nunca fui treinado / não sei como operar"><span>Nunca fui treinado / não sei como operar</span></label>
-      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q7_barreiras" value="Minha carteira não tem o perfil que a AG atende"><span>Minha carteira não tem o perfil que a AG atende</span></label>
+      <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q7_barreiras" value="Minha carteira não tem o perfil que a AG TaxTech atende"><span>Minha carteira não tem o perfil que a AG TaxTech atende</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q7_barreiras" value="Falta de suporte comercial da rede"><span>Falta de suporte comercial da rede</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q7_barreiras" value="Falta de tempo ou foco"><span>Falta de tempo ou foco</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q7_barreiras" value="Não entendi bem o produto / serviço"><span>Não entendi bem o produto / serviço</span></label>
@@ -688,7 +684,7 @@ body {
     <p class="subtitle">O foco agora é o próximo passo.</p>
     <div class="question">
       <p>8. Você tem interesse em retomar e ativar essa parceria com a AG TaxTech?</p>
-      <div class="options">
+      <div class="options inline">
       <label class="option" onclick="selecionarC(this)"><input type="radio" name="q8_interesse" value="Sim" required><span>Sim, tenho interesse</span></label>
       <label class="option" onclick="selecionarC(this)"><input type="radio" name="q8_interesse" value="Talvez" required><span>Talvez</span></label>
       <label class="option" onclick="selecionarC(this)"><input type="radio" name="q8_interesse" value="Não" required><span>Não tenho interesse</span></label>
@@ -696,14 +692,14 @@ body {
     </div>
     <div class="question oculto" id="bloco-q8prazo">
       <p>Em quanto tempo você estaria disposto a começar?</p>
-      <div class="options">
+      <div class="options inline">
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q8_prazo" value="Imediato" required><span>Imediato</span></label>
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q8_prazo" value="Nos próximos 30 dias" required><span>Nos próximos 30 dias</span></label>
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q8_prazo" value="Não sei" required><span>Não sei</span></label>
       </div>
     </div>
     <div class="question oculto" id="bloco-dispo">
-      <p>Qual é a sua disponibilidade para atuar como parceiro AG?</p>
+      <p>Qual é a sua disponibilidade para atuar como parceiro AG TaxTech?</p>
       <div class="options">
       <label class="option" onclick="selecionar(this)"><input type="radio" name="disponibilidade" value="Integral ou principal atividade (15h ou mais por semana)" required><span>Integral ou principal atividade (15h ou mais por semana)</span></label>
       <label class="option" onclick="selecionar(this)"><input type="radio" name="disponibilidade" value="Parcial, com outra atividade principal (10 a 15h por semana)" required><span>Parcial, com outra atividade principal (10 a 15h por semana)</span></label>
@@ -711,7 +707,8 @@ body {
       </div>
     </div>
     <div class="question" data-check="q9" data-max="3">
-      <p>9. Se a AG te desse o apoio certo, o que mais destravaria você? (pode marcar mais de uma)</p>
+      <p>9. Se a AG TaxTech te desse o apoio certo, o que mais destravaria você?</p>
+      <p class="rank-hint">Pode selecionar até 3 opções.</p>
       <div class="options">
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q9" value="Lista de clientes-alvo / perfil ideal claro"><span>Lista de clientes-alvo / perfil ideal claro</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q9" value="Treinamento de ativação"><span>Treinamento de ativação</span></label>
@@ -753,8 +750,9 @@ body {
     <h2>Como falamos com você</h2>
     <p class="subtitle">Escolha o canal de preferência.</p>
     <div class="question">
-      <p>11. Qual o seu canal de preferência para falarmos com você? <span class="rank-hint" style="display:inline;margin:0;">Escolha apenas um.</span></p>
-      <div class="options">
+      <p>11. Qual o seu canal de preferência para falarmos com você?</p>
+      <p class="rank-hint">Escolha apenas um.</p>
+      <div class="options inline">
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q11_canal" value="E-mail" required><span>E-mail</span></label>
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q11_canal" value="WhatsApp" required><span>WhatsApp</span></label>
       <label class="option" onclick="selecionar(this)"><input type="radio" name="q11_canal" value="Telefone" required><span>Telefone</span></label>
@@ -762,8 +760,9 @@ body {
       </div>
     </div>
     <div class="question" data-check="q12_turno">
-      <p>12. Qual o melhor turno? (pode marcar mais de uma)</p>
-      <div class="options">
+      <p>12. Qual o melhor turno?</p>
+      <p class="rank-hint">Pode selecionar mais de uma opção.</p>
+      <div class="options inline">
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q12_turno" value="Manhã (9h às 12h)"><span>Manhã (9h às 12h)</span></label>
       <label class="option" onclick="selecionarMulti(this)"><input type="checkbox" name="q12_turno" value="Tarde (13h às 18h)"><span>Tarde (13h às 18h)</span></label>
       </div>
@@ -948,12 +947,15 @@ function atualizarProgress(){
   });
   document.getElementById('progressLabel').textContent = 'Etapa '+(currentSection+1)+' de '+TOTAL_SECTIONS;
 }
+function sinalizarPendencia(){
+  const sec='[data-section="'+currentSection+'"]';
+  const err = document.querySelector(sec+' .has-error, '+sec+' [style*="FFF5F5"]');
+  if(err) err.scrollIntoView({behavior:'smooth',block:'center'});
+  const a=document.getElementById('formAlert');
+  if(a){ a.classList.add('show'); clearTimeout(window._alertT); window._alertT=setTimeout(function(){a.classList.remove('show');},3500); }
+}
 async function avancar(){
-  if(!(await validarSecao(currentSection))){
-    const err = document.querySelector('[data-section="'+currentSection+'"] .has-error, [data-section="'+currentSection+'"] [style*="FFF5F5"]');
-    err && err.scrollIntoView({behavior:'smooth',block:'center'});
-    return;
-  }
+  if(!(await validarSecao(currentSection))){ sinalizarPendencia(); return; }
   document.querySelector('[data-section="'+currentSection+'"]').classList.remove('active');
   currentSection++;
   document.querySelector('[data-section="'+currentSection+'"]').classList.add('active');
@@ -1006,7 +1008,7 @@ function coletarDados(){
 }
 
 async function enviar(){
-  if(!(await validarSecao(currentSection))) return;
+  if(!(await validarSecao(currentSection))){ sinalizarPendencia(); return; }
   const dados = coletarDados();
   document.getElementById('loadingOverlay').classList.add('active');
   try{
@@ -1060,8 +1062,8 @@ function atualizarCondicionais(){
   toggleBloco('bloco-q1nome', ehRede && casa!=='');
   var lbl=document.getElementById('lbl-q1nome');
   if(lbl){ lbl.innerHTML = (casa==='Sim')
-      ? 'Qual o nome da rede ou da CASA AG que te conectou à AG?<span class="req"> *</span>'
-      : 'Qual o nome da empresa ou de quem te conectou à AG?<span class="req"> *</span>'; }
+      ? 'Qual o nome da rede ou da CASA AG que te conectou à AG TaxTech?<span class="req"> *</span>'
+      : 'Qual o nome da empresa ou de quem te conectou à AG TaxTech?<span class="req"> *</span>'; }
   var apres=valSel('q2_apresentou');
   toggleBloco('bloco-motivo', apres.indexOf('avançou')>=0 || apres.indexOf('recusado')>=0);
   toggleBloco('bloco-motivo-outro', marcado('q2_motivo','Outro'));
@@ -1071,7 +1073,9 @@ function atualizarCondicionais(){
   toggleBloco('bloco-q8prazo', comInteresse);
   toggleBloco('bloco-dispo', comInteresse);
   toggleBloco('bloco-q9-outro', marcado('q9','Outro'));
-  toggleBloco('bloco-bg-outro', valSel('background')==='Outro perfil');
+  var bg=(document.querySelector('[name="background"]')||{}).value;
+  toggleBloco('bloco-bg-outro', bg==='Outro perfil');
+  toggleBloco('bloco-q1unidade', ehRede && casa==='Sim');
 }
 function selecionarC(el){ selecionar(el); atualizarCondicionais(); }
 document.addEventListener('DOMContentLoaded', atualizarCondicionais);
@@ -1101,10 +1105,10 @@ async function validarSecao(idx){
 function coletarDados(){
   return {
     nome:get('nome'), documento:get('cnpj'), uf:get('uf'), email:get('email'), telefone:get('telefone'),
-    background:getTexto('background'), background_outro:get('background_outro'),
+    background:get('background'), background_outro:get('background_outro'),
     q1_perfil:getTexto('q1_perfil'),
     q1_rede_casa:getTexto('q1_rede_casa'),
-    q1_rede_nome:get('q1_rede_nome'),
+    q1_rede_nome:get('q1_rede_nome'), q1_rede_unidade:get('q1_rede_unidade'),
     q2_apresentou:getTexto('q2_apresentou'),
     q2_motivo:getMulti('q2_motivo'), q2motivo_outro:get('q2motivo_outro'),
     q3_porte_carteira:getTexto('q3'),
@@ -1125,5 +1129,6 @@ function coletarDados(){
   };
 }
 </script>
+<div class="form-alert" id="formAlert">Responda os campos destacados para seguir.</div>
 </body>
 </html>
