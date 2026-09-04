@@ -178,14 +178,6 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
       </div>
       <div class="error-msg">Selecione a sua classe.</div>
     </div>
-    <div class="field" id="fSituacao">
-      <label>Nesta classe, esta aula é:<span class="req">*</span></label>
-      <div class="options inline" id="situacaoOpts">
-        <label class="option"><input type="radio" name="situacao" value="Primeira vez"><span>Primeira vez</span></label>
-        <label class="option"><input type="radio" name="situacao" value="Repetindo a aula"><span>Estou repetindo a aula</span></label>
-      </div>
-      <div class="error-msg">Informe se é a sua primeira vez nesta aula ou se está repetindo.</div>
-    </div>
     <div class="field" id="fEmail">
       <label for="email">E-mail @agcpartner de uso<span class="req">*</span></label>
       <input type="email" id="email" name="email" autocomplete="email" placeholder="seunome@agcpartner.com.br">
@@ -353,7 +345,7 @@ const AULA = "Simulação de Vendas";
 const QTD_ME = 7;          // múltipla escolha por sessão
 const QTD_VF = 3;          // verdadeiro ou falso por sessão
 const NOTA_MINIMA = 7;     // abaixo disso o parceiro ganha uma segunda tentativa
-const MAX_TENTATIVAS = 2;  // tentativas por parceiro, por classe e por ciclo (repetente abre novo ciclo)
+const MAX_TENTATIVAS = 2;  // tentativas por parceiro, por classe e por ciclo. Novo dia = novo ciclo (repetição da aula), decidido pelo sistema
 const DOMINIOS_ACEITOS = ["agcpartner.com.br", "agcapital.com.br"]; // agcapital.com.br para homologação do time interno
 const MOSTRAR_GABARITO = true;  // false = na revisão mostra só o tema, sem a resposta correta
 
@@ -435,6 +427,7 @@ let respostas = new Array(PROVA.length).fill(null);
 let atual = -1; // -1 = identificação
 let tentativa = 1;
 let ciclo = 1;
+let versaoMaior = 1;
 let idsUsados = new Set();
 const LETRAS = ["A","B","C","D"];
 
@@ -553,9 +546,6 @@ document.getElementById("btnIniciar").addEventListener("click", async () => {
   const classeOk = classeSelecionada() !== "";
   document.getElementById("fClasse").classList.toggle("has-error", !classeOk);
   if (!classeOk) ok = false;
-  const situacaoOk = situacaoSelecionada() !== "";
-  document.getElementById("fSituacao").classList.toggle("has-error", !situacaoOk);
-  if (!situacaoOk) ok = false;
   const dominio = (email.split("@")[1] || "").toLowerCase();
   const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) && DOMINIOS_ACEITOS.indexOf(dominio) >= 0;
   document.getElementById("fEmail").querySelector(".error-msg").textContent = "Use o seu e-mail @agcpartner de uso.";
@@ -568,28 +558,35 @@ document.getElementById("btnIniciar").addEventListener("click", async () => {
   const hist = await consultarHistorico(email);
   btn.disabled = false; btn.textContent = "Iniciar o quiz →";
 
-  // ciclo e tentativas nesta classe. O servidor informa o último ciclo e quantas tentativas ele teve;
-  // sem servidor, usa o registro local do navegador.
-  const situacao = situacaoSelecionada();
-  const hc = hist ? ((hist.classes || {})[classe] || { ultimoCiclo: 0, tentativasUltimoCiclo: 0 }) : null;
-  let ultimoCiclo = hc ? Number(hc.ultimoCiclo || 0) : Number(localLer(chaveCiclo(email, classe)) || 0);
-  let feitasNoCiclo = hc ? Number(hc.tentativasUltimoCiclo || 0) : tentativasFeitas(email, classe);
-  if (!hc) feitasNoCiclo = Math.max(feitasNoCiclo, 0);
-
-  if (situacao === "Repetindo a aula") {
-    // repetente: abre um novo ciclo, salvo se já estiver em um ciclo de repetição com tentativa em aberto
-    if (ultimoCiclo >= 2 && feitasNoCiclo < MAX_TENTATIVAS) { ciclo = ultimoCiclo; }
-    else { ciclo = Math.max(ultimoCiclo, 1) + 1; feitasNoCiclo = 0; }
+  // Ciclo e tentativas nesta classe, decididos pelo sistema (o parceiro não informa nada):
+  //  - acesso em dia posterior ao último registro nesta classe = novo ciclo (repetição da aula), 2 tentativas;
+  //  - no mesmo dia, continua o ciclo até o limite de tentativas.
+  const hoje = new Date().toISOString().slice(0, 10);
+  const hc = hist ? ((hist.classes || {})[classe] || { ultimoCiclo: 0, tentativasUltimoCiclo: 0, mesmoDia: false }) : null;
+  let ultimoCiclo, feitasNoCiclo, mesmoDia, sessoes;
+  if (hc) {
+    ultimoCiclo = Number(hc.ultimoCiclo || 0); feitasNoCiclo = Number(hc.tentativasUltimoCiclo || 0);
+    mesmoDia = !!hc.mesmoDia; sessoes = Number(hist.sessoes || 0);
   } else {
-    ciclo = Math.max(ultimoCiclo, 1);
+    ultimoCiclo = Number(localLer(chaveCiclo(email, classe)) || 0);
+    feitasNoCiclo = tentativasFeitas(email, classe);
+    mesmoDia = localLer(chaveCiclo(email, classe) + "_dia") === hoje;
+    sessoes = Number(localLer("quiz_sv_sessoes_" + email.toLowerCase()) || 0);
+  }
+  let novaSessao;
+  if (ultimoCiclo === 0) { ciclo = 1; feitasNoCiclo = 0; novaSessao = true; }
+  else if (!mesmoDia) { ciclo = ultimoCiclo + 1; feitasNoCiclo = 0; novaSessao = true; }
+  else {
+    ciclo = ultimoCiclo; novaSessao = false;
     if (feitasNoCiclo >= MAX_TENTATIVAS) {
       const f = document.getElementById("fEmail");
-      f.querySelector(".error-msg").textContent = "Este e-mail já utilizou as " + MAX_TENTATIVAS + " tentativas do quiz na " + classe + ". Se você está repetindo a aula, marque a opção acima. Em caso de dúvida, fale com o condutor da sua turma.";
+      f.querySelector(".error-msg").textContent = "Este e-mail já utilizou as " + MAX_TENTATIVAS + " tentativas de hoje na " + classe + ". Em caso de dúvida, fale com o condutor da sua turma.";
       f.classList.add("has-error");
       return;
     }
   }
   tentativa = feitasNoCiclo + 1;
+  versaoMaior = novaSessao ? sessoes + 1 : Math.max(sessoes, 1);
 
   // questões já vistas por este e-mail (qualquer classe, qualquer tentativa): não repetir
   idsUsados = new Set(idsLocais(email));
@@ -604,12 +601,6 @@ document.querySelectorAll("#classeOpts .option").forEach(op => op.addEventListen
   op.classList.add("selected"); op.querySelector("input").checked = true;
   document.getElementById("fClasse").classList.remove("has-error");
 }));
-document.querySelectorAll("#situacaoOpts .option").forEach(op => op.addEventListener("click", () => {
-  document.querySelectorAll("#situacaoOpts .option").forEach(o => o.classList.remove("selected"));
-  op.classList.add("selected"); op.querySelector("input").checked = true;
-  document.getElementById("fSituacao").classList.remove("has-error");
-}));
-function situacaoSelecionada(){ const r = document.querySelector('input[name="situacao"]:checked'); return r ? r.value : ""; }
 function classeSelecionada(){ const r = document.querySelector('input[name="classe"]:checked'); return r ? r.value : ""; }
 ["nome","email"].forEach(id => document.getElementById(id).addEventListener("input", e => e.target.closest(".field").classList.remove("has-error")));
 
@@ -645,11 +636,12 @@ async function finalizar(){
     nome: document.getElementById("nome").value.trim(),
     email: document.getElementById("email").value.trim(),
     classe: classeSelecionada(),
-    situacao: situacaoSelecionada(),
+    situacao: ciclo > 1 ? "Repetição da aula" : "Primeira vez",
     ciclo,
+    versao_prova: versaoMaior + "." + (tentativa - 1),
     nota, acertos, erros, total: detalhe.length,
     tentativa, max_tentativas: MAX_TENTATIVAS,
-    versao: PROVA.map(q => q.id).join("|"),
+    questoes: PROVA.map(q => q.id).join("|"),
     detalhe,
     enviado_em: new Date().toISOString(),
     navegador: navigator.userAgent
@@ -657,6 +649,8 @@ async function finalizar(){
 
   registrarTentativa(dados.email, dados.classe, tentativa);
   localGravar(chaveCiclo(dados.email, dados.classe), ciclo);
+  localGravar(chaveCiclo(dados.email, dados.classe) + "_dia", new Date().toISOString().slice(0, 10));
+  localGravar("quiz_sv_sessoes_" + dados.email.toLowerCase(), versaoMaior);
   PROVA.forEach(q => idsUsados.add(q.id));
   guardarIdsLocais(dados.email, idsUsados);
   document.getElementById("loading").classList.add("active");
