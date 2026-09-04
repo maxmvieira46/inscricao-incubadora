@@ -163,7 +163,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
   <section class="card active" id="cardIdent">
     <span class="badge">Antes de começar</span>
     <h2>Identifique-se</h2>
-    <p class="subtitle">Informe o seu nome e o e-mail cadastrado na Aceleração de Parcerias para liberar o quiz.</p>
+    <p class="subtitle">Informe o seu nome, a sua classe e o seu e-mail @agcpartner de uso para liberar o quiz.</p>
     <div class="note">Você verá <strong>uma questão por vez</strong> e poderá voltar para revisar antes de enviar. Ao concluir, a sua pontuação aparece na tela e o resultado é registrado automaticamente para o time da Aceleração de Parcerias.</div>
     <div class="field" id="fNome">
       <label for="nome">Nome completo<span class="req">*</span></label>
@@ -178,10 +178,19 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
       </div>
       <div class="error-msg">Selecione a sua classe.</div>
     </div>
+    <div class="field" id="fSituacao">
+      <label>Nesta classe, esta aula é:<span class="req">*</span></label>
+      <div class="options inline" id="situacaoOpts">
+        <label class="option"><input type="radio" name="situacao" value="Primeira vez"><span>Primeira vez</span></label>
+        <label class="option"><input type="radio" name="situacao" value="Repetindo a aula"><span>Estou repetindo a aula</span></label>
+      </div>
+      <div class="error-msg">Informe se é a sua primeira vez nesta aula ou se está repetindo.</div>
+    </div>
     <div class="field" id="fEmail">
-      <label for="email">E-mail<span class="req">*</span></label>
-      <input type="email" id="email" name="email" autocomplete="email" placeholder="seu@email.com.br">
-      <div class="error-msg">Informe um e-mail válido.</div>
+      <label for="email">E-mail @agcpartner de uso<span class="req">*</span></label>
+      <input type="email" id="email" name="email" autocomplete="email" placeholder="seunome@agcpartner.com.br">
+      <div class="hint" style="font-size:12px;color:var(--ag-text-secondary);margin-top:6px;">Informe <strong>apenas</strong> o seu e-mail @agcpartner de uso. É por ele que o seu histórico é reconhecido; outros endereços não são aceitos.</div>
+      <div class="error-msg">Use o seu e-mail @agcpartner de uso.</div>
     </div>
     <div class="nav-row">
       <span></span>
@@ -270,7 +279,27 @@ const BANCO_ME = [
  {id:"ME29", tema:"Tecnologia Athena", q:"A Athena trabalha de forma totalmente automática?",
   o:["Sim, sem qualquer participação humana.","Sim, e emite os relatórios finais sozinha.","Não. A tecnologia depende de acompanhamento, validação e supervisão de profissionais.","Sim, mas apenas na esteira de tributos diretos e indiretos."], c:2},
  {id:"ME30", tema:"Garantias contratuais", q:"Quando começa a contar o suporte de cinco anos previsto em contrato?",
-  o:["Na data de assinatura do contrato.","Na data da primeira reunião comercial.","A partir de cada aproveitamento realizado.","Na data de entrega do relatório inicial."], c:2}
+  o:["Na data de assinatura do contrato.","Na data da primeira reunião comercial.","A partir de cada aproveitamento realizado.","Na data de entrega do relatório inicial."], c:2},
+ {id:"ME31", tema:"Origem das oportunidades", q:"Qual é o papel do eSocial no processo apresentado?",
+  o:["É o sistema que calcula automaticamente os créditos da empresa.","É apresentado como um sistema com limitações de parametrização, que pode continuar exigindo a incidência sobre uma verba mesmo havendo previsão legal para não tributá-la.","Substitui a análise previdenciária da AG TaxTech.","Não tem relação com a esteira previdenciária."], c:1},
+ {id:"ME32", tema:"Aproveitamento dos créditos", q:"A empresa pode optar por aproveitar apenas algumas competências?",
+  o:["Não, o aproveitamento é sempre integral.","Sim, pode excluir competências sobre as quais não tenha segurança ou que prefira não reabrir.","Apenas se a AG TaxTech autorizar.","Apenas na esteira de tributos diretos e indiretos."], c:1},
+ {id:"ME33", tema:"Execução e acompanhamento", q:"Quem deve acompanhar as comunicações recebidas no e-CAC durante o processo?",
+  o:["Somente a AG TaxTech, com acesso permanente.","O parceiro comercial.","A empresa e a sua contabilidade, encaminhando eventuais comunicações à equipe responsável.","Ninguém, pois o e-CAC não é utilizado."], c:2},
+ {id:"ME34", tema:"Garantias contratuais", q:"A empresa consegue manter a sua CND durante o processo?",
+  o:["Não, a CND fica suspensa até o fim das compensações.","Sim, existe suporte administrativo e jurídico para auxiliar na manutenção da CND relacionada aos temas aproveitados.","Apenas se optar por restituição.","Apenas se estiver no Simples Nacional."], c:1},
+ {id:"ME35", tema:"Metodologia de análise", q:"O trabalho da AG TaxTech consiste apenas em procurar erros contábeis?",
+  o:["Sim, o foco é localizar falhas do contador.","Sim, mas apenas na folha de pagamento.","Não. Envolve o cruzamento entre informações apuradas, declaradas e recolhidas e as alterações legislativas do período analisado.","Não, o trabalho é apenas jurídico."], c:2},
+ {id:"ME36", tema:"Níveis de tema", q:"A empresa pode utilizar temas de níveis 2 e 3?",
+  o:["Não, eles são bloqueados no relatório.","Sim, com recomendação expressa da equipe.","Pode optar por utilizá-los, mas a equipe não orienta esse aproveitamento, pois poderia ser questionado pelo Fisco.","Somente após decisão judicial favorável."], c:2},
+ {id:"ME37", tema:"Esteiras de trabalho", q:"Quais tributos estão relacionados à esteira de tributos diretos e indiretos?",
+  o:["INSS e FGTS.","PIS, Cofins, IPI, IRPJ e CSLL, conforme o caso.","ISS e IPTU.","Apenas o Imposto de Renda da pessoa física dos sócios."], c:1},
+ {id:"ME38", tema:"Remuneração", q:"Existe pagamento antecipado de honorários?",
+  o:["Sim, um pró-labore mensal.","Sim, um adiantamento de custas na assinatura.","Não. Não há pró-labore, adiantamento de custas ou outro custo inicial; a remuneração está vinculada ao proveito econômico efetivo.","Sim, uma taxa de abertura do estudo."], c:2},
+ {id:"ME39", tema:"Aproveitamento dos créditos", q:"Após receber o relatório, quais opções a empresa tem em relação aos créditos identificados?",
+  o:["Apenas aproveitamento integral.","Aproveitamento integral, parcial ou não prosseguir.","Apenas restituição.","Apenas aproveitamento parcial, definido pela AG TaxTech."], c:1},
+ {id:"ME40", tema:"Compensação e restituição", q:"Qual é a característica da restituição em relação ao prazo?",
+  o:["Tem efeito financeiro imediato, como a compensação.","Pode exigir um prazo maior para o recebimento dos valores.","É concluída em até dez dias úteis.","Não depende de solicitação da empresa."], c:1}
 ];
 
 const BANCO_VF = [
@@ -303,7 +332,17 @@ const BANCO_VF = [
  {id:"VF27", tema:"NDA e acessos", q:"A empresa precisa liberar todos os acessos do e-CAC e do eSocial para que o trabalho comece.", c:false},
  {id:"VF28", tema:"Perfil do cliente", q:"Conhecer o regime tributário e o faturamento da empresa ajuda a definir quais frentes de análise são mais adequadas.", c:true},
  {id:"VF29", tema:"Esteiras de trabalho", q:"A esteira previdenciária está relacionada principalmente à folha de pagamento.", c:true},
- {id:"VF30", tema:"Compensação e restituição", q:"A restituição costuma gerar efeito financeiro mais imediato do que a compensação.", c:false}
+ {id:"VF30", tema:"Compensação e restituição", q:"A restituição costuma gerar efeito financeiro mais imediato do que a compensação.", c:false},
+ {id:"VF31", tema:"Esteiras de trabalho", q:"A esteira de tributos diretos e indiretos envolve tributos como PIS, Cofins, IPI, IRPJ e CSLL, conforme o caso.", c:true},
+ {id:"VF32", tema:"Níveis de tema", q:"A empresa pode optar por utilizar temas de níveis 2 e 3, mas a equipe não orienta esse aproveitamento.", c:true},
+ {id:"VF33", tema:"Remuneração", q:"A remuneração é calculada sobre o valor identificado no relatório, mesmo que a empresa não o aproveite.", c:false},
+ {id:"VF34", tema:"NDA e acessos", q:"O acordo de confidencialidade (NDA) é assinado antes da elaboração do relatório.", c:true},
+ {id:"VF35", tema:"Prazos dos relatórios", q:"O relatório da análise previdenciária leva aproximadamente dez dias úteis.", c:true},
+ {id:"VF36", tema:"Garantias contratuais", q:"Existe suporte administrativo e jurídico para auxiliar na manutenção da CND relacionada aos temas aproveitados.", c:true},
+ {id:"VF37", tema:"Postura do parceiro", q:"O parceiro deve dominar os principais pontos da apresentação, mesmo sem responder a todas as perguntas técnicas.", c:true},
+ {id:"VF38", tema:"Perfil do cliente", q:"O número de colaboradores celetistas é irrelevante para a análise previdenciária.", c:false},
+ {id:"VF39", tema:"Escopo previdenciário", q:"Empresas com menos de 50 funcionários celetistas fazem parte do escopo de apuração dos créditos previdenciários.", c:false},
+ {id:"VF40", tema:"Compensação e restituição", q:"A compensação utiliza o crédito para abater débitos tributários, com efeito financeiro mais imediato.", c:true}
 ];
 
 /* ============================================================
@@ -314,7 +353,8 @@ const AULA = "Simulação de Vendas";
 const QTD_ME = 7;          // múltipla escolha por sessão
 const QTD_VF = 3;          // verdadeiro ou falso por sessão
 const NOTA_MINIMA = 7;     // abaixo disso o parceiro ganha uma segunda tentativa
-const MAX_TENTATIVAS = 2;  // tentativas por parceiro e por classe
+const MAX_TENTATIVAS = 2;  // tentativas por parceiro, por classe e por ciclo (repetente abre novo ciclo)
+const DOMINIOS_ACEITOS = ["agcpartner.com.br", "agcapital.com.br"]; // agcapital.com.br para homologação do time interno
 const MOSTRAR_GABARITO = true;  // false = na revisão mostra só o tema, sem a resposta correta
 
 /* ============================================================
@@ -341,12 +381,12 @@ const FATO = {
   ME07:"nda",
   ME08:"prazo_previdenciario", ME20:"prazo_tributos", VF20:"prazo_tributos",
   ME09:"remuneracao", VF09:"remuneracao", VF22:"remuneracao_antecipada",
-  ME10:"compensacao_restituicao", VF10:"compensacao_restituicao", VF30:"compensacao_restituicao",
+  ME10:"compensacao_restituicao", VF10:"compensacao_restituicao", VF40:"compensacao_restituicao", VF30:"restituicao_prazo", ME40:"restituicao_prazo",
   ME22:"quem_decide_comp_rest",
   ME11:"competencias65", VF13:"competencias65",
   ME12:"perfil_cliente", VF28:"perfil_cliente", ME27:"perfil_levantado",
   ME13:"lucro_presumido", VF14:"lucro_presumido",
-  ME14:"origem_oportunidade", VF16:"origem_oportunidade",
+  ME14:"origem_oportunidade", VF16:"esocial", ME31:"esocial",
   ME15:"amostragem", VF17:"amostragem", VF15:"nao_so_erros",
   ME16:"duplicidade", VF05:"duplicidade",
   ME17:"judicializado", VF18:"judicializado",
@@ -357,7 +397,9 @@ const FATO = {
   ME25:"escopo_previdenciario", VF26:"escopo_previdenciario",
   ME26:"acessos_primeira_etapa", VF07:"acessos_limitados", VF27:"acessos_limitados",
   ME28:"reuniao_profundidade",
-  VF08:"aproveitamento_opcional", VF23:"competencias_excluir", VF12:"ecac"
+  VF08:"aproveitamento_opcional", ME39:"aproveitamento_opcional", VF23:"competencias_excluir", ME32:"competencias_excluir", VF12:"ecac", ME33:"ecac",
+  ME34:"cnd", VF36:"cnd", ME35:"nao_so_erros", ME36:"niveis_2_3_uso", VF32:"niveis_2_3_uso", ME37:"tributos_esteira", VF31:"tributos_esteira",
+  ME38:"remuneracao_antecipada", VF33:"remuneracao", VF34:"nda", VF35:"prazo_previdenciario", VF37:"postura_dominio", VF38:"celetistas_relevancia", VF39:"escopo_previdenciario"
 };
 function sortearSemRepetirFato(banco, qtd, usados, evitarIds){
   const out = [];
@@ -392,6 +434,7 @@ let PROVA = montarProva();
 let respostas = new Array(PROVA.length).fill(null);
 let atual = -1; // -1 = identificação
 let tentativa = 1;
+let ciclo = 1;
 let idsUsados = new Set();
 const LETRAS = ["A","B","C","D"];
 
@@ -478,6 +521,9 @@ function avancar(i){
    IDENTIFICAÇÃO
    ============================================================ */
 function chaveTentativas(email, classe){ return "quiz_sv_" + email.toLowerCase() + "_" + classe.replace(/\s+/g, "").toLowerCase(); }
+function chaveCiclo(email, classe){ return chaveTentativas(email, classe) + "_ciclo"; }
+function localLer(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
+function localGravar(k, v){ try { localStorage.setItem(k, String(v)); } catch(e){} }
 function chaveIds(email){ return "quiz_sv_ids_" + email.toLowerCase(); }
 function idsLocais(email){ try { return JSON.parse(localStorage.getItem(chaveIds(email)) || "[]"); } catch(e){ return []; } }
 function guardarIdsLocais(email, ids){ try { localStorage.setItem(chaveIds(email), JSON.stringify(Array.from(ids))); } catch(e){} }
@@ -507,7 +553,12 @@ document.getElementById("btnIniciar").addEventListener("click", async () => {
   const classeOk = classeSelecionada() !== "";
   document.getElementById("fClasse").classList.toggle("has-error", !classeOk);
   if (!classeOk) ok = false;
-  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+  const situacaoOk = situacaoSelecionada() !== "";
+  document.getElementById("fSituacao").classList.toggle("has-error", !situacaoOk);
+  if (!situacaoOk) ok = false;
+  const dominio = (email.split("@")[1] || "").toLowerCase();
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) && DOMINIOS_ACEITOS.indexOf(dominio) >= 0;
+  document.getElementById("fEmail").querySelector(".error-msg").textContent = "Use o seu e-mail @agcpartner de uso.";
   document.getElementById("fEmail").classList.toggle("has-error", !emailOk);
   if (!emailOk) ok = false;
   if (!ok) return;
@@ -517,16 +568,28 @@ document.getElementById("btnIniciar").addEventListener("click", async () => {
   const hist = await consultarHistorico(email);
   btn.disabled = false; btn.textContent = "Iniciar o quiz →";
 
-  // tentativas nesta classe: maior valor entre o registro do servidor e o do navegador
-  const feitasServidor = hist ? Number((hist.tentativas || {})[classe] || 0) : 0;
-  const feitas = Math.max(feitasServidor, tentativasFeitas(email, classe));
-  if (feitas >= MAX_TENTATIVAS) {
-    const f = document.getElementById("fEmail");
-    f.querySelector(".error-msg").textContent = "Este e-mail já utilizou as " + MAX_TENTATIVAS + " tentativas do quiz na " + classe + ". Fale com o condutor da sua turma.";
-    f.classList.add("has-error");
-    return;
+  // ciclo e tentativas nesta classe. O servidor informa o último ciclo e quantas tentativas ele teve;
+  // sem servidor, usa o registro local do navegador.
+  const situacao = situacaoSelecionada();
+  const hc = hist ? ((hist.classes || {})[classe] || { ultimoCiclo: 0, tentativasUltimoCiclo: 0 }) : null;
+  let ultimoCiclo = hc ? Number(hc.ultimoCiclo || 0) : Number(localLer(chaveCiclo(email, classe)) || 0);
+  let feitasNoCiclo = hc ? Number(hc.tentativasUltimoCiclo || 0) : tentativasFeitas(email, classe);
+  if (!hc) feitasNoCiclo = Math.max(feitasNoCiclo, 0);
+
+  if (situacao === "Repetindo a aula") {
+    // repetente: abre um novo ciclo, salvo se já estiver em um ciclo de repetição com tentativa em aberto
+    if (ultimoCiclo >= 2 && feitasNoCiclo < MAX_TENTATIVAS) { ciclo = ultimoCiclo; }
+    else { ciclo = Math.max(ultimoCiclo, 1) + 1; feitasNoCiclo = 0; }
+  } else {
+    ciclo = Math.max(ultimoCiclo, 1);
+    if (feitasNoCiclo >= MAX_TENTATIVAS) {
+      const f = document.getElementById("fEmail");
+      f.querySelector(".error-msg").textContent = "Este e-mail já utilizou as " + MAX_TENTATIVAS + " tentativas do quiz na " + classe + ". Se você está repetindo a aula, marque a opção acima. Em caso de dúvida, fale com o condutor da sua turma.";
+      f.classList.add("has-error");
+      return;
+    }
   }
-  tentativa = feitas + 1;
+  tentativa = feitasNoCiclo + 1;
 
   // questões já vistas por este e-mail (qualquer classe, qualquer tentativa): não repetir
   idsUsados = new Set(idsLocais(email));
@@ -541,6 +604,12 @@ document.querySelectorAll("#classeOpts .option").forEach(op => op.addEventListen
   op.classList.add("selected"); op.querySelector("input").checked = true;
   document.getElementById("fClasse").classList.remove("has-error");
 }));
+document.querySelectorAll("#situacaoOpts .option").forEach(op => op.addEventListener("click", () => {
+  document.querySelectorAll("#situacaoOpts .option").forEach(o => o.classList.remove("selected"));
+  op.classList.add("selected"); op.querySelector("input").checked = true;
+  document.getElementById("fSituacao").classList.remove("has-error");
+}));
+function situacaoSelecionada(){ const r = document.querySelector('input[name="situacao"]:checked'); return r ? r.value : ""; }
 function classeSelecionada(){ const r = document.querySelector('input[name="classe"]:checked'); return r ? r.value : ""; }
 ["nome","email"].forEach(id => document.getElementById(id).addEventListener("input", e => e.target.closest(".field").classList.remove("has-error")));
 
@@ -576,6 +645,8 @@ async function finalizar(){
     nome: document.getElementById("nome").value.trim(),
     email: document.getElementById("email").value.trim(),
     classe: classeSelecionada(),
+    situacao: situacaoSelecionada(),
+    ciclo,
     nota, acertos, erros, total: detalhe.length,
     tentativa, max_tentativas: MAX_TENTATIVAS,
     versao: PROVA.map(q => q.id).join("|"),
@@ -585,6 +656,7 @@ async function finalizar(){
   };
 
   registrarTentativa(dados.email, dados.classe, tentativa);
+  localGravar(chaveCiclo(dados.email, dados.classe), ciclo);
   PROVA.forEach(q => idsUsados.add(q.id));
   guardarIdsLocais(dados.email, idsUsados);
   document.getElementById("loading").classList.add("active");
@@ -632,7 +704,7 @@ function mostrarResultado(d){
   const r = document.getElementById("resultado");
   r.innerHTML = `
     <div class="result-top">
-      <div class="eyebrow">Resultado registrado · Tentativa ${d.tentativa} de ${MAX_TENTATIVAS}</div>
+      <div class="eyebrow">Resultado registrado · Tentativa ${d.tentativa} de ${MAX_TENTATIVAS}${d.ciclo > 1 ? " · Repetição da aula" : ""}</div>
       <h2>${aprovado ? "Muito bem, " : "Obrigado, "}${esc(primeiro)}!</h2>
       <p>${esc(d.aula)} · ${esc(d.classe)}</p>
       <div class="nota-box">
