@@ -62,13 +62,14 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 .field .error-msg{font-size:12px;color:var(--ag-error);margin-top:4px;display:none}
 .field.has-error input{border-color:var(--ag-error)}
 .field.has-error .error-msg{display:block}
+.field.has-error .option{border-color:var(--ag-error)}
 
 /* Questão */
 .question-num{font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ag-text-secondary);margin-bottom:10px}
 .question-text{font-size:17px;font-weight:600;line-height:1.5;margin-bottom:18px}
 .options{display:flex;flex-direction:column;gap:8px}
 .options.inline{flex-direction:row;flex-wrap:wrap}
-.options.inline .option{flex:1;min-width:140px;justify-content:center}
+.options.inline .option{flex:1;min-width:140px;justify-content:center;align-items:center}
 .option{display:flex;align-items:flex-start;gap:12px;padding:13px 16px;border:1.5px solid var(--ag-border);border-radius:10px;cursor:pointer;transition:all var(--transition);background:#FAFAF8}
 .option:hover{border-color:var(--ag-laranja);background:var(--ag-laranja-soft)}
 .option.selected{border-color:var(--ag-laranja);background:var(--ag-laranja-soft);box-shadow:0 0 0 2px rgba(230,126,34,.15)}
@@ -168,6 +169,14 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
       <label for="nome">Nome completo<span class="req">*</span></label>
       <input type="text" id="nome" name="nome" autocomplete="name" placeholder="Como você é identificado na Aceleração de Parcerias">
       <div class="error-msg">Informe o seu nome completo.</div>
+    </div>
+    <div class="field" id="fClasse">
+      <label>De qual classe você faz parte?<span class="req">*</span></label>
+      <div class="options inline" id="classeOpts">
+        <label class="option"><input type="radio" name="classe" value="Classe 2"><span>Classe 2</span></label>
+        <label class="option"><input type="radio" name="classe" value="Classe 3"><span>Classe 3</span></label>
+      </div>
+      <div class="error-msg">Selecione a sua classe.</div>
     </div>
     <div class="field" id="fEmail">
       <label for="email">E-mail<span class="req">*</span></label>
@@ -301,7 +310,7 @@ const BANCO_VF = [
    CONFIGURAÇÃO
    ============================================================ */
 const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbyeBLjCQDUlsXdqRMRl31xpsSDTMPOCrvkALU7zcF1i_VigAllDG3LytCr6wyNdhZut/exec";
-const AULA = "Simulação de Vendas · Classe 2 · Semana 1";
+const AULA = "Simulação de Vendas";
 const QTD_ME = 7;          // múltipla escolha por sessão
 const QTD_VF = 3;          // verdadeiro ou falso por sessão
 const NOTA_MINIMA = 7;     // abaixo disso o parceiro ganha uma segunda tentativa
@@ -478,6 +487,9 @@ document.getElementById("btnIniciar").addEventListener("click", () => {
   let ok = true;
   document.getElementById("fNome").classList.toggle("has-error", nome.split(/\s+/).length < 2);
   if (nome.split(/\s+/).length < 2) ok = false;
+  const classeOk = classeSelecionada() !== "";
+  document.getElementById("fClasse").classList.toggle("has-error", !classeOk);
+  if (!classeOk) ok = false;
   const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
   document.getElementById("fEmail").classList.toggle("has-error", !emailOk);
   if (!emailOk) ok = false;
@@ -492,6 +504,12 @@ document.getElementById("btnIniciar").addEventListener("click", () => {
   tentativa = feitas + 1;
   irPara(0);
 });
+document.querySelectorAll("#classeOpts .option").forEach(op => op.addEventListener("click", () => {
+  document.querySelectorAll("#classeOpts .option").forEach(o => o.classList.remove("selected"));
+  op.classList.add("selected"); op.querySelector("input").checked = true;
+  document.getElementById("fClasse").classList.remove("has-error");
+}));
+function classeSelecionada(){ const r = document.querySelector('input[name="classe"]:checked'); return r ? r.value : ""; }
 ["nome","email"].forEach(id => document.getElementById(id).addEventListener("input", e => e.target.closest(".field").classList.remove("has-error")));
 
 /* ============================================================
@@ -521,10 +539,11 @@ async function finalizar(){
   const nota = acertos * 1.0;
 
   const dados = {
-    origem: "quiz_classe2_semana1",
+    origem: "quiz_simulacao_vendas",
     aula: AULA,
     nome: document.getElementById("nome").value.trim(),
     email: document.getElementById("email").value.trim(),
+    classe: classeSelecionada(),
     nota, acertos, erros, total: detalhe.length,
     tentativa, max_tentativas: MAX_TENTATIVAS,
     versao: PROVA.map(q => q.id).join("|"),
@@ -582,7 +601,7 @@ function mostrarResultado(d){
     <div class="result-top">
       <div class="eyebrow">Resultado registrado · Tentativa ${d.tentativa} de ${MAX_TENTATIVAS}</div>
       <h2>${aprovado ? "Muito bem, " : "Obrigado, "}${esc(primeiro)}!</h2>
-      <p>${esc(d.aula)}</p>
+      <p>${esc(d.aula)} · ${esc(d.classe)}</p>
       <div class="nota-box">
         <div class="valor">${d.nota.toFixed(1).replace(".",",")}<small> / 10</small></div>
         <div class="rotulo">Sua nota</div>
