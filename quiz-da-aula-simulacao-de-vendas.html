@@ -314,7 +314,7 @@ const AULA = "Simulação de Vendas";
 const QTD_ME = 7;          // múltipla escolha por sessão
 const QTD_VF = 3;          // verdadeiro ou falso por sessão
 const NOTA_MINIMA = 7;     // abaixo disso o parceiro ganha uma segunda tentativa
-const MAX_TENTATIVAS = 2;  // total de tentativas permitidas
+const MAX_TENTATIVAS = 2;  // tentativas por parceiro e por classe
 const MOSTRAR_GABARITO = true;  // false = na revisão mostra só o tema, sem a resposta correta
 
 /* ============================================================
@@ -477,11 +477,28 @@ function avancar(i){
 /* ============================================================
    IDENTIFICAÇÃO
    ============================================================ */
-function chaveTentativas(email){ return "quiz_sv_" + email.toLowerCase(); }
-function tentativasFeitas(email){ try { return Number(localStorage.getItem(chaveTentativas(email)) || 0); } catch(e){ return 0; } }
-function registrarTentativa(email, n){ try { localStorage.setItem(chaveTentativas(email), String(n)); } catch(e){} }
+function chaveTentativas(email, classe){ return "quiz_sv_" + email.toLowerCase() + "_" + classe.replace(/\s+/g, "").toLowerCase(); }
+function chaveIds(email){ return "quiz_sv_ids_" + email.toLowerCase(); }
+function idsLocais(email){ try { return JSON.parse(localStorage.getItem(chaveIds(email)) || "[]"); } catch(e){ return []; } }
+function guardarIdsLocais(email, ids){ try { localStorage.setItem(chaveIds(email), JSON.stringify(Array.from(ids))); } catch(e){} }
 
-document.getElementById("btnIniciar").addEventListener("click", () => {
+/* Consulta o histórico no receptor (ids já apresentados e tentativas por classe).
+   Se o receptor não responder em 6 segundos, segue com o registro local do navegador. */
+async function consultarHistorico(email){
+  if (!WEBAPP_URL || WEBAPP_URL.indexOf("http") !== 0) return null;
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 6000);
+  try {
+    const r = await fetch(WEBAPP_URL + "?acao=historico&email=" + encodeURIComponent(email), { signal: ctrl.signal });
+    const j = await r.json();
+    return j && j.ok ? j : null;
+  } catch (e) { return null; }
+  finally { clearTimeout(timer); }
+}
+function tentativasFeitas(email, classe){ try { return Number(localStorage.getItem(chaveTentativas(email, classe)) || 0); } catch(e){ return 0; } }
+function registrarTentativa(email, classe, n){ try { localStorage.setItem(chaveTentativas(email, classe), String(n)); } catch(e){} }
+
+document.getElementById("btnIniciar").addEventListener("click", async () => {
   const nome = document.getElementById("nome").value.trim();
   const email = document.getElementById("email").value.trim();
   let ok = true;
@@ -494,14 +511,29 @@ document.getElementById("btnIniciar").addEventListener("click", () => {
   document.getElementById("fEmail").classList.toggle("has-error", !emailOk);
   if (!emailOk) ok = false;
   if (!ok) return;
-  const feitas = tentativasFeitas(email);
+  const classe = classeSelecionada();
+  const btn = document.getElementById("btnIniciar");
+  btn.disabled = true; btn.textContent = "Preparando o seu quiz...";
+  const hist = await consultarHistorico(email);
+  btn.disabled = false; btn.textContent = "Iniciar o quiz →";
+
+  // tentativas nesta classe: maior valor entre o registro do servidor e o do navegador
+  const feitasServidor = hist ? Number((hist.tentativas || {})[classe] || 0) : 0;
+  const feitas = Math.max(feitasServidor, tentativasFeitas(email, classe));
   if (feitas >= MAX_TENTATIVAS) {
     const f = document.getElementById("fEmail");
-    f.querySelector(".error-msg").textContent = "Este e-mail já utilizou as " + MAX_TENTATIVAS + " tentativas do quiz. Fale com o condutor da sua turma.";
+    f.querySelector(".error-msg").textContent = "Este e-mail já utilizou as " + MAX_TENTATIVAS + " tentativas do quiz na " + classe + ". Fale com o condutor da sua turma.";
     f.classList.add("has-error");
     return;
   }
   tentativa = feitas + 1;
+
+  // questões já vistas por este e-mail (qualquer classe, qualquer tentativa): não repetir
+  idsUsados = new Set(idsLocais(email));
+  if (hist) (hist.ids || []).forEach(id => idsUsados.add(id));
+  PROVA = montarProva(idsUsados);
+  respostas = new Array(PROVA.length).fill(null);
+  renderQuestoes();
   irPara(0);
 });
 document.querySelectorAll("#classeOpts .option").forEach(op => op.addEventListener("click", () => {
@@ -552,8 +584,9 @@ async function finalizar(){
     navegador: navigator.userAgent
   };
 
-  registrarTentativa(dados.email, tentativa);
+  registrarTentativa(dados.email, dados.classe, tentativa);
   PROVA.forEach(q => idsUsados.add(q.id));
+  guardarIdsLocais(dados.email, idsUsados);
   document.getElementById("loading").classList.add("active");
   try {
     await fetch(WEBAPP_URL, { method:"POST", headers:{ "Content-Type":"text/plain" }, body: JSON.stringify(dados) });
@@ -565,8 +598,8 @@ async function finalizar(){
 
 function mensagemFinal(d, aprovado){
   if (aprovado) return `<div class="msg-final aprovado">Você demonstrou domínio do conteúdo da reunião de simulação. O resultado já foi enviado ao time da Aceleração de Parcerias.</div>`;
-  if (d.tentativa < MAX_TENTATIVAS) return `<div class="msg-final chance"><strong>Você tem mais uma chance.</strong> Sua nota ficou abaixo de ${String(NOTA_MINIMA).replace(".",",")},0. Revise as questões em vermelho acima e refaça o quiz com um novo sorteio de perguntas. Esta é a sua última tentativa e as duas notas ficam registradas.<br><button class="btn btn-primary" type="button" onclick="novaTentativa()">Refazer o quiz (tentativa ${d.tentativa + 1} de ${MAX_TENTATIVAS}) →</button></div>`;
-  return `<div class="msg-final">Esta foi a sua última tentativa. Vale rever os temas sinalizados em vermelho. O time da Aceleração de Parcerias recebeu os seus resultados e pode ajudar com dúvidas pelo condutor da sua turma.</div>`;
+  if (d.tentativa < MAX_TENTATIVAS) return `<div class="msg-final chance"><strong>Você tem mais uma chance.</strong> Sua nota ficou abaixo de ${String(NOTA_MINIMA).replace(".",",")},0. Revise as questões em vermelho acima e refaça o quiz com um novo sorteio de perguntas. Esta é a sua última tentativa nesta classe e as duas notas ficam registradas.<br><button class="btn btn-primary" type="button" onclick="novaTentativa()">Refazer o quiz (tentativa ${d.tentativa + 1} de ${MAX_TENTATIVAS}) →</button></div>`;
+  return `<div class="msg-final">Esta foi a sua última tentativa nesta classe. Vale rever os temas sinalizados em vermelho. O time da Aceleração de Parcerias recebeu os seus resultados e pode ajudar com dúvidas pelo condutor da sua turma.</div>`;
 }
 
 function novaTentativa(){
