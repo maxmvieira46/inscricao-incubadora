@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz da Aula - Classe 2 · Semana 1 · Simulação de Vendas | AG TaxTech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --ag-grafite:#2C2C2C;--ag-grafite-light:#3D3D3D;
+  --ag-laranja:#E67E22;--ag-laranja-hover:#D35400;--ag-laranja-soft:#FDF2E9;
+  --ag-navy:#001959;--ag-navy-dark:#111837;--ag-eyebrow:#E8843C;
+  --ag-bg:#F5F5F0;--ag-card:#FFFFFF;--ag-border:#E0DDD5;
+  --ag-text:#2C2C2C;--ag-text-secondary:#6B6B6B;
+  --ag-success:#27AE60;--ag-success-bg:#E8F8F0;--ag-error:#E74C3C;--ag-error-bg:#FDEDEC;
+  --radius:12px;--shadow:0 2px 12px rgba(44,44,44,.06);
+  --max-width:680px;--transition:.3s cubic-bezier(.4,0,.2,1);
+}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--ag-bg);color:var(--ag-text);line-height:1.6;min-height:100vh}
+
+/* Cabeçalho */
+.header{background:linear-gradient(135deg,var(--ag-navy-dark),var(--ag-navy));color:#FFF;position:relative;overflow:hidden}
+.header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--ag-laranja)}
+.header-inner{max-width:var(--max-width);margin:0 auto;padding:36px 24px 34px}
+.logo-area{display:flex;align-items:center;gap:14px;margin-bottom:26px}
+.logo-mark{width:48px;height:48px;background:var(--ag-laranja);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;color:#FFF;letter-spacing:-.5px;flex-shrink:0}
+.logo-text{font-size:12px;text-transform:uppercase;letter-spacing:2.5px;opacity:.75;font-weight:600;line-height:1.35}
+.header-eyebrow{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ag-eyebrow);margin:0 0 8px}
+.header h1{font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,32px);font-weight:700;line-height:1.2;margin-bottom:12px}
+.header p{font-size:15px;opacity:.8;max-width:540px;line-height:1.55}
+.header p+p{margin-top:8px}
+
+/* Barra de progresso */
+.progress-wrap{background:var(--ag-card);border-bottom:1px solid var(--ag-border);position:sticky;top:0;z-index:100}
+.progress-inner{max-width:var(--max-width);margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:6px}
+.progress-label{font-size:12px;color:var(--ag-text-secondary);white-space:nowrap;font-weight:600;margin-right:6px}
+.progress-step{flex:1;height:4px;border-radius:2px;background:var(--ag-border);transition:background var(--transition)}
+.progress-step.active{background:var(--ag-laranja)}
+.progress-step.done{background:var(--ag-success)}
+
+/* Estrutura */
+.container{max-width:var(--max-width);margin:0 auto;padding:24px 24px 48px}
+.card{background:var(--ag-card);border-radius:var(--radius);box-shadow:var(--shadow);padding:32px 28px;margin-bottom:20px;border:1px solid var(--ag-border);display:none;animation:fadeUp .4s ease-out}
+.card.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.badge{display:inline-flex;align-items:center;gap:8px;background:var(--ag-laranja-soft);color:var(--ag-laranja);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}
+.badge.vf{background:#E7EAF1;color:var(--ag-navy)}
+.card h2{font-size:21px;font-weight:700;margin-bottom:6px}
+.card .subtitle{font-size:14px;color:var(--ag-text-secondary);margin-bottom:24px}
+.note{font-size:13px;color:var(--ag-text-secondary);background:#F9F8F5;padding:12px 14px;border-radius:8px;margin-bottom:22px;border-left:3px solid var(--ag-laranja);line-height:1.5}
+.note strong{color:var(--ag-text)}
+
+/* Campos */
+.field{margin-bottom:20px}
+.field label{display:block;font-size:14px;font-weight:600;margin-bottom:8px}
+.field label .req{color:var(--ag-laranja);margin-left:2px}
+.field input[type="text"],.field input[type="email"]{width:100%;padding:12px 16px;font-size:15px;font-family:inherit;border:1.5px solid var(--ag-border);border-radius:8px;background:#FAFAF8;color:var(--ag-text);transition:border-color var(--transition),box-shadow var(--transition);outline:none}
+.field input:focus{border-color:var(--ag-laranja);box-shadow:0 0 0 3px rgba(230,126,34,.12);background:#FFF}
+.field .error-msg{font-size:12px;color:var(--ag-error);margin-top:4px;display:none}
+.field.has-error input{border-color:var(--ag-error)}
+.field.has-error .error-msg{display:block}
+
+/* Questão */
+.question-num{font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ag-text-secondary);margin-bottom:10px}
+.question-text{font-size:17px;font-weight:600;line-height:1.5;margin-bottom:18px}
+.options{display:flex;flex-direction:column;gap:8px}
+.options.inline{flex-direction:row;flex-wrap:wrap}
+.options.inline .option{flex:1;min-width:140px;justify-content:center}
+.option{display:flex;align-items:flex-start;gap:12px;padding:13px 16px;border:1.5px solid var(--ag-border);border-radius:10px;cursor:pointer;transition:all var(--transition);background:#FAFAF8}
+.option:hover{border-color:var(--ag-laranja);background:var(--ag-laranja-soft)}
+.option.selected{border-color:var(--ag-laranja);background:var(--ag-laranja-soft);box-shadow:0 0 0 2px rgba(230,126,34,.15)}
+.option input[type="radio"]{appearance:none;-webkit-appearance:none;width:20px;height:20px;border:2px solid var(--ag-border);border-radius:50%;flex-shrink:0;margin-top:2px;position:relative;cursor:pointer;transition:all var(--transition);background:#FFF}
+.option.selected input[type="radio"]{border-color:var(--ag-laranja);background:var(--ag-laranja)}
+.option.selected input[type="radio"]::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:8px;height:8px;border-radius:50%;background:#FFF}
+.option span{font-size:14.5px;line-height:1.45}
+.option .letra{font-weight:700;color:var(--ag-laranja);margin-right:2px}
+.alert{display:none;font-size:13px;color:var(--ag-error);background:var(--ag-error-bg);padding:10px 14px;border-radius:8px;margin-top:14px;border-left:3px solid var(--ag-error)}
+.alert.show{display:block}
+
+/* Navegação */
+.nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:26px;padding-top:20px;border-top:1px solid #F0EDE5;gap:12px}
+.btn{padding:12px 26px;font-size:15px;font-family:inherit;font-weight:600;border-radius:8px;cursor:pointer;transition:all var(--transition);border:none;display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:var(--ag-laranja);color:#FFF}
+.btn-primary:hover{background:var(--ag-laranja-hover);transform:translateY(-1px);box-shadow:0 4px 12px rgba(230,126,34,.3)}
+.btn-secondary{background:transparent;color:var(--ag-text-secondary);border:1.5px solid var(--ag-border)}
+.btn-secondary:hover{border-color:var(--ag-text-secondary);color:var(--ag-text)}
+.btn-submit{background:var(--ag-navy);color:#FFF;padding:14px 34px;font-size:16px}
+.btn-submit:hover{background:var(--ag-navy-dark);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,25,89,.25)}
+.btn:disabled{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* Resultado */
+.result{display:none;background:var(--ag-card);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--ag-border);animation:fadeUp .5s ease-out;overflow:hidden}
+.result.active{display:block}
+.result-top{background:linear-gradient(135deg,var(--ag-navy-dark),var(--ag-navy));color:#FFF;padding:40px 28px 32px;text-align:center;position:relative}
+.result-top::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--ag-laranja)}
+.result-top .eyebrow{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ag-eyebrow);margin-bottom:10px}
+.result-top h2{font-family:'Playfair Display',serif;font-size:24px;margin-bottom:6px}
+.result-top p{opacity:.8;font-size:14px}
+.nota-box{margin:22px auto 0;display:inline-flex;flex-direction:column;align-items:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:16px 34px}
+.nota-box .valor{font-family:'Playfair Display',serif;font-size:56px;line-height:1;font-weight:700}
+.nota-box .valor small{font-size:22px;opacity:.7;font-family:'Inter',sans-serif;font-weight:500}
+.nota-box .rotulo{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;opacity:.75;margin-top:8px}
+.result-body{padding:28px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+.stat{border-radius:10px;padding:16px 12px;text-align:center;border:1px solid var(--ag-border);background:#FAFAF8}
+.stat .n{font-size:28px;font-weight:700;line-height:1.1}
+.stat .l{font-size:12px;color:var(--ag-text-secondary);margin-top:4px;font-weight:500}
+.stat.ok .n{color:var(--ag-success)}
+.stat.err .n{color:var(--ag-error)}
+.stat.pct .n{color:var(--ag-navy)}
+.result-body h3{font-size:15px;font-weight:700;margin:0 0 12px}
+.rev-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.rev-item{border:1px solid var(--ag-border);border-radius:10px;padding:14px 16px;background:#FAFAF8;border-left-width:4px}
+.rev-item.ok{border-left-color:var(--ag-success)}
+.rev-item.err{border-left-color:var(--ag-error)}
+.rev-item .tema{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ag-text-secondary);margin-bottom:4px}
+.rev-item .q{font-size:14px;font-weight:600;line-height:1.45;margin-bottom:6px}
+.rev-item .r{font-size:13px;color:var(--ag-text-secondary);line-height:1.45}
+.rev-item .r b{color:var(--ag-text);font-weight:600}
+.rev-item .r .certa{color:var(--ag-success);font-weight:600}
+.rev-item .r .errada{color:var(--ag-error);font-weight:600}
+.msg-final{font-size:14px;color:var(--ag-text-secondary);background:#F9F8F5;padding:14px 16px;border-radius:8px;margin-top:22px;border-left:3px solid var(--ag-laranja);line-height:1.55}
+.msg-final.aprovado{border-left-color:var(--ag-success);background:var(--ag-success-bg);color:#1E6B3F}
+
+.loading{display:none;position:fixed;inset:0;background:rgba(245,245,240,.92);z-index:200;align-items:center;justify-content:center;flex-direction:column;gap:14px}
+.loading.active{display:flex}
+.spinner{width:44px;height:44px;border:4px solid var(--ag-border);border-top-color:var(--ag-laranja);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading p{font-size:14px;color:var(--ag-text-secondary);font-weight:500}
+
+.footer{max-width:var(--max-width);margin:0 auto;padding:0 24px 32px;text-align:center;font-size:12px;color:var(--ag-text-secondary)}
+@media(max-width:520px){.card{padding:24px 18px}.stats{grid-template-columns:1fr 1fr 1fr;gap:8px}.stat .n{font-size:22px}.options.inline .option{min-width:110px}.result-body{padding:20px 16px}}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="logo-area">
+      <img src="data:image/png;base64,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" alt="AG TaxTech" style="height:52px;width:auto;display:block;">
+    </div>
+    <p class="header-eyebrow">Aceleração de Parcerias 2026</p>
+    <h1>Quiz da Aula</h1>
+    <p><strong>Classe 2 · Semana 1 · Simulação de Vendas</strong></p>
+    <p>Dez questões sobre o conteúdo da videoaula: sete de múltipla escolha e três de verdadeiro ou falso. Cada acerto vale 1,0 ponto. As questões são sorteadas a cada acesso.</p>
+  </div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-inner" id="progressInner">
+    <span class="progress-label" id="progressLabel">Identificação</span>
+  </div>
+</div>
+
+<main class="container">
+
+  <!-- Identificação -->
+  <section class="card active" id="cardIdent">
+    <span class="badge">Antes de começar</span>
+    <h2>Identifique-se</h2>
+    <p class="subtitle">Informe o seu nome e o e-mail cadastrado na Aceleração de Parcerias para liberar o quiz.</p>
+    <div class="note">Você verá <strong>uma questão por vez</strong> e poderá voltar para revisar antes de enviar. Ao concluir, a sua pontuação aparece na tela e o resultado é registrado automaticamente para o time da Aceleração de Parcerias.</div>
+    <div class="field" id="fNome">
+      <label for="nome">Nome completo<span class="req">*</span></label>
+      <input type="text" id="nome" name="nome" autocomplete="name" placeholder="Como você é identificado na Aceleração de Parcerias">
+      <div class="error-msg">Informe o seu nome completo.</div>
+    </div>
+    <div class="field" id="fEmail">
+      <label for="email">E-mail<span class="req">*</span></label>
+      <input type="email" id="email" name="email" autocomplete="email" placeholder="seu@email.com.br">
+      <div class="error-msg">Informe um e-mail válido.</div>
+    </div>
+    <div class="nav-row">
+      <span></span>
+      <button class="btn btn-primary" id="btnIniciar" type="button">Iniciar o quiz →</button>
+    </div>
+  </section>
+
+  <!-- Questões (montadas por script) -->
+  <div id="questoesWrap"></div>
+
+  <!-- Resultado -->
+  <section class="result" id="resultado"></section>
+
+</main>
+
+<div class="footer">Aceleração de Parcerias 2026 - Projetos Estratégicos - AG TaxTech</div>
+
+<div class="loading" id="loading"><div class="spinner"></div><p>Corrigindo e registrando o seu resultado...</p></div>
+
+<script>
+/* ============================================================
+   BANCO DE QUESTÕES - Classe 2 · Semana 1 · Simulação de Vendas
+   Fonte: FAQs adicionais da videoaula + teste de conteúdo.
+   Cada sessão sorteia 7 de múltipla escolha e 3 de verdadeiro ou falso.
+   Para a múltipla escolha, "c" é o índice da alternativa correta (0 a 3).
+   Para verdadeiro ou falso, "c" é true ou false.
+   "tema" alimenta o relatório de erros por assunto.
+   ============================================================ */
+const BANCO_ME = [
+ {id:"ME01", tema:"Reunião comercial", q:"Qual é a principal finalidade da primeira reunião comercial?",
+  o:["Assinar imediatamente o contrato de execução.","Apresentar a AG TaxTech, entender o perfil do cliente e obter os acessos para elaborar o relatório inicial.","Fazer todos os lançamentos de compensação.","Explicar em detalhe todos os temas técnicos e riscos."], c:1},
+ {id:"ME02", tema:"Postura do parceiro", q:"Quando o parceiro não souber responder a uma pergunta técnica do cliente, ele deve:",
+  o:["Dar uma resposta aproximada para não perder a venda.","Ignorar a pergunta e seguir com a apresentação.","Reconhecer a dúvida, registrá-la e informar que buscará o esclarecimento com a equipe técnica.","Encaminhar o cliente diretamente para outro fornecedor."], c:2},
+ {id:"ME03", tema:"Período analisado", q:"Qual é o período normalmente analisado pela AG TaxTech?",
+  o:["Últimos dois anos.","Últimos três anos.","Últimos cinco anos, respeitando o prazo prescricional.","Todo o período de existência da empresa."], c:2},
+ {id:"ME04", tema:"Esteiras de trabalho", q:"Qual alternativa apresenta corretamente as duas principais esteiras de trabalho?",
+  o:["Trabalhista e comercial.","Previdenciária e de tributos diretos e indiretos.","Financeira e societária.","Judicial e trabalhista."], c:1},
+ {id:"ME05", tema:"Tecnologia Athena", q:"Qual é a função da tecnologia Athena?",
+  o:["Substituir integralmente o contador da empresa.","Apoiar a apuração, a análise e a monetização das oportunidades tributárias identificadas.","Emitir automaticamente todas as certidões da empresa.","Elaborar contratos comerciais sem participação humana."], c:1},
+ {id:"ME06", tema:"Níveis de tema", q:"O que caracteriza um tema de nível 1?",
+  o:["Tema contrário ao contribuinte e sem possibilidade de aproveitamento.","Tema ainda sem qualquer decisão judicial.","Tema considerado consolidado, com orientação de aproveitamento pela via administrativa.","Tema que só pode ser utilizado judicialmente."], c:2},
+ {id:"ME07", tema:"NDA e acessos", q:"O que é formalizado na primeira etapa, antes da elaboração do relatório?",
+  o:["Contrato definitivo de execução.","Contrato de franquia.","Acordo de confidencialidade (NDA).","Procuração geral e irrestrita."], c:2},
+ {id:"ME08", tema:"Prazos dos relatórios", q:"Qual é o prazo aproximado indicado para o relatório da análise previdenciária?",
+  o:["Dois dias úteis.","Cinco dias corridos.","Dez dias úteis.","Sessenta dias úteis."], c:2},
+ {id:"ME09", tema:"Remuneração", q:"Como ocorre a remuneração do trabalho da AG TaxTech?",
+  o:["Por meio de pagamento fixo mensal antecipado.","Com base no valor efetivamente aproveitado pela empresa, conforme tabela escalonada.","Pela quantidade de reuniões realizadas.","Por uma taxa única, independentemente do resultado."], c:1},
+ {id:"ME10", tema:"Compensação e restituição", q:"Qual é a diferença principal entre compensação e restituição?",
+  o:["A compensação utiliza o crédito para abater débitos; a restituição busca a devolução dos valores.","A compensação ocorre somente judicialmente; a restituição ocorre somente administrativamente.","A restituição é sempre imediata; a compensação demora vários anos.","Não existe diferença entre os dois procedimentos."], c:0},
+ {id:"ME11", tema:"Período analisado", q:"O que significa analisar as últimas 65 competências?",
+  o:["Cinco anos de análise, considerando os 12 meses e o 13º salário de cada ano.","Sessenta e cinco meses corridos a partir da abertura da empresa.","Cinco anos apenas de tributos diretos, sem folha de pagamento.","As competências que a empresa escolher, até o limite de 65."], c:0},
+ {id:"ME12", tema:"Perfil do cliente", q:"Por que é importante conhecer o perfil da empresa antes de apresentar a solução?",
+  o:["Para definir antecipadamente o valor do contrato.","Porque segmento, regime tributário, faturamento e número de colaboradores ajudam a definir quais frentes de análise são mais adequadas.","Para identificar erros cometidos pelo contador.","Para dispensar a assinatura do acordo de confidencialidade."], c:1},
+ {id:"ME13", tema:"Esteiras de trabalho", q:"O período em que a empresa esteve no lucro presumido interfere em todas as análises?",
+  o:["Sim, inviabiliza todas as análises do período.","Não interfere em nada, pois o regime tributário é irrelevante.","Não necessariamente na esteira previdenciária, mas pode limitar oportunidades de tributos diretos e indiretos.","Interfere apenas na esteira previdenciária."], c:2},
+ {id:"ME14", tema:"Origem das oportunidades", q:"O que pode provocar o pagamento de tributos a maior sem que exista erro do contador?",
+  o:["A falta de emissão de notas fiscais.","Uma previsão legal favorável ao contribuinte ainda não parametrizada no sistema governamental de envio das informações.","O atraso no pagamento das guias.","A ausência de certidão negativa de débitos."], c:1},
+ {id:"ME15", tema:"Metodologia de análise", q:"A AG TaxTech trabalha com amostragem de documentos?",
+  o:["Sim, analisa apenas os meses de maior faturamento.","Sim, seleciona uma amostra aleatória de competências.","Não. A proposta é uma análise abrangente e completa das obrigações do período considerado.","Apenas na esteira previdenciária."], c:2},
+ {id:"ME16", tema:"Duplicidade e judicialização", q:"Como são evitadas oportunidades em duplicidade?",
+  o:["A empresa assina um termo declarando que nunca aproveitou créditos.","A equipe consulta compensações e trabalhos anteriores para excluir do escopo os temas já aproveitados.","A Athena descarta automaticamente qualquer tema já discutido no mercado.","Não há verificação; o cliente é responsável por informar."], c:1},
+ {id:"ME17", tema:"Duplicidade e judicialização", q:"O que acontece com um tema que a empresa já discute judicialmente?",
+  o:["É apresentado normalmente como crédito para aproveitamento administrativo.","É retirado do escopo de aproveitamento administrativo, podendo haver apoio técnico para cálculo ou organização dos valores.","É ignorado completamente pela equipe.","É incluído como tema de nível 1."], c:1},
+ {id:"ME18", tema:"Níveis de tema", q:"O que caracteriza um tema de nível 3?",
+  o:["Tema consolidado e recomendado para aproveitamento imediato.","Tema com decisões favoráveis e desfavoráveis, apresentado para acompanhamento.","Tema já analisado pelos tribunais superiores e contrário ao contribuinte, apresentado como oportunidade financeira sem recomendação de aproveitamento administrativo.","Tema que ainda não foi discutido em nenhuma instância."], c:2},
+ {id:"ME19", tema:"Níveis de tema", q:"O que caracteriza um tema de nível 2?",
+  o:["Tema consolidado para aproveitamento administrativo.","Tema com decisões favoráveis e desfavoráveis, ainda sem posicionamento consolidado, apresentado principalmente para acompanhamento.","Tema contrário ao contribuinte nos tribunais superiores.","Tema exclusivo da esteira previdenciária."], c:1},
+ {id:"ME20", tema:"Prazos dos relatórios", q:"Qual é o prazo aproximado indicado para o relatório de tributos diretos e indiretos?",
+  o:["Cinco dias úteis.","Dez dias úteis.","Vinte dias úteis.","Noventa dias úteis."], c:2},
+ {id:"ME21", tema:"Remuneração", q:"A empresa paga pelo relatório inicial?",
+  o:["Sim, um valor fixo por esteira analisada.","Sim, mas apenas se decidir prosseguir.","Não. Se a empresa decidir não prosseguir após o relatório, não terá custo pelo trabalho realizado até aquele momento.","Sim, um percentual sobre o faturamento."], c:2},
+ {id:"ME22", tema:"Compensação e restituição", q:"Quem decide se será feita compensação ou restituição dos valores identificados?",
+  o:["A AG TaxTech, com base na tabela escalonada.","A empresa, considerando sua situação financeira, seus débitos e sua preferência.","A contabilidade do cliente, obrigatoriamente.","A Receita Federal, no momento da homologação."], c:1},
+ {id:"ME23", tema:"Execução e acompanhamento", q:"Quem executa tecnicamente os procedimentos após a contratação?",
+  o:["A contabilidade do cliente, sozinha.","O próprio parceiro comercial.","A equipe operacional da AG TaxTech, com anuência e acompanhamento da empresa contratante.","Um escritório terceirizado indicado pelo cliente."], c:2},
+ {id:"ME24", tema:"Garantias contratuais", q:"Quais garantias são mencionadas no contrato?",
+  o:["Suporte por cinco anos a partir de cada aproveitamento, apoio na manutenção da regularidade fiscal e da CND e apólice de seguro para erros e omissões.","Devolução integral dos honorários em caso de autuação.","Garantia de resultado mínimo em reais.","Substituição da contabilidade do cliente durante o processo."], c:0},
+ {id:"ME25", tema:"Escopo previdenciário", q:"Quais perfis de empresa ficam fora do escopo de apuração dos créditos previdenciários?",
+  o:["Empresas do lucro real.","Empresas do Simples Nacional e empresas com menos de 50 funcionários celetistas.","Empresas com mais de 500 colaboradores.","Empresas que já possuem ação judicial."], c:1},
+ {id:"ME26", tema:"NDA e acessos", q:"Para que são utilizados os acessos ao e-CAC e ao eSocial na primeira etapa?",
+  o:["Para transmitir compensações em nome da empresa.","Para consulta e extração de informações necessárias ao relatório.","Para alterar o regime tributário da empresa.","Para retificar declarações anteriores."], c:1},
+ {id:"ME27", tema:"Perfil do cliente", q:"Quais informações sobre a empresa foram levantadas na simulação de vendas?",
+  o:["Apenas o CNPJ e o faturamento.","Segmento, regime tributário, faturamento anual, número aproximado de celetistas, trabalhos tributários anteriores e existência de medidas judiciais.","Somente a existência de medidas judiciais.","Nome dos sócios e endereço da sede."], c:1},
+ {id:"ME28", tema:"Reunião comercial", q:"A reunião inicial deve abordar todos os detalhes técnicos e riscos?",
+  o:["Sim, para que o cliente decida com todas as informações.","Sim, sempre com o apoio da equipe jurídica presente.","Não necessariamente. A orientação é adaptar a profundidade ao perfil do cliente e concentrar a reunião na obtenção dos acessos e na elaboração do relatório.","Não, a reunião inicial serve apenas para assinar o contrato."], c:2},
+ {id:"ME29", tema:"Tecnologia Athena", q:"A Athena trabalha de forma totalmente automática?",
+  o:["Sim, sem qualquer participação humana.","Sim, e emite os relatórios finais sozinha.","Não. A tecnologia depende de acompanhamento, validação e supervisão de profissionais.","Sim, mas apenas na esteira de tributos diretos e indiretos."], c:2},
+ {id:"ME30", tema:"Garantias contratuais", q:"Quando começa a contar o suporte de cinco anos previsto em contrato?",
+  o:["Na data de assinatura do contrato.","Na data da primeira reunião comercial.","A partir de cada aproveitamento realizado.","Na data de entrega do relatório inicial."], c:2}
+];
+
+const BANCO_VF = [
+ {id:"VF01", tema:"Reunião comercial", q:"A primeira reunião deve necessariamente resultar na assinatura do contrato de execução.", c:false},
+ {id:"VF02", tema:"Postura do parceiro", q:"O parceiro deve evitar inventar respostas para perguntas técnicas que não domina.", c:true},
+ {id:"VF03", tema:"Período analisado", q:"A análise considera, em regra, os últimos cinco anos.", c:true},
+ {id:"VF04", tema:"Tecnologia Athena", q:"A tecnologia Athena elimina completamente a necessidade de acompanhamento humano.", c:false},
+ {id:"VF05", tema:"Duplicidade e judicialização", q:"Os temas já aproveitados pela empresa devem ser excluídos do escopo para evitar duplicidade.", c:true},
+ {id:"VF06", tema:"Níveis de tema", q:"Temas de nível 2 são apresentados como totalmente consolidados e recomendados para aproveitamento imediato.", c:false},
+ {id:"VF07", tema:"NDA e acessos", q:"No primeiro momento, a empresa libera acessos específicos, limitados e temporários.", c:true},
+ {id:"VF08", tema:"Aproveitamento dos créditos", q:"A empresa é obrigada a aproveitar todos os créditos identificados no relatório.", c:false},
+ {id:"VF09", tema:"Remuneração", q:"A remuneração está relacionada ao valor efetivamente aproveitado pela empresa.", c:true},
+ {id:"VF10", tema:"Compensação e restituição", q:"A compensação e a restituição são alternativas de aproveitamento dos valores identificados.", c:true},
+ {id:"VF11", tema:"Garantias contratuais", q:"O suporte de cinco anos começa necessariamente na data de assinatura do contrato.", c:false},
+ {id:"VF12", tema:"Execução e acompanhamento", q:"A empresa e a sua contabilidade devem acompanhar as comunicações recebidas no e-CAC.", c:true},
+ {id:"VF13", tema:"Período analisado", q:"As 65 competências analisadas correspondem a cinco anos, incluindo o 13º salário de cada ano.", c:true},
+ {id:"VF14", tema:"Esteiras de trabalho", q:"O período no lucro presumido impede qualquer análise na esteira previdenciária.", c:false},
+ {id:"VF15", tema:"Metodologia de análise", q:"O trabalho da AG TaxTech consiste apenas em procurar erros contábeis.", c:false},
+ {id:"VF16", tema:"Origem das oportunidades", q:"Mesmo com previsão legal para não tributar determinada verba, o eSocial pode continuar exigindo a incidência até que seja atualizado.", c:true},
+ {id:"VF17", tema:"Metodologia de análise", q:"A AG TaxTech realiza a análise por amostragem de documentos.", c:false},
+ {id:"VF18", tema:"Duplicidade e judicialização", q:"Um tema que a empresa já discute judicialmente pode ser apresentado como crédito para aproveitamento administrativo.", c:false},
+ {id:"VF19", tema:"Níveis de tema", q:"Temas de nível 3 já foram analisados pelos tribunais superiores com posição contrária ao contribuinte.", c:true},
+ {id:"VF20", tema:"Prazos dos relatórios", q:"O relatório de tributos diretos e indiretos leva aproximadamente vinte dias úteis.", c:true},
+ {id:"VF21", tema:"Remuneração", q:"Se a empresa decidir não prosseguir após receber o relatório, ela paga pelo estudo realizado até aquele momento.", c:false},
+ {id:"VF22", tema:"Remuneração", q:"A proposta prevê pró-labore ou adiantamento de custas antes do aproveitamento.", c:false},
+ {id:"VF23", tema:"Aproveitamento dos créditos", q:"A empresa pode excluir determinadas competências sobre as quais não tenha segurança quanto às informações declaradas.", c:true},
+ {id:"VF24", tema:"Execução e acompanhamento", q:"Após a contratação, a execução técnica dos procedimentos fica a cargo da contabilidade do cliente.", c:false},
+ {id:"VF25", tema:"Garantias contratuais", q:"Entre as garantias do contrato está uma apólice de seguro para erros e omissões.", c:true},
+ {id:"VF26", tema:"Escopo previdenciário", q:"Empresas do Simples Nacional fazem parte do escopo de apuração dos créditos previdenciários.", c:false},
+ {id:"VF27", tema:"NDA e acessos", q:"A empresa precisa liberar todos os acessos do e-CAC e do eSocial para que o trabalho comece.", c:false},
+ {id:"VF28", tema:"Perfil do cliente", q:"Conhecer o regime tributário e o faturamento da empresa ajuda a definir quais frentes de análise são mais adequadas.", c:true},
+ {id:"VF29", tema:"Esteiras de trabalho", q:"A esteira previdenciária está relacionada principalmente à folha de pagamento.", c:true},
+ {id:"VF30", tema:"Compensação e restituição", q:"A restituição costuma gerar efeito financeiro mais imediato do que a compensação.", c:false}
+];
+
+/* ============================================================
+   CONFIGURAÇÃO
+   ============================================================ */
+const WEBAPP_URL = "COLE_AQUI_A_URL_DO_WEBAPP_DO_APPS_SCRIPT";
+const AULA = "Classe 2 · Semana 1 · Simulação de Vendas";
+const QTD_ME = 7;          // múltipla escolha por sessão
+const QTD_VF = 3;          // verdadeiro ou falso por sessão
+const NOTA_MINIMA = 7;     // referência para a mensagem final (não bloqueia nada)
+const MOSTRAR_GABARITO = true;  // false = na revisão mostra só o tema, sem a resposta correta
+
+/* ============================================================
+   SORTEIO
+   ============================================================ */
+function embaralhar(arr){
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+/* Chave do fato avaliado: questões com a mesma chave nunca caem juntas na mesma prova
+   (evita, por exemplo, uma múltipla escolha e um verdadeiro ou falso sobre o mesmo ponto). */
+const FATO = {
+  ME01:"reuniao_finalidade", VF01:"reuniao_finalidade",
+  ME02:"postura_duvida", VF02:"postura_duvida",
+  ME03:"cinco_anos", VF03:"cinco_anos",
+  ME04:"esteiras", VF29:"esteiras",
+  ME05:"athena_funcao",
+  ME29:"athena_supervisao", VF04:"athena_supervisao",
+  ME06:"nivel1", ME19:"nivel2", VF06:"nivel2", ME18:"nivel3", VF19:"nivel3",
+  ME07:"nda",
+  ME08:"prazo_previdenciario", ME20:"prazo_tributos", VF20:"prazo_tributos",
+  ME09:"remuneracao", VF09:"remuneracao", VF22:"remuneracao_antecipada",
+  ME10:"compensacao_restituicao", VF10:"compensacao_restituicao", VF30:"compensacao_restituicao",
+  ME22:"quem_decide_comp_rest",
+  ME11:"competencias65", VF13:"competencias65",
+  ME12:"perfil_cliente", VF28:"perfil_cliente", ME27:"perfil_levantado",
+  ME13:"lucro_presumido", VF14:"lucro_presumido",
+  ME14:"origem_oportunidade", VF16:"origem_oportunidade",
+  ME15:"amostragem", VF17:"amostragem", VF15:"nao_so_erros",
+  ME16:"duplicidade", VF05:"duplicidade",
+  ME17:"judicializado", VF18:"judicializado",
+  ME21:"relatorio_sem_custo", VF21:"relatorio_sem_custo",
+  ME23:"execucao_tecnica", VF24:"execucao_tecnica",
+  ME24:"garantias", VF25:"garantias",
+  ME30:"suporte_cinco_anos", VF11:"suporte_cinco_anos",
+  ME25:"escopo_previdenciario", VF26:"escopo_previdenciario",
+  ME26:"acessos_primeira_etapa", VF07:"acessos_limitados", VF27:"acessos_limitados",
+  ME28:"reuniao_profundidade",
+  VF08:"aproveitamento_opcional", VF23:"competencias_excluir", VF12:"ecac"
+};
+function sortearSemRepetirFato(banco, qtd, usados){
+  const out = [];
+  for (const q of embaralhar(banco)) {
+    const f = FATO[q.id] || q.id;
+    if (usados.has(f)) continue;
+    usados.add(f); out.push(q);
+    if (out.length === qtd) break;
+  }
+  return out;
+}
+function montarProva(){
+  const usados = new Set();
+  const me = sortearSemRepetirFato(BANCO_ME, QTD_ME, usados).map(q => {
+    // embaralha também a ordem das alternativas, guardando o índice original
+    const ordem = embaralhar([0,1,2,3]);
+    return { id:q.id, tipo:"ME", tema:q.tema, q:q.q,
+             opcoes: ordem.map(i => q.o[i]),
+             correta: ordem.indexOf(q.c) };
+  });
+  const vf = sortearSemRepetirFato(BANCO_VF, QTD_VF, usados).map(q => ({
+    id:q.id, tipo:"VF", tema:q.tema, q:q.q, opcoes:["Verdadeiro","Falso"], correta: q.c ? 0 : 1
+  }));
+  return embaralhar(me.concat(vf));
+}
+
+const PROVA = montarProva();
+const respostas = new Array(PROVA.length).fill(null);
+let atual = -1; // -1 = identificação
+const LETRAS = ["A","B","C","D"];
+
+/* ============================================================
+   RENDERIZAÇÃO
+   ============================================================ */
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+function renderQuestoes(){
+  const wrap = document.getElementById("questoesWrap");
+  wrap.innerHTML = PROVA.map((q, i) => {
+    const badge = q.tipo === "ME" ? '<span class="badge">Múltipla escolha</span>' : '<span class="badge vf">Verdadeiro ou falso</span>';
+    const cls = q.tipo === "VF" ? "options inline" : "options";
+    const ops = q.opcoes.map((o, k) => `
+      <label class="option" data-q="${i}" data-k="${k}">
+        <input type="radio" name="q${i}" value="${k}">
+        <span>${q.tipo==="ME" ? `<span class="letra">${LETRAS[k]})</span> ` : ""}${esc(o)}</span>
+      </label>`).join("");
+    const ultima = i === PROVA.length - 1;
+    return `
+    <section class="card" id="cardQ${i}">
+      ${badge}
+      <div class="question-num">Questão ${i+1} de ${PROVA.length} · 1,0 ponto</div>
+      <div class="question-text">${esc(q.q)}</div>
+      <div class="${cls}">${ops}</div>
+      <div class="alert" id="alertQ${i}">Selecione uma alternativa para continuar.</div>
+      <div class="nav-row">
+        <button class="btn btn-secondary" type="button" onclick="irPara(${i-1})">← Anterior</button>
+        ${ultima
+          ? `<button class="btn btn-submit" type="button" onclick="finalizar()">Concluir e ver a nota</button>`
+          : `<button class="btn btn-primary" type="button" onclick="avancar(${i})">Próxima →</button>`}
+      </div>
+    </section>`;
+  }).join("");
+
+  wrap.querySelectorAll(".option").forEach(op => {
+    op.addEventListener("click", () => {
+      const i = +op.dataset.q, k = +op.dataset.k;
+      respostas[i] = k;
+      op.parentElement.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
+      op.classList.add("selected");
+      op.querySelector("input").checked = true;
+      document.getElementById("alertQ"+i).classList.remove("show");
+    });
+  });
+
+  // barra de progresso
+  const pi = document.getElementById("progressInner");
+  for (let i = 0; i < PROVA.length; i++) {
+    const s = document.createElement("div");
+    s.className = "progress-step"; s.id = "step"+i; pi.appendChild(s);
+  }
+}
+
+function atualizarProgresso(){
+  for (let i = 0; i < PROVA.length; i++) {
+    const s = document.getElementById("step"+i);
+    s.classList.remove("active","done");
+    if (i < atual) s.classList.add("done");
+    if (i === atual) s.classList.add("active");
+  }
+  document.getElementById("progressLabel").textContent = atual < 0 ? "Identificação" : `Questão ${atual+1} de ${PROVA.length}`;
+}
+
+function irPara(i){
+  document.querySelectorAll(".card").forEach(c => c.classList.remove("active"));
+  atual = i;
+  document.getElementById(i < 0 ? "cardIdent" : "cardQ"+i).classList.add("active");
+  atualizarProgresso();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function avancar(i){
+  if (respostas[i] === null) {
+    document.getElementById("alertQ"+i).classList.add("show");
+    document.getElementById("cardQ"+i).scrollIntoView({behavior:"smooth", block:"start"});
+    return;
+  }
+  irPara(i+1);
+}
+
+/* ============================================================
+   IDENTIFICAÇÃO
+   ============================================================ */
+document.getElementById("btnIniciar").addEventListener("click", () => {
+  const nome = document.getElementById("nome").value.trim();
+  const email = document.getElementById("email").value.trim();
+  let ok = true;
+  document.getElementById("fNome").classList.toggle("has-error", nome.split(/\s+/).length < 2);
+  if (nome.split(/\s+/).length < 2) ok = false;
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+  document.getElementById("fEmail").classList.toggle("has-error", !emailOk);
+  if (!emailOk) ok = false;
+  if (!ok) return;
+  irPara(0);
+});
+["nome","email"].forEach(id => document.getElementById(id).addEventListener("input", e => e.target.closest(".field").classList.remove("has-error")));
+
+/* ============================================================
+   CORREÇÃO E ENVIO
+   ============================================================ */
+function corrigir(){
+  return PROVA.map((q, i) => {
+    const marcada = respostas[i];
+    const acertou = marcada === q.correta;
+    return {
+      n: i+1, id: q.id, tipo: q.tipo, tema: q.tema, enunciado: q.q,
+      resposta_dada: marcada === null ? "" : q.opcoes[marcada],
+      resposta_correta: q.opcoes[q.correta],
+      acertou
+    };
+  });
+}
+
+async function finalizar(){
+  // garante que todas foram respondidas; volta para a primeira pendente
+  const pend = respostas.findIndex(r => r === null);
+  if (pend >= 0) { irPara(pend); setTimeout(()=>document.getElementById("alertQ"+pend).classList.add("show"), 350); return; }
+
+  const detalhe = corrigir();
+  const acertos = detalhe.filter(d => d.acertou).length;
+  const erros = detalhe.length - acertos;
+  const nota = acertos * 1.0;
+
+  const dados = {
+    origem: "quiz_classe2_semana1",
+    aula: AULA,
+    nome: document.getElementById("nome").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    nota, acertos, erros, total: detalhe.length,
+    versao: PROVA.map(q => q.id).join("|"),
+    detalhe,
+    enviado_em: new Date().toISOString(),
+    navegador: navigator.userAgent
+  };
+
+  document.getElementById("loading").classList.add("active");
+  try {
+    await fetch(WEBAPP_URL, { method:"POST", headers:{ "Content-Type":"text/plain" }, body: JSON.stringify(dados) });
+  } catch (e) {
+    // o Apps Script recebe mesmo quando o navegador bloqueia a leitura da resposta
+  }
+  mostrarResultado(dados);
+}
+
+function mostrarResultado(d){
+  document.getElementById("loading").classList.remove("active");
+  document.querySelectorAll(".card").forEach(c => c.classList.remove("active"));
+  document.querySelector(".progress-wrap").style.display = "none";
+
+  const pct = Math.round(d.acertos / d.total * 100);
+  const aprovado = d.nota >= NOTA_MINIMA;
+  const primeiro = d.nome.split(/\s+/)[0];
+  const itens = d.detalhe.map(x => `
+    <li class="rev-item ${x.acertou ? "ok" : "err"}">
+      <div class="tema">Questão ${x.n} · ${esc(x.tema)}</div>
+      <div class="q">${esc(x.enunciado)}</div>
+      <div class="r">Sua resposta: <span class="${x.acertou ? "certa" : "errada"}">${esc(x.resposta_dada)}</span>${
+        (!x.acertou && MOSTRAR_GABARITO) ? ` · Correta: <b>${esc(x.resposta_correta)}</b>` : ""}</div>
+    </li>`).join("");
+
+  const r = document.getElementById("resultado");
+  r.innerHTML = `
+    <div class="result-top">
+      <div class="eyebrow">Resultado registrado</div>
+      <h2>${aprovado ? "Muito bem, " : "Obrigado, "}${esc(primeiro)}!</h2>
+      <p>${esc(d.aula)}</p>
+      <div class="nota-box">
+        <div class="valor">${d.nota.toFixed(1).replace(".",",")}<small> / 10</small></div>
+        <div class="rotulo">Sua nota</div>
+      </div>
+    </div>
+    <div class="result-body">
+      <div class="stats">
+        <div class="stat ok"><div class="n">${d.acertos}</div><div class="l">Acertos</div></div>
+        <div class="stat err"><div class="n">${d.erros}</div><div class="l">Erros</div></div>
+        <div class="stat pct"><div class="n">${pct}%</div><div class="l">Aproveitamento</div></div>
+      </div>
+      <h3>Revisão das questões (as erradas em vermelho, com a resposta correta)</h3>
+      <ul class="rev-list">${itens}</ul>
+      <div class="msg-final ${aprovado ? "aprovado" : ""}">${aprovado
+        ? "Você demonstrou domínio do conteúdo da aula. O resultado já foi enviado ao time da Aceleração de Parcerias."
+        : "Vale rever os temas sinalizados em vermelho antes da próxima aula. O time da Aceleração de Parcerias recebeu o seu resultado e pode ajudar com dúvidas pelo condutor da sua turma."}</div>
+    </div>`;
+  r.classList.add("active");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+renderQuestoes();
+</script>
+</body>
+</html>
