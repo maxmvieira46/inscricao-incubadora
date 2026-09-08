@@ -664,10 +664,10 @@ body {
     <p class="subtitle">Informações básicas para o time conhecer você.</p>
 
     <div class="field">
-      <label>CNPJ de sua formalização <span class="req">*</span></label>
-      <input type="text" name="cnpj" required placeholder="00.000.000/0000-00" inputmode="numeric" maxlength="18" oninput="mascaraCNPJ(this)">
-      <div class="field-esclarece">Utilizado para formalizar sua parceria com a AG TaxTech.</div>
-      <div class="error-msg">Informe um CNPJ válido</div>
+      <label>CPF ou CNPJ de sua formalização <span class="req">*</span></label>
+      <input type="text" name="cnpj" required placeholder="CPF ou CNPJ" inputmode="numeric" maxlength="18" oninput="mascaraDoc(this)">
+      <div class="field-esclarece">Utilizado para formalizar sua parceria com a AG TaxTech. Pode ser CPF ou CNPJ.</div>
+      <div class="error-msg">Informe um CPF ou CNPJ válido</div>
     </div>
     <div class="field">
       <label>Nome completo <span class="req">*</span></label>
@@ -1367,10 +1367,10 @@ function validarSecao(idx) {
       invalido = true;
     }
 
-    // Validação especial para CNPJ (14 dígitos)
+    // Validação especial para documento: CPF (11) ou CNPJ (14 dígitos)
     if (el.name === 'cnpj' && valor) {
       var soDigitos = valor.replace(/\D/g, '');
-      if (soDigitos.length !== 14) invalido = true;
+      if (soDigitos.length !== 11 && soDigitos.length !== 14) invalido = true;
     }
     
     // Validação especial para área "Outra"
@@ -1595,16 +1595,21 @@ function mascaraTelefone(input) {
   }
 }
 
-function mascaraCNPJ(input) {
+function mascaraDoc(input) {
   var v = input.value.replace(/\D/g, '');
   if (v.length > 14) v = v.slice(0, 14);
   var out = v;
-  if (v.length > 12)      out = v.slice(0,2)+'.'+v.slice(2,5)+'.'+v.slice(5,8)+'/'+v.slice(8,12)+'-'+v.slice(12);
-  else if (v.length > 8)  out = v.slice(0,2)+'.'+v.slice(2,5)+'.'+v.slice(5,8)+'/'+v.slice(8);
-  else if (v.length > 5)  out = v.slice(0,2)+'.'+v.slice(2,5)+'.'+v.slice(5);
-  else if (v.length > 2)  out = v.slice(0,2)+'.'+v.slice(2);
+  if (v.length <= 11) {
+    if (v.length > 9)      out = v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6,9)+'-'+v.slice(9);
+    else if (v.length > 6) out = v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6);
+    else if (v.length > 3) out = v.slice(0,3)+'.'+v.slice(3);
+  } else {
+    if (v.length > 12)      out = v.slice(0,2)+'.'+v.slice(2,5)+'.'+v.slice(5,8)+'/'+v.slice(8,12)+'-'+v.slice(12);
+    else                    out = v.slice(0,2)+'.'+v.slice(2,5)+'.'+v.slice(5,8)+'/'+v.slice(8);
+  }
   input.value = out;
 }
+function mascaraCNPJ(input) { mascaraDoc(input); }
 
 // Fechar dropdown ao clicar fora
 document.addEventListener('click', function(e) {
