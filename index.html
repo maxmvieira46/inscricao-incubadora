@@ -753,9 +753,41 @@ body {
       </div>
     </div>
     <div class="field">
-      <label>Casa AG / Quem indicou <span class="req">*</span></label>
-      <input type="text" name="casa_ag" required placeholder="Ex: AG Rio, BH, Jundiaí - Indicado por: Nome e Sobrenome ou Hunter Nome e Sobrenome">
-      <div class="error-msg">Informe a casa AG ou quem indicou</div>
+      <label>Casa AG vinculada <span class="req">*</span></label>
+      <select name="casa_ag" required onchange="toggleOutraCasa(this)">
+        <option value="">Selecione...</option>
+        <option value="AG Rio">AG Rio</option>
+        <option value="AG BH">AG BH</option>
+        <option value="AG Brasília">AG Brasília</option>
+        <option value="AG Recife">AG Recife</option>
+        <option value="AG Curitiba">AG Curitiba</option>
+        <option value="AG Salvador">AG Salvador</option>
+        <option value="AG Manaus">AG Manaus</option>
+        <option value="AG São Luís">AG São Luís</option>
+        <option value="AG Cuiabá">AG Cuiabá</option>
+        <option value="AG Araçatuba">AG Araçatuba</option>
+        <option value="AG Belém">AG Belém</option>
+        <option value="AG Campinas">AG Campinas</option>
+        <option value="AG Chapecó">AG Chapecó</option>
+        <option value="AG Fortaleza">AG Fortaleza</option>
+        <option value="AG Goiânia">AG Goiânia</option>
+        <option value="AG João Pessoa">AG João Pessoa</option>
+        <option value="AG Jundiaí">AG Jundiaí</option>
+        <option value="AG Maceió">AG Maceió</option>
+        <option value="AG Maringá">AG Maringá</option>
+        <option value="AG São Caetano">AG São Caetano</option>
+        <option value="AG São José dos Campos">AG São José dos Campos</option>
+        <option value="AG Uberaba">AG Uberaba</option>
+        <option value="AG Vitória">AG Vitória</option>
+        <option value="__outro__">Outro (indicação de parceiro)</option>
+      </select>
+      <div class="field-esclarece">Selecione a CASA AG à qual você está vinculado. Se veio por indicação de um parceiro, escolha "Outro".</div>
+      <div class="error-msg">Selecione a Casa AG vinculada</div>
+    </div>
+    <div class="field" id="outraCasaField" style="display:none;">
+      <label>Quem indicou você? <span class="req">*</span></label>
+      <input type="text" name="casa_ag_outro" placeholder="Nome e sobrenome de quem te indicou">
+      <div class="error-msg">Informe quem indicou você</div>
     </div>
     <div class="field">
       <label>Área de atuação principal <span class="req">*</span></label>
@@ -1324,6 +1356,20 @@ function toggleOutraArea(sel) {
   }
 }
 
+// ─── CASA AG "OUTRO" (indicação) TOGGLE ───────────────────────────
+function toggleOutraCasa(sel) {
+  const outroField = document.getElementById('outraCasaField');
+  const outroInput = outroField.querySelector('input');
+  if (sel.value === '__outro__') {
+    outroField.style.display = 'block';
+    outroInput.required = true;
+  } else {
+    outroField.style.display = 'none';
+    outroInput.required = false;
+    outroInput.value = '';
+  }
+}
+
 // ─── NAVEGAÇÃO ────────────────────────────────────────────────────
 function selecionar(el) {
   el.closest('.options').querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
@@ -1392,6 +1438,12 @@ function validarSecao(idx) {
     // Validação especial para área "Outra"
     if (el.name === 'area' && valor === '__outra__') {
       // Área "Outra" selecionada — campo outra_area será validado separadamente
+      invalido = false;
+    }
+
+    // Validação especial para Casa AG "Outro" (indicação)
+    if (el.name === 'casa_ag' && valor === '__outro__') {
+      // "Outro" selecionado — campo casa_ag_outro é validado separadamente
       invalido = false;
     }
     
@@ -1506,6 +1558,13 @@ function coletarDados() {
   var area = get('area');
   if (area === '__outra__') area = get('area_outra') || 'Outra';
 
+  // Casa AG: se "Outro", registrar como indicação com o nome informado
+  var casa = get('casa_ag');
+  if (casa === '__outro__') {
+    var indicador = get('casa_ag_outro');
+    casa = indicador ? ('Indicação: ' + indicador) : 'Indicação';
+  }
+
   return {
     cnpj: get('cnpj'),
     nome: get('nome'),
@@ -1513,7 +1572,7 @@ function coletarDados() {
     telefone: get('ddi') + ' ' + get('telefone'),
     uf: get('uf'),
     cidade: get('cidade'),
-    casa_ag: get('casa_ag'),
+    casa_ag: casa,
     area: area,
     experiencia: get('experiencia'),
     acessos: get('acessos'),
